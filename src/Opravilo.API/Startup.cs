@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Opravilo.API.Handlers;
 using Opravilo.API.Installers;
+using Opravilo.API.Middlewares;
 using Opravilo.API.Options;
 
 namespace Opravilo.API
@@ -41,6 +42,8 @@ namespace Opravilo.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Opravilo.API v1"));
             }
+
+            app.UseMiddleware<ProfilingMiddleware>();
 
             app.UseHttpsRedirection();
 
