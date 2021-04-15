@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Opravilo.API.Handlers;
+using Opravilo.API.Installers;
+using Opravilo.API.Options;
 
 namespace Opravilo.API
 {
@@ -20,10 +22,14 @@ namespace Opravilo.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Opravilo.API", Version = "v1" });
-            });
+            
+            services.InstallSwagger();
+
+            var authOptions = Configuration.GetSection(AuthOptions.OptionName).Get<AuthOptions>();
+            services.AddSingleton(authOptions);
+            services.InstallJwt(authOptions);
+
+            services.AddSingleton<JwtTokenGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +46,7 @@ namespace Opravilo.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
