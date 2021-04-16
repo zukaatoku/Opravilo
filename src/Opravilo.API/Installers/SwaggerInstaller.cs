@@ -16,7 +16,7 @@ namespace Opravilo.API.Installers
                     Name = "Bearer",
                     BearerFormat = "JWT",
                     Scheme = "bearer",
-                    Description = "Write 'Bearer + token' to authenticate",
+                    Description = "Write 'token' to authenticate",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http
                 });
