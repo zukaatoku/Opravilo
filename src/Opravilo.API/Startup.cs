@@ -31,6 +31,8 @@ namespace Opravilo.API
             services.InstallJwt(authOptions);
 
             services.AddSingleton<JwtTokenGenerator>();
+            
+            services.InstallServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

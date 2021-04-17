@@ -16,7 +16,7 @@ namespace Opravilo.API.Handlers
             _authOptions = authOptions;
         }
 
-        public string AuthenticateUser(string login, string password)
+        public string AuthenticateUser(string login)
         {
             var identity = GetIdentity(login);
             var now = DateTime.UtcNow;

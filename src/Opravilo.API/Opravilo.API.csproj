@@ -39,6 +39,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Opravilo.Application\Opravilo.Application.csproj" />
+      <ProjectReference Include="..\Opravilo.Migrator\Opravilo.Migrator.csproj" />
     </ItemGroup>
 
 </Project>

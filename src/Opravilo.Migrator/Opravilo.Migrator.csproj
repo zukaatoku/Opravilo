@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <CodeAnalysisRuleSet>..\..\tools\stylecop\custom.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Npgsql" Version="6.0.0-preview3" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+      <PackageReference Include="FluentMigrator" Version="3.2.15" />
+      <PackageReference Include="FluentMigrator.Extensions.Postgres" Version="3.2.15" />
+      <PackageReference Include="FluentMigrator.Runner" Version="3.2.15" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\tools\StyleCop\stylecop.json" Link="stylecop.json" />
+    </ItemGroup>
+
+</Project>

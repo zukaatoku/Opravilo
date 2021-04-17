@@ -4,6 +4,6 @@ namespace Opravilo.DataAccess.Repositories
 {
     public interface IUserRepository
     {
-        UserDto FindUser(string login, string password);
+        UserDto FindUser(string login, string passwordHash);
     }
 }

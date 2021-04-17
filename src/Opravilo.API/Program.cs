@@ -16,8 +16,9 @@ namespace Opravilo.API
 
             try
             {
+                var host = CreateHostBuilder(args).Build();
                 Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
+                host.Run();
             }
             catch (Exception ex)
             {

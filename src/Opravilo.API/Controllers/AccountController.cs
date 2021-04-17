@@ -28,7 +28,7 @@ namespace Opravilo.API.Controllers
         public string Login(
             [FromBody] LoginRequest request)
         {
-            return _jwtTokenGenerator.AuthenticateUser(request.Login, request.Password);
+            return _jwtTokenGenerator.AuthenticateUser(request.Login);
         }
     }
 }
