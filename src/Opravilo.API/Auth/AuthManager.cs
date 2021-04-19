@@ -101,7 +101,7 @@ namespace Opravilo.API.Auth
 
             var refreshTokenExpiration = DateTime.Now.AddMinutes(_authOptions.RefreshLifetime);
             
-            //Пока - один юзер = один рефреш токен
+            // Пока - один юзер = один рефреш токен
             _userService.CleanRefreshTokens(userId);
             _userService.SaveRefreshToken(userId, refreshToken, refreshTokenExpiration);
             
