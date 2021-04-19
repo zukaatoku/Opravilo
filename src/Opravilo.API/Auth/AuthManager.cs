@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Opravilo.API.Models.Responses;
+using Opravilo.API.Options;
 using Opravilo.Application.Interfaces.Services;
 
 namespace Opravilo.API.Auth
@@ -15,14 +16,16 @@ namespace Opravilo.API.Auth
         private readonly IPasswordHasher _hasher;
         private readonly ITokenGenerator _tokenGenerator;
         private readonly TokenValidationParameters _validationParameters;
+        private readonly AuthOptions _authOptions;
         
         public AuthManager(IUserService userService, IPasswordHasher hasher, ITokenGenerator tokenGenerator, 
-            TokenValidationParameters validationParameters)
+            TokenValidationParameters validationParameters, AuthOptions authOptions)
         {
             _userService = userService;
             _hasher = hasher;
             _tokenGenerator = tokenGenerator;
             _validationParameters = validationParameters;
+            _authOptions = authOptions;
         }
         
         public AuthenticationResult Register(string login, string password)
@@ -33,17 +36,10 @@ namespace Opravilo.API.Auth
 
             if (user == null)
             {
-                return new AuthenticationResult()
-                {
-                    IsSuccess = false,
-                    Errors = new List<string>()
-                    {
-                        "Failed to register user!"
-                    }
-                };
+                return Fail("Failed to register user!");
             }
 
-            return Authenticate(user.Login);
+            return Authenticate(user.Login, user.Id);
         }
 
         public AuthenticationResult Authenticate(string login, string password)
@@ -54,17 +50,10 @@ namespace Opravilo.API.Auth
 
             if (user == null)
             {
-                return new AuthenticationResult()
-                {
-                    IsSuccess = false,
-                    Errors = new List<string>()
-                    {
-                        "Failed to find user!"
-                    }
-                };
+                return Fail("Failed to find user!");
             }
 
-            return Authenticate(user.Login);
+            return Authenticate(user.Login, user.Id);
         }
 
         public AuthenticationResult RefreshToken(string jwtToken, string refreshToken)
@@ -84,32 +73,55 @@ namespace Opravilo.API.Auth
 
             if (expirationTime.CompareTo(now) > 0)
             {
-                return new AuthenticationResult()
-                {
-                    IsSuccess = false,
-                    Errors = new List<string>()
-                    {
-                        "JWT token not expired yet!"
-                    }
-                };
+                return Fail("JWT token not expired yet!");
             }
             
             var loginClaim = principal.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+            var idClaim = Convert.ToInt32(principal.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            
+            var savedToken = _userService.FindToken(idClaim);
+            
+            if (savedToken.RefreshToken != refreshToken)
+            {
+                return Fail("Refresh token invalid!");
+            }
+            
+            if (now.CompareTo(savedToken.ExpirationDate) > 0)
+            {
+                return Fail("Refresh token expired!");
+            }
 
-            // todo: check refresh token equals
-            return Authenticate(loginClaim);
+            return Authenticate(loginClaim, idClaim);
         }
 
-        private AuthenticationResult Authenticate(string login)
+        private AuthenticationResult Authenticate(string login, long userId)
         {
-            var token = _tokenGenerator.GetToken(login);
+            var token = _tokenGenerator.GetToken(login, userId);
             var refreshToken = _tokenGenerator.GetRefreshToken();
 
+            var refreshTokenExpiration = DateTime.Now.AddMinutes(_authOptions.RefreshLifetime);
+            
+            //Пока - один юзер = один рефреш токен
+            _userService.CleanRefreshTokens(userId);
+            _userService.SaveRefreshToken(userId, refreshToken, refreshTokenExpiration);
+            
             return new AuthenticationResult()
             {
                 IsSuccess = true,
                 RefreshToken = refreshToken,
                 Token = token
+            };
+        }
+
+        private AuthenticationResult Fail(string reason)
+        {
+            return new AuthenticationResult()
+            {
+                IsSuccess = false,
+                Errors = new List<string>()
+                {
+                    reason
+                }
             };
         }
     }

@@ -10,6 +10,7 @@ namespace Opravilo.API.Options
         public int Lifetime { get; set; }
         public string Issuer { get; set; }
         public string Audience { get; set; }
+        public int RefreshLifetime { get; set; }
 
         public SymmetricSecurityKey GetSymmetricSecurityKey()
         {

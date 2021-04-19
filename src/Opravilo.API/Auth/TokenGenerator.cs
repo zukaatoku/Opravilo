@@ -17,9 +17,9 @@ namespace Opravilo.API.Auth
             _authOptions = authOptions;
         }
 
-        public string GetToken(string login)
+        public string GetToken(string login, long userId)
         {
-            var identity = GetIdentity(login);
+            var identity = GetIdentity(login, userId);
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
@@ -46,11 +46,12 @@ namespace Opravilo.API.Auth
             }
         }
 
-        private ClaimsIdentity GetIdentity(string userName)
+        private ClaimsIdentity GetIdentity(string userName, long userId)
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
+                new Claim("sub", userId.ToString())
             };
 
             var identity = new ClaimsIdentity(claims, "Token", 

@@ -1,3 +1,4 @@
+using System;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.User;
 using Opravilo.DataAccess.Repositories;
@@ -24,6 +25,7 @@ namespace Opravilo.Application.Services
 
             return new UserModel()
             {
+                Id = user.Id,
                 Login = user.Login,
             };
         }
@@ -34,8 +36,34 @@ namespace Opravilo.Application.Services
 
             return new UserModel()
             {
-                Login = user.Login
+                Id = user.Id,
+                Login = user.Login,
             };
+        }
+
+        public void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime)
+        {
+            _userRepository.SaveRefreshToken(userId, refreshToken, expirationTime);
+        }
+
+        public RefreshTokenModel FindToken(long userId)
+        {
+            var token = _userRepository.FindRefreshToken(userId);
+            if (token == null)
+            {
+                return null;
+            }
+
+            return new RefreshTokenModel()
+            {
+                RefreshToken = token.RefreshToken,
+                ExpirationDate = token.ExpirationDate
+            };
+        }
+
+        public void CleanRefreshTokens(long userId)
+        {
+            _userRepository.CleanRefreshTokens(userId);
         }
     }
 }
