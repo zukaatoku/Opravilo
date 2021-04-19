@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;
-using Opravilo.API.Handlers;
 using Opravilo.API.Models.Requests;
 using Opravilo.API.Models.Responses;
 
@@ -12,12 +11,10 @@ namespace Opravilo.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly JwtTokenGenerator _jwtTokenGenerator;
         private readonly IAuthManager _authManager;
         
-        public AccountController(JwtTokenGenerator jwtTokenGenerator, IAuthManager authManager)
+        public AccountController(IAuthManager authManager)
         {
-            _jwtTokenGenerator = jwtTokenGenerator;
             _authManager = authManager;
         }
         
@@ -29,10 +26,10 @@ namespace Opravilo.API.Controllers
         
         [AllowAnonymous]
         [HttpPost("login")]
-        public string Login(
+        public AuthenticationResult Login(
             [FromBody] LoginRequest request)
         {
-            return _jwtTokenGenerator.AuthenticateUser(request.Login);
+            return _authManager.Authenticate(request.Login, request.Password);
         }
 
         [AllowAnonymous]

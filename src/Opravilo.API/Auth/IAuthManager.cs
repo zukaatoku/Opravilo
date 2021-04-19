@@ -5,5 +5,6 @@ namespace Opravilo.API.Auth
     public interface IAuthManager
     {
         AuthenticationResult Register(string login, string password);
+        AuthenticationResult Authenticate(string login, string password);
     }
 }

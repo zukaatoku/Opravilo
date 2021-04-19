@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Opravilo.API.Handlers;
 using Opravilo.API.Installers;
 using Opravilo.API.Middlewares;
 using Opravilo.API.Options;
@@ -29,9 +28,6 @@ namespace Opravilo.API
             var authOptions = Configuration.GetSection(AuthOptions.OptionName).Get<AuthOptions>();
             services.AddSingleton(authOptions);
             services.InstallJwt(authOptions);
-
-            services.AddSingleton<JwtTokenGenerator>();
-            
             services.InstallServices();
             services.InstallApplication();
             services.InstallDatabase(Configuration);

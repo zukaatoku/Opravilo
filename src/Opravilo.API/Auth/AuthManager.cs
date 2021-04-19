@@ -35,7 +35,33 @@ namespace Opravilo.API.Auth
                 };
             }
 
-            var token = _tokenGenerator.GetToken(user.Login);
+            return Authenticate(user.Login);
+        }
+
+        public AuthenticationResult Authenticate(string login, string password)
+        {
+            var hashedPassword = _hasher.HashPassword(password);
+
+            var user = _userService.FindUser(login, hashedPassword);
+
+            if (user == null)
+            {
+                return new AuthenticationResult()
+                {
+                    IsSuccess = false,
+                    Errors = new List<string>()
+                    {
+                        "Failed to find user!"
+                    }
+                };
+            }
+
+            return Authenticate(user.Login);
+        }
+
+        private AuthenticationResult Authenticate(string login)
+        {
+            var token = _tokenGenerator.GetToken(login);
 
             return new AuthenticationResult()
             {

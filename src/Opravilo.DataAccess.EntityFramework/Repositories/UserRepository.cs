@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Opravilo.DataAccess.Dto;
 using Opravilo.DataAccess.EntityFramework.Models;
 using Opravilo.DataAccess.Repositories;
@@ -16,7 +17,18 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public UserDto FindUser(string login, string passwordHash)
         {
-            throw new System.NotImplementedException();
+            var user = _context.Users.FirstOrDefault(u => u.Login == login && 
+                                                          u.PasswordHash == passwordHash);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserDto()
+            {
+                Login = user.Login
+            };
         }
 
         public UserDto AddUser(string login, string passwordHash)
