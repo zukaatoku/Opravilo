@@ -39,5 +39,12 @@ namespace Opravilo.API.Controllers
         {
             return _authManager.Register(request.Login, request.Password);
         }
+
+        [AllowAnonymous]
+        [HttpPost("refresh")]
+        public AuthenticationResult RefreshToken(string token, string refreshToken)
+        {
+            return _authManager.RefreshToken(token, refreshToken);
+        }
     }
 }
