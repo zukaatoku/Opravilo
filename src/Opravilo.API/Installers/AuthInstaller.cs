@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Opravilo.API.Auth;
 using Opravilo.API.Options;
 
 namespace Opravilo.API.Installers
@@ -26,6 +27,10 @@ namespace Opravilo.API.Installers
                         ValidateIssuerSigningKey = true
                     };
                 });
+
+            services.AddTransient<IAuthManager, AuthManager>();
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
+            services.AddTransient<ITokenGenerator, TokenGenerator>();
         }
     }
 }

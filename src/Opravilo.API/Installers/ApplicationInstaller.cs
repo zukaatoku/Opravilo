@@ -1,5 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Opravilo.Application.Interfaces.Services;
+using Opravilo.Application.Services;
+using Opravilo.DataAccess.EntityFramework.Repositories;
+using Opravilo.DataAccess.Repositories;
 
 namespace Opravilo.API.Installers
 {
@@ -7,7 +10,8 @@ namespace Opravilo.API.Installers
     {
         public static void InstallApplication(this IServiceCollection services)
         {
-            // services.AddTransient<IUserService>()
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }

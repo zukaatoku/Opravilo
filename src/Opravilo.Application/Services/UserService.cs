@@ -27,5 +27,15 @@ namespace Opravilo.Application.Services
                 Login = user.Login,
             };
         }
+
+        public UserModel RegisterUser(string login, string passwordHash)
+        {
+            var user = _userRepository.AddUser(login, passwordHash);
+
+            return new UserModel()
+            {
+                Login = user.Login
+            };
+        }
     }
 }
