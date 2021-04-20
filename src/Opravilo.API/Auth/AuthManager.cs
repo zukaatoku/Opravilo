@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
 using Opravilo.API.Models.Responses;
 using Opravilo.API.Options;
 using Opravilo.Application.Interfaces.Services;
@@ -13,25 +12,21 @@ namespace Opravilo.API.Auth
     public class AuthManager : IAuthManager
     {
         private readonly IUserService _userService;
-        private readonly IPasswordHasher _hasher;
         private readonly ITokenGenerator _tokenGenerator;
-        private readonly TokenValidationParameters _validationParameters;
+        private readonly ITokenValidationParametersCreator _tokenParametersCreator;
         private readonly AuthOptions _authOptions;
         
-        public AuthManager(IUserService userService, IPasswordHasher hasher, ITokenGenerator tokenGenerator, 
-            TokenValidationParameters validationParameters, AuthOptions authOptions)
+        public AuthManager(IUserService userService, ITokenGenerator tokenGenerator, 
+            ITokenValidationParametersCreator tokenParametersCreator, AuthOptions authOptions)
         {
             _userService = userService;
-            _hasher = hasher;
             _tokenGenerator = tokenGenerator;
-            _validationParameters = validationParameters;
             _authOptions = authOptions;
+            _tokenParametersCreator = tokenParametersCreator;
         }
         
-        public AuthenticationResult Register(string login, string password)
+        public AuthenticationResult Register(string login, string hashedPassword)
         {
-            var hashedPassword = _hasher.HashPassword(password);
-            
             var user = _userService.RegisterUser(login, hashedPassword);
 
             if (user == null)
@@ -42,10 +37,8 @@ namespace Opravilo.API.Auth
             return Authenticate(user.Login, user.Id);
         }
 
-        public AuthenticationResult Authenticate(string login, string password)
+        public AuthenticationResult Authenticate(string login, string hashedPassword)
         {
-            var hashedPassword = _hasher.HashPassword(password);
-
             var user = _userService.FindUser(login, hashedPassword);
 
             if (user == null)
@@ -58,11 +51,10 @@ namespace Opravilo.API.Auth
 
         public AuthenticationResult RefreshToken(string jwtToken, string refreshToken)
         {
-            var clonedParameters = _validationParameters.Clone();
-            clonedParameters.ValidateLifetime = false;
+            var parameters = _tokenParametersCreator.Create(_authOptions, false);
 
             var principal =
-                new JwtSecurityTokenHandler().ValidateToken(jwtToken, clonedParameters, out var validatedToken);
+                new JwtSecurityTokenHandler().ValidateToken(jwtToken, parameters, out var validatedToken);
             
             var expiredClaim = Convert.ToInt32(principal.Claims.First(c => c.Type == "exp").Value);
 

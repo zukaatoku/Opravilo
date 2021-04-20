@@ -11,29 +11,16 @@ namespace Opravilo.API.Installers
     {
         public static void InstallJwt(this IServiceCollection services, AuthOptions authOptions)
         {
-            var validationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = true,
-                ValidIssuer = authOptions.Issuer,
+            var tokenParametersCreator = new TokenValidationParametersCreator();
 
-                ValidateAudience = true,
-                ValidAudience = authOptions.Audience,
-
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                
-                IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
-                ValidateIssuerSigningKey = true
-            };
-            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
                     opt.RequireHttpsMetadata = false;
-                    opt.TokenValidationParameters = validationParameters;
+                    opt.TokenValidationParameters = tokenParametersCreator.Create(authOptions, true);
                 });
 
-            services.AddSingleton(validationParameters);
+            services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);
             services.AddTransient<IAuthManager, AuthManager>();
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();

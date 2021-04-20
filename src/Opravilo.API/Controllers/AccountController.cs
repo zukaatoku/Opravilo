@@ -12,10 +12,12 @@ namespace Opravilo.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAuthManager _authManager;
+        private readonly IPasswordHasher _passwordHasher;
         
-        public AccountController(IAuthManager authManager)
+        public AccountController(IAuthManager authManager, IPasswordHasher passwordHasher)
         {
             _authManager = authManager;
+            _passwordHasher = passwordHasher;
         }
         
         [HttpGet("login")]
@@ -29,7 +31,8 @@ namespace Opravilo.API.Controllers
         public AuthenticationResult Login(
             [FromBody] LoginRequest request)
         {
-            return _authManager.Authenticate(request.Login, request.Password);
+            var hashedPassword = _passwordHasher.HashPassword(request.Password);
+            return _authManager.Authenticate(request.Login, hashedPassword);
         }
 
         [AllowAnonymous]
@@ -37,7 +40,8 @@ namespace Opravilo.API.Controllers
         public AuthenticationResult RegisterUser(
             [FromBody] RegistrationRequest request)
         {
-            return _authManager.Register(request.Login, request.Password);
+            var hashedPassword = _passwordHasher.HashPassword(request.Password);
+            return _authManager.Register(request.Login, hashedPassword);
         }
 
         [AllowAnonymous]
