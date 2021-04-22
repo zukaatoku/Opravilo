@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.User;
 using Opravilo.DataAccess.Repositories;
@@ -30,14 +31,31 @@ namespace Opravilo.Application.Services
             };
         }
 
-        public UserModel RegisterUser(string login, string passwordHash)
+        public RegistrationResultModel RegisterUser(string login, string email, string passwordHash)
         {
-            var user = _userRepository.AddUser(login, passwordHash);
+            var canCreateUser = _userRepository.CredentialsAvailable(login, email);
 
-            return new UserModel()
+            if (!canCreateUser)
             {
-                Id = user.Id,
-                Login = user.Login,
+                return new RegistrationResultModel()
+                {
+                    Errors = new List<string>()
+                    {
+                        "Invalid credentials!"
+                    }
+                };
+            }
+            
+            var user = _userRepository.AddUser(login, email, passwordHash);
+
+            return new RegistrationResultModel()
+            {
+                CreatedUser = new UserModel()
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email
+                } 
             };
         }
 

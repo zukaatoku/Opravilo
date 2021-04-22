@@ -41,7 +41,7 @@ namespace Opravilo.API.Controllers
             [FromBody] RegistrationRequest request)
         {
             var hashedPassword = _passwordHasher.HashPassword(request.Password);
-            return _authManager.Register(request.Login, hashedPassword);
+            return _authManager.Register(request.Login, request.Email, hashedPassword);
         }
 
         [AllowAnonymous]

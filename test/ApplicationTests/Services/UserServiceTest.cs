@@ -80,26 +80,48 @@ namespace ApplicationTests.Services
         }
 
         [Fact]
-        public void RegisterUser_Should_Return_NewUser()
+        public void RegisterUser_Should_ReturnSuccess_WhenAllGood()
         {
             const long expectedId = 1;
             const string expectedLogin = "test";
             const string fakePassword = "123";
+            const string expectedEmail = "test@email";
             
-            _repository.Setup(r => r.AddUser(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string password) => new UserDto()
+            _repository.Setup(r => r.CredentialsAvailable(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(true);
+            
+            _repository.Setup(r => r.AddUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((string login, string email, string password) => new UserDto()
                 {
                     Login = login,
+                    Email = email,
                     Id = expectedId
                 });
 
             _service = new UserService(_repository.Object);
 
-            var user = _service.RegisterUser(expectedLogin, fakePassword);
+            var result = _service.RegisterUser(expectedLogin, expectedEmail, fakePassword);
 
-            Assert.NotNull(user);
-            Assert.Equal(expectedId, user.Id);
-            Assert.Equal(expectedLogin, user.Login);
+            Assert.True(result.IsSuccess);
+            Assert.Null(result.Errors);
+            Assert.NotNull(result.CreatedUser);
+            Assert.Equal(expectedLogin, result.CreatedUser.Login);
+            Assert.Equal(expectedEmail, result.CreatedUser.Email);
+        }
+
+        [Fact]
+        public void RegisterUser_Should_ReturnError_WhenInvalidCredentials()
+        {
+            _repository.Setup(r => r.CredentialsAvailable(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(false);
+
+            _service = new UserService(_repository.Object);
+
+            var registrationResult = _service.RegisterUser("any login", "test@email", "any password");
+            
+            Assert.False(registrationResult.IsSuccess);
+            Assert.NotEmpty(registrationResult.Errors);
+            Assert.Null(registrationResult.CreatedUser);
         }
 
         [Fact]

@@ -25,15 +25,17 @@ namespace Opravilo.API.Auth
             _tokenParametersCreator = tokenParametersCreator;
         }
         
-        public AuthenticationResult Register(string login, string hashedPassword)
+        public AuthenticationResult Register(string login, string email, string hashedPassword)
         {
-            var user = _userService.RegisterUser(login, hashedPassword);
+            var registrationResult = _userService.RegisterUser(login, email, hashedPassword);
 
-            if (user == null)
+            if (!registrationResult.IsSuccess)
             {
-                return Fail("Failed to register user!");
+                return Fail(registrationResult.Errors.First());
             }
 
+            var user = registrationResult.CreatedUser;
+            
             return Authenticate(user.Login, user.Id);
         }
 

@@ -23,6 +23,9 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         [Column("CHANGED_DATE")]
         public DateTime ChangedDate { get; set; }
         
+        [Column("EMAIL")]
+        public string Email { get; set; }
+        
         public virtual List<RefreshTokenModel> RefreshTokens { get; set; }
     }
 }

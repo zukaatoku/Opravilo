@@ -29,17 +29,19 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             return new UserDto()
             {
                 Id = user.Id,
-                Login = user.Login
+                Login = user.Login,
+                Email = user.Email
             };
         }
 
-        public UserDto AddUser(string login, string passwordHash)
+        public UserDto AddUser(string login, string email, string passwordHash)
         {
             var now = DateTime.Now;
             var user = new UserModel()
             {
                 Login = login,
                 PasswordHash = passwordHash,
+                Email = email,
                 ChangedDate = now,
                 CreatedDate = now
             };
@@ -100,6 +102,12 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             user.RefreshTokens.Clear();
 
             _context.SaveChanges();
+        }
+
+        public bool CredentialsAvailable(string login, string email)
+        {
+            return _context.Users
+                .Any(u => u.Email == email || u.Login == login);
         }
     }
 }

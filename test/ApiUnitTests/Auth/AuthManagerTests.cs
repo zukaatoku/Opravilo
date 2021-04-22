@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ApiUnitTests.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -59,31 +60,42 @@ namespace ApiUnitTests.Auth
         [Fact]
         public void Register_Should_ReturnSuccess_WhenServiceReturnsUser()
         {
-            _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string password) => new UserModel()
-                {
-                    Id = 1,
-                    Login = login
+            _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((string login, string email, string password) => new RegistrationResultModel() 
+                { 
+                    CreatedUser = new UserModel()
+                    {
+                        Id = 1,
+                        Login = login,
+                        Email = email
+                    }
                 });
 
             _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
-            var result = _authManager.Register("Login", "Password");
+            var result = _authManager.Register("Login", "test@email", "Password");
 
             AssertSuccess(result);
         }
 
         [Fact]
-        public void Register_Should_ReturnFalse_WhenServiceReturnsNull()
+        public void Register_Should_ReturnFalse_WhenServiceReturnsNotSuccess()
         {
-            _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string password) => null);
+            const string expectedError = "error";
+            _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((string login, string email, string password) => new RegistrationResultModel()
+                {
+                    Errors = new List<string>()
+                    {
+                        expectedError
+                    }
+                });
 
             _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
-            var result = _authManager.Register("Login", "Password");
+            var result = _authManager.Register("Login", "test@email", "Password");
 
-            AssertFail(result, "Failed to register user!");
+            AssertFail(result, expectedError);
         }
         
         [Fact]

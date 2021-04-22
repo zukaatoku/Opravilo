@@ -4,5 +4,6 @@ namespace Opravilo.DataAccess.Dto
     {
         public long Id { get; init; }
         public string Login { get; init; }
+        public string Email { get; set; }
     }
 }
