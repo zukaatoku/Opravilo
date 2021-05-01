@@ -25,9 +25,13 @@ namespace Opravilo.API
             
             services.InstallSwagger();
 
-            var authOptions = Configuration.GetSection(AuthOptions.OptionName).Get<AuthOptions>();
+            var authOptions = Configuration.GetSection(JwtAuthOptions.OptionName).Get<JwtAuthOptions>();
             services.AddSingleton(authOptions);
-            services.InstallJwt(authOptions);
+
+            var vkAuthOptions = Configuration.GetSection(VkAuthOptions.OptionName).Get<VkAuthOptions>();
+            services.AddSingleton(vkAuthOptions);
+            
+            services.InstallAuthentication(authOptions, vkAuthOptions);
             services.InstallServices();
             services.InstallApplication();
             services.InstallDatabase(Configuration);

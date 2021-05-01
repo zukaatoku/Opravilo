@@ -106,7 +106,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public bool CredentialsAvailable(string login, string email)
         {
-            return _context.Users
+            return !_context.Users
                 .Any(u => u.Email == email || u.Login == login);
         }
     }

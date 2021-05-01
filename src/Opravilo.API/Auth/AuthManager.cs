@@ -14,10 +14,10 @@ namespace Opravilo.API.Auth
         private readonly IUserService _userService;
         private readonly ITokenGenerator _tokenGenerator;
         private readonly ITokenValidationParametersCreator _tokenParametersCreator;
-        private readonly AuthOptions _authOptions;
+        private readonly JwtAuthOptions _authOptions;
         
         public AuthManager(IUserService userService, ITokenGenerator tokenGenerator, 
-            ITokenValidationParametersCreator tokenParametersCreator, AuthOptions authOptions)
+            ITokenValidationParametersCreator tokenParametersCreator, JwtAuthOptions authOptions)
         {
             _userService = userService;
             _tokenGenerator = tokenGenerator;

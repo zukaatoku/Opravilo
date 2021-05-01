@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;
@@ -20,7 +21,15 @@ namespace Opravilo.API.Controllers
             _passwordHasher = passwordHasher;
         }
         
+        [HttpGet("vkLogin")]
+        [Authorize(AuthenticationSchemes = "Vkontakte")]
+        public string LoginVk()
+        {
+            return User?.Identity?.Name;
+        }
+        
         [HttpGet("login")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public string GetLogin()
         {
             return User?.Identity?.Name;
