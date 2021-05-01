@@ -31,7 +31,7 @@ namespace Opravilo.API.Installers
                 });
 
             services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);
-            services.AddTransient<IAuthManager, AuthManager>();
+            services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
         }

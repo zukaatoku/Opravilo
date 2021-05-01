@@ -7,10 +7,11 @@ namespace Opravilo.DataAccess.Repositories
     {
         UserDto FindUser(string login, string passwordHash);
         UserDto FindUser(string vkId);
-        UserDto AddUser(string login, string email, string passwordHash);
+        UserDto AddUser(string login, string displayName, string passwordHash);
         void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime);
         RefreshTokenDto FindRefreshToken(long userId);
         void CleanRefreshTokens(long userId);
-        bool CredentialsAvailable(string login, string email);
+        bool LoginAvailable(string login);
+        bool VkIdAvailable(string vkId);
     }
 }

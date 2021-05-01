@@ -27,7 +27,7 @@ namespace Opravilo.Application.Services
             return new UserModel()
             {
                 Id = user.Id,
-                Login = user.Login,
+                DisplayName = user.DisplayName,
             };
         }
 
@@ -43,13 +43,13 @@ namespace Opravilo.Application.Services
             return new UserModel()
             {
                 Id = user.Id,
-                Login = user.Login,
+                DisplayName = user.DisplayName,
             };
         }
 
-        public RegistrationResultModel RegisterUser(string login, string email, string passwordHash)
+        public RegistrationResultModel RegisterUser(string login, string displayName, string passwordHash)
         {
-            var canCreateUser = _userRepository.CredentialsAvailable(login, email);
+            var canCreateUser = _userRepository.LoginAvailable(login);
 
             if (!canCreateUser)
             {
@@ -62,15 +62,14 @@ namespace Opravilo.Application.Services
                 };
             }
             
-            var user = _userRepository.AddUser(login, email, passwordHash);
+            var user = _userRepository.AddUser(login, displayName, passwordHash);
 
             return new RegistrationResultModel()
             {
                 CreatedUser = new UserModel()
                 {
                     Id = user.Id,
-                    Login = user.Login,
-                    Email = user.Email
+                    DisplayName = user.DisplayName,
                 } 
             };
         }

@@ -20,7 +20,7 @@ namespace ApiUnitTests.Auth
         private readonly Mock<ITokenGenerator> _tokenGeneratorMock;
         private readonly Mock<ITokenValidationParametersCreator> _tokenParametersCreatorMock;
         
-        private AuthManager _authManager;
+        private UserManager _authManager;
         private JwtAuthOptions _authOptions;
         
         public AuthManagerTests()
@@ -61,19 +61,18 @@ namespace ApiUnitTests.Auth
         public void Register_Should_ReturnSuccess_WhenServiceReturnsUser()
         {
             _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string email, string password) => new RegistrationResultModel() 
+                .Returns((string login, string displayName, string password) => new RegistrationResultModel() 
                 { 
                     CreatedUser = new UserModel()
                     {
                         Id = 1,
-                        Login = login,
-                        Email = email
+                        DisplayName = displayName,
                     }
                 });
 
-            _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
+            _authManager = new UserManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
-            var result = _authManager.Register("Login", "test@email", "Password");
+            var result = _authManager.Register("Login", "displayLogin", "Password");
 
             AssertSuccess(result);
         }
@@ -83,7 +82,7 @@ namespace ApiUnitTests.Auth
         {
             const string expectedError = "error";
             _serviceMock.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string email, string password) => new RegistrationResultModel()
+                .Returns((string login, string displayName, string password) => new RegistrationResultModel()
                 {
                     Errors = new List<string>()
                     {
@@ -91,9 +90,9 @@ namespace ApiUnitTests.Auth
                     }
                 });
 
-            _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
+            _authManager = new UserManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
-            var result = _authManager.Register("Login", "test@email", "Password");
+            var result = _authManager.Register("Login", "displayLogin", "Password");
 
             AssertFail(result, expectedError);
         }
@@ -105,10 +104,10 @@ namespace ApiUnitTests.Auth
                 .Returns((string login, string password) => new UserModel()
                 {
                     Id = 1,
-                    Login = login
+                    DisplayName = "DisplayName"
                 });
 
-            _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
+            _authManager = new UserManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
             var result = _authManager.Authenticate("Login", "Password");
 
@@ -121,7 +120,7 @@ namespace ApiUnitTests.Auth
             _serviceMock.Setup(s => s.FindUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string login, string password) => null);
 
-            _authManager = new AuthManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
+            _authManager = new UserManager(_serviceMock.Object, _tokenGeneratorMock.Object, null, _authOptions);
 
             var result = _authManager.Authenticate("Login", "Password");
 
@@ -137,7 +136,7 @@ namespace ApiUnitTests.Auth
             
             var fakeJwt = FakeTokenGenerator.GetJwtToken(_authOptions, now.AddMinutes(FakeJwtLifetime - 2), "fake_login", 1);
 
-            _authManager = new AuthManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
+            _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
             var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
@@ -154,7 +153,7 @@ namespace ApiUnitTests.Auth
             
             var fakeJwt = FakeTokenGenerator.GetJwtToken(_authOptions, now, "fake_login", 1);
 
-            _authManager = new AuthManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
+            _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
             var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
@@ -171,7 +170,7 @@ namespace ApiUnitTests.Auth
             
             var fakeJwt = FakeTokenGenerator.GetJwtToken(_authOptions, now.AddMinutes(-2), "fake_login", 1);
 
-            _authManager = new AuthManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
+            _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
             var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
@@ -188,7 +187,7 @@ namespace ApiUnitTests.Auth
             
             var fakeJwt = FakeTokenGenerator.GetJwtToken(_authOptions, now.AddDays(-5), "fake_login", 1);
 
-            _authManager = new AuthManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
+            _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
             var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);

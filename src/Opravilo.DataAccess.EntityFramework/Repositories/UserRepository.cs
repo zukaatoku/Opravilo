@@ -29,8 +29,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             return new UserDto()
             {
                 Id = user.Id,
-                Login = user.Login,
-                Email = user.Email
+                DisplayName = user.DisplayName,
             };
         }
 
@@ -46,19 +45,18 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             return new UserDto()
             {
                 Id = user.Id,
-                Login = user.Login,
-                Email = user.Email
+                DisplayName = user.DisplayName,
             };
         }
 
-        public UserDto AddUser(string login, string email, string passwordHash)
+        public UserDto AddUser(string login, string displayName, string passwordHash)
         {
             var now = DateTime.Now;
             var user = new UserModel()
             {
                 Login = login,
                 PasswordHash = passwordHash,
-                Email = email,
+                DisplayName = displayName,
                 ChangedDate = now,
                 CreatedDate = now
             };
@@ -69,7 +67,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             return new UserDto()
             {
                 Id = user.Id,
-                Login = login
+                DisplayName = user.DisplayName,
             };
         }
 
@@ -121,10 +119,16 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             _context.SaveChanges();
         }
 
-        public bool CredentialsAvailable(string login, string email)
+        public bool LoginAvailable(string login)
         {
             return !_context.Users
-                .Any(u => u.Email == email || u.Login == login);
+                .Any(u => u.Login == login);
+        }
+
+        public bool VkIdAvailable(string vkId)
+        {
+            return !_context.Users
+                .Any(u => u.VkUserId == vkId);
         }
     }
 }

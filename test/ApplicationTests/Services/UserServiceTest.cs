@@ -85,39 +85,37 @@ namespace ApplicationTests.Services
             const long expectedId = 1;
             const string expectedLogin = "test";
             const string fakePassword = "123";
-            const string expectedEmail = "test@email";
+            const string expectedDisplayName = "display_name";
             
-            _repository.Setup(r => r.CredentialsAvailable(It.IsAny<string>(), It.IsAny<string>()))
+            _repository.Setup(r => r.LoginAvailable(It.IsAny<string>()))
                 .Returns(true);
             
             _repository.Setup(r => r.AddUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string login, string email, string password) => new UserDto()
+                .Returns((string login, string displayName, string password) => new UserDto()
                 {
-                    Login = login,
-                    Email = email,
-                    Id = expectedId
+                    DisplayName = expectedDisplayName,
+                    Id = expectedId,
                 });
 
             _service = new UserService(_repository.Object);
 
-            var result = _service.RegisterUser(expectedLogin, expectedEmail, fakePassword);
+            var result = _service.RegisterUser(expectedLogin, expectedDisplayName, fakePassword);
 
             Assert.True(result.IsSuccess);
             Assert.Null(result.Errors);
             Assert.NotNull(result.CreatedUser);
-            Assert.Equal(expectedLogin, result.CreatedUser.Login);
-            Assert.Equal(expectedEmail, result.CreatedUser.Email);
+            Assert.Equal(expectedDisplayName, result.CreatedUser.DisplayName);
         }
 
         [Fact]
         public void RegisterUser_Should_ReturnError_WhenInvalidCredentials()
         {
-            _repository.Setup(r => r.CredentialsAvailable(It.IsAny<string>(), It.IsAny<string>()))
+            _repository.Setup(r => r.LoginAvailable(It.IsAny<string>()))
                 .Returns(false);
 
             _service = new UserService(_repository.Object);
 
-            var registrationResult = _service.RegisterUser("any login", "test@email", "any password");
+            var registrationResult = _service.RegisterUser("any login", "any_display_name", "any password");
             
             Assert.False(registrationResult.IsSuccess);
             Assert.NotEmpty(registrationResult.Errors);
@@ -128,12 +126,13 @@ namespace ApplicationTests.Services
         public void FindUser_Should_Return_Model_When_There_Is_User()
         {
             const string expectedLogin = "test";
+            const string expectedDisplayName = "display_name";
             const long expectedId = 1;
             _repository.Setup(r => r.FindUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string login, string pwd) => new UserDto()
                 {
                     Id = expectedId,
-                    Login = login,
+                    DisplayName = expectedDisplayName,
                 });
 
             _service = new UserService(_repository.Object);
@@ -141,7 +140,7 @@ namespace ApplicationTests.Services
             var user = _service.FindUser(expectedLogin, "test");
 
             Assert.NotNull(user);
-            Assert.Equal(expectedLogin, user.Login);
+            Assert.Equal(expectedDisplayName, user.DisplayName);
             Assert.Equal(expectedId, user.Id);
             Assert.NotEqual(0, user.Id);
         }

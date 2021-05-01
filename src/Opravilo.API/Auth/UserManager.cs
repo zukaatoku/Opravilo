@@ -9,14 +9,14 @@ using Opravilo.Application.Interfaces.Services;
 
 namespace Opravilo.API.Auth
 {
-    public class AuthManager : IAuthManager
+    public class UserManager : IUserManager
     {
         private readonly IUserService _userService;
         private readonly ITokenGenerator _tokenGenerator;
         private readonly ITokenValidationParametersCreator _tokenParametersCreator;
         private readonly JwtAuthOptions _authOptions;
         
-        public AuthManager(IUserService userService, ITokenGenerator tokenGenerator, 
+        public UserManager(IUserService userService, ITokenGenerator tokenGenerator, 
             ITokenValidationParametersCreator tokenParametersCreator, JwtAuthOptions authOptions)
         {
             _userService = userService;
@@ -25,9 +25,9 @@ namespace Opravilo.API.Auth
             _tokenParametersCreator = tokenParametersCreator;
         }
         
-        public AuthenticationResult Register(string login, string email, string hashedPassword)
+        public AuthenticationResult Register(string login, string displayName, string hashedPassword)
         {
-            var registrationResult = _userService.RegisterUser(login, email, hashedPassword);
+            var registrationResult = _userService.RegisterUser(login, displayName, hashedPassword);
 
             if (!registrationResult.IsSuccess)
             {
@@ -36,7 +36,7 @@ namespace Opravilo.API.Auth
 
             var user = registrationResult.CreatedUser;
             
-            return Authenticate(user.Login, user.Id);
+            return Authenticate(login, user.Id);
         }
 
         public AuthenticationResult Authenticate(string login, string hashedPassword)
@@ -48,7 +48,7 @@ namespace Opravilo.API.Auth
                 return Fail("Failed to find user!");
             }
 
-            return Authenticate(user.Login, user.Id);
+            return Authenticate(login, user.Id);
         }
 
         public AuthenticationResult Authenticate(string vkId)
@@ -59,7 +59,7 @@ namespace Opravilo.API.Auth
                 return Fail("Vkontakte profile not attached to any user!");
             }
 
-            return Authenticate(user.Login, user.Id);
+            return Authenticate(user.DisplayName, user.Id);
         }
 
         public AuthenticationResult RefreshToken(string jwtToken, string refreshToken)
@@ -99,9 +99,9 @@ namespace Opravilo.API.Auth
             return Authenticate(loginClaim, idClaim);
         }
 
-        private AuthenticationResult Authenticate(string login, long userId)
+        private AuthenticationResult Authenticate(string displayName, long userId)
         {
-            var token = _tokenGenerator.GetToken(login, userId);
+            var token = _tokenGenerator.GetToken(displayName, userId);
             var refreshToken = _tokenGenerator.GetRefreshToken();
 
             var refreshTokenExpiration = DateTime.Now.AddMinutes(_authOptions.RefreshLifetime);

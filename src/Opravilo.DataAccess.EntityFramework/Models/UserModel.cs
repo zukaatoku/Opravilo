@@ -23,11 +23,11 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         [Column("CHANGED_DATE")]
         public DateTime ChangedDate { get; set; }
         
-        [Column("EMAIL")]
-        public string Email { get; set; }
-        
         [Column("VK_USER_ID")]
         public string VkUserId { get; set; }
+        
+        [Column("DISPLAY_NAME")]
+        public string DisplayName { get; set; }
         
         public virtual List<RefreshTokenModel> RefreshTokens { get; set; }
     }
