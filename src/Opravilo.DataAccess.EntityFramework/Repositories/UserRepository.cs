@@ -51,15 +51,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public UserDto AddUser(string login, string displayName, string passwordHash)
         {
-            var now = DateTime.Now;
-            var user = new UserModel()
-            {
-                Login = login,
-                PasswordHash = passwordHash,
-                DisplayName = displayName,
-                ChangedDate = now,
-                CreatedDate = now
-            };
+            var user = CreateUser(login, displayName, passwordHash);
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -69,6 +61,35 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
                 Id = user.Id,
                 DisplayName = user.DisplayName,
             };
+        }
+
+        public UserDto AddVkUser(string firstName, string surname, string vkId)
+        {
+            var user = CreateUser(Guid.NewGuid().ToString(), $"{firstName} {surname}", null);
+
+            user.VkUserId = vkId;
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            
+            return new UserDto()
+            {
+                Id = user.Id,
+                DisplayName = user.DisplayName,
+            };
+        }
+
+        private UserModel CreateUser(string login, string displayName, string passwordHash)
+        {
+            var now = DateTime.Now;
+            var user = new UserModel()
+            {
+                Login = login,
+                PasswordHash = passwordHash,
+                DisplayName = displayName,
+                ChangedDate = now,
+                CreatedDate = now
+            };
+            return user;
         }
 
         public void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime)
@@ -123,12 +144,6 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
         {
             return !_context.Users
                 .Any(u => u.Login == login);
-        }
-
-        public bool VkIdAvailable(string vkId)
-        {
-            return !_context.Users
-                .Any(u => u.VkUserId == vkId);
         }
     }
 }

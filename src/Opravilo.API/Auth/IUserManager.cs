@@ -6,7 +6,7 @@ namespace Opravilo.API.Auth
     {
         AuthenticationResult Register(string login, string displayName, string hashedPassword);
         AuthenticationResult Authenticate(string login, string hashedPassword);
-        AuthenticationResult Authenticate(string vkId);
+        AuthenticationResult AuthenticateOrCreate(string vkId, string givenName, string surname);
         AuthenticationResult RefreshToken(string jwtToken, string refreshToken);
     }
 }

@@ -7,9 +7,13 @@ namespace Opravilo.Application.Interfaces.Services
     {
         UserModel FindUser(string vkId);
         UserModel FindUser(string login, string password);
+        UserModel CreateVkUser(string givenName, string surname, string vkId);
+        
         RegistrationResultModel RegisterUser(string login, string displayName, string passwordHash);
-        void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime);
+        
         RefreshTokenModel FindToken(long userId);
+        
+        void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime);
         void CleanRefreshTokens(long userId);
     }
 }

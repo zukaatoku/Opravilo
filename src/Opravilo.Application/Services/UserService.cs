@@ -98,5 +98,16 @@ namespace Opravilo.Application.Services
         {
             _userRepository.CleanRefreshTokens(userId);
         }
+
+        public UserModel CreateVkUser(string givenName, string surname, string vkId)
+        {
+            var user = _userRepository.AddVkUser(givenName, surname, vkId);
+
+            return new UserModel()
+            {
+                Id = user.Id,
+                DisplayName = user.DisplayName
+            };
+        }
     }
 }

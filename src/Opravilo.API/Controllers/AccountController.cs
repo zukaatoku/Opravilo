@@ -29,8 +29,12 @@ namespace Opravilo.API.Controllers
         public AuthenticationResult AuthenticateVkontakte()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
+            
             var id = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            return _authManager.Authenticate(id);
+            var firstName = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.GivenName).Value;
+            var secondName = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.Surname).Value;
+            
+            return _authManager.AuthenticateOrCreate(id, firstName, secondName);
         }
         
         [HttpGet("login")]

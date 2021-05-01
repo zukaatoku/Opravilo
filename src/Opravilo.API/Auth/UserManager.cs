@@ -51,12 +51,12 @@ namespace Opravilo.API.Auth
             return Authenticate(login, user.Id);
         }
 
-        public AuthenticationResult Authenticate(string vkId)
+        public AuthenticationResult AuthenticateOrCreate(string vkId, string givenName, string surname)
         {
             var user = _userService.FindUser(vkId);
             if (user == null)
             {
-                return Fail("Vkontakte profile not attached to any user!");
+                user = _userService.CreateVkUser(givenName, surname, vkId);
             }
 
             return Authenticate(user.DisplayName, user.Id);
