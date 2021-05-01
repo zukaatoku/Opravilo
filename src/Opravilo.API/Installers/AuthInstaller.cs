@@ -11,7 +11,8 @@ namespace Opravilo.API.Installers
         {
             var tokenParametersCreator = new TokenValidationParametersCreator();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
