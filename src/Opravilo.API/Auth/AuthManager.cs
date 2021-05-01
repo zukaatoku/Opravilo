@@ -51,6 +51,17 @@ namespace Opravilo.API.Auth
             return Authenticate(user.Login, user.Id);
         }
 
+        public AuthenticationResult Authenticate(string vkId)
+        {
+            var user = _userService.FindUser(vkId);
+            if (user == null)
+            {
+                return Fail("Vkontakte profile not attached to any user!");
+            }
+
+            return Authenticate(user.Login, user.Id);
+        }
+
         public AuthenticationResult RefreshToken(string jwtToken, string refreshToken)
         {
             var parameters = _tokenParametersCreator.Create(_authOptions, false);
