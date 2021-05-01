@@ -10,9 +10,9 @@ namespace Opravilo.API.Auth
 {
     public class TokenGenerator : ITokenGenerator
     {
-        private readonly AuthOptions _authOptions;
+        private readonly JwtAuthOptions _authOptions;
 
-        public TokenGenerator(AuthOptions authOptions)
+        public TokenGenerator(JwtAuthOptions authOptions)
         {
             _authOptions = authOptions;
         }

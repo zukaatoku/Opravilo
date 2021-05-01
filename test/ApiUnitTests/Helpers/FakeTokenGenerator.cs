@@ -9,7 +9,7 @@ namespace ApiUnitTests.Helpers
 {
     public static class FakeTokenGenerator
     {
-        public static string GetJwtToken(AuthOptions authOptions, DateTime date, string login, long userId)
+        public static string GetJwtToken(JwtAuthOptions authOptions, DateTime date, string login, long userId)
         {
             var identity = GetIdentity(login, userId);
             

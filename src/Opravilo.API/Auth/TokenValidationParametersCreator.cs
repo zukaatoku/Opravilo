@@ -6,7 +6,7 @@ namespace Opravilo.API.Auth
 {
     public class TokenValidationParametersCreator : ITokenValidationParametersCreator
     {
-        public TokenValidationParameters Create(AuthOptions options, bool shouldCheckLifetime)
+        public TokenValidationParameters Create(JwtAuthOptions options, bool shouldCheckLifetime)
         {
             return new TokenValidationParameters()
             {

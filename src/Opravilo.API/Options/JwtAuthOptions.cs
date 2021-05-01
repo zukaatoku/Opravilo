@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Opravilo.API.Options
 {
-    public class AuthOptions
+    public class JwtAuthOptions
     {
         public const string OptionName = "Auth";
         public string Key { get; set; }

@@ -14,10 +14,10 @@ namespace Opravilo.API.Auth
         private readonly IUserService _userService;
         private readonly ITokenGenerator _tokenGenerator;
         private readonly ITokenValidationParametersCreator _tokenParametersCreator;
-        private readonly AuthOptions _authOptions;
+        private readonly JwtAuthOptions _authOptions;
         
         public AuthManager(IUserService userService, ITokenGenerator tokenGenerator, 
-            ITokenValidationParametersCreator tokenParametersCreator, AuthOptions authOptions)
+            ITokenValidationParametersCreator tokenParametersCreator, JwtAuthOptions authOptions)
         {
             _userService = userService;
             _tokenGenerator = tokenGenerator;
@@ -46,6 +46,17 @@ namespace Opravilo.API.Auth
             if (user == null)
             {
                 return Fail("Failed to find user!");
+            }
+
+            return Authenticate(user.Login, user.Id);
+        }
+
+        public AuthenticationResult Authenticate(string vkId)
+        {
+            var user = _userService.FindUser(vkId);
+            if (user == null)
+            {
+                return Fail("Vkontakte profile not attached to any user!");
             }
 
             return Authenticate(user.Login, user.Id);

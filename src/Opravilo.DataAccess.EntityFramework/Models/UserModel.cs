@@ -26,6 +26,9 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         [Column("EMAIL")]
         public string Email { get; set; }
         
+        [Column("VK_USER_ID")]
+        public string VkUserId { get; set; }
+        
         public virtual List<RefreshTokenModel> RefreshTokens { get; set; }
     }
 }

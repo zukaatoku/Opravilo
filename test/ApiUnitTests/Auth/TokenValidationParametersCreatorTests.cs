@@ -24,9 +24,9 @@ namespace ApiUnitTests.Auth
             Assert.Equal(options.Issuer, parameters.ValidIssuer);
         }
 
-        private AuthOptions GetFakeOptions()
+        private JwtAuthOptions GetFakeOptions()
         {
-            return new AuthOptions()
+            return new JwtAuthOptions()
             {
                 Issuer = "fakeIssuer",
                 Audience = "fakeAudience",

@@ -15,6 +15,22 @@ namespace Opravilo.Application.Services
             _userRepository = userRepository;
         }
 
+        public UserModel FindUser(string vkId)
+        {
+            var user = _userRepository.FindUser(vkId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserModel()
+            {
+                Id = user.Id,
+                Login = user.Login,
+            };
+        }
+
         public UserModel FindUser(string login, string password)
         {
             var user = _userRepository.FindUser(login, password);

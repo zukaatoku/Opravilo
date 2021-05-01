@@ -21,7 +21,7 @@ namespace ApiUnitTests.Auth
         private readonly Mock<ITokenValidationParametersCreator> _tokenParametersCreatorMock;
         
         private AuthManager _authManager;
-        private AuthOptions _authOptions;
+        private JwtAuthOptions _authOptions;
         
         public AuthManagerTests()
         {
@@ -34,7 +34,7 @@ namespace ApiUnitTests.Auth
                 .Returns("fake_refresh_token");
 
             _tokenParametersCreatorMock = new Mock<ITokenValidationParametersCreator>();
-            _tokenParametersCreatorMock.Setup(t => t.Create(It.IsAny<AuthOptions>(), It.IsAny<bool>()))
+            _tokenParametersCreatorMock.Setup(t => t.Create(It.IsAny<JwtAuthOptions>(), It.IsAny<bool>()))
                 .Returns(() => new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
@@ -47,7 +47,7 @@ namespace ApiUnitTests.Auth
                     ValidateIssuerSigningKey = true
                 });
 
-            _authOptions = new AuthOptions()
+            _authOptions = new JwtAuthOptions()
             {
                 Issuer = "fake_issuer",
                 Audience = "fake_audience",

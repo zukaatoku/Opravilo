@@ -34,6 +34,23 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             };
         }
 
+        public UserDto FindUser(string vkId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.VkUserId == vkId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserDto()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Email = user.Email
+            };
+        }
+
         public UserDto AddUser(string login, string email, string passwordHash)
         {
             var now = DateTime.Now;
@@ -106,7 +123,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public bool CredentialsAvailable(string login, string email)
         {
-            return _context.Users
+            return !_context.Users
                 .Any(u => u.Email == email || u.Login == login);
         }
     }

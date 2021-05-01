@@ -1,3 +1,7 @@
+using System.Linq;
+using System.Security.Claims;
+using AspNet.Security.OAuth.Vkontakte;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;
@@ -20,7 +24,17 @@ namespace Opravilo.API.Controllers
             _passwordHasher = passwordHasher;
         }
         
+        [HttpGet("vkLogin")]
+        [Authorize(AuthenticationSchemes = VkontakteAuthenticationDefaults.AuthenticationScheme)]
+        public AuthenticationResult AuthenticateVkontakte()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var id = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            return _authManager.Authenticate(id);
+        }
+        
         [HttpGet("login")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public string GetLogin()
         {
             return User?.Identity?.Name;
