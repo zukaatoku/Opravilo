@@ -10,8 +10,8 @@ namespace Opravilo.API.Installers
     {
         public static void InstallApplication(this IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }
