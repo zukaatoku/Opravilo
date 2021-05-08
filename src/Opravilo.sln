@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opravilo.API", "Opravilo.API\Opravilo.API.csproj", "{81CF5EE9-587B-4C7A-A834-21EB9D284745}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{61323C6F-A866-4A27-A11C-4AE133CAC994}"
+ProjectSection(SolutionItems) = preProject
+	..\.gitignore = ..\.gitignore
+EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{956D2781-4DE3-4752-B197-ECB408D043A5}"
 ProjectSection(SolutionItems) = preProject
