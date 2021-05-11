@@ -15,7 +15,7 @@ const tailLayout = {
     wrapperCol: { offset: 4, span: 16 },
 };
 
-export const LoginPage: FC = () => (
+const LoginPage: FC = () => (
   <Form {...layout}>
       <Form.Item label="Username" name="username" rules={[{required: true, message: "Please input your username!"}]}>
           <Input />
@@ -30,3 +30,5 @@ export const LoginPage: FC = () => (
       </Form.Item>
   </Form>
 );
+
+export default LoginPage;

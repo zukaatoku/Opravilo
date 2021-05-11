@@ -1,8 +1,10 @@
 import "antd/dist/antd.css";
 import * as React from "react";
 import {FC} from "react";
-import { LoginPage } from "./pages/login/login";
-import {AnonymousLayout} from "./layouts/AnonymousLayout";
+import { AnonymousLayout } from "./layouts/AnonymousLayout";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import LoginPage from "./pages/login/LoginPage";
+import RegistrationPage from "./pages/registration/RegistrationPage";
 
 export interface HelloWorldProps {
     userName: string,
@@ -10,7 +12,12 @@ export interface HelloWorldProps {
 }
 
 export const App: FC<HelloWorldProps> = (props: HelloWorldProps) => (
-    <AnonymousLayout>
-        <LoginPage />
-    </AnonymousLayout>
+    <Router>
+        <Switch>
+            <AnonymousLayout>
+                <Route exact path="/" component={LoginPage} />
+                <Route exact path="/registration" component={RegistrationPage} />
+            </AnonymousLayout>
+        </Switch>
+    </Router>
 );

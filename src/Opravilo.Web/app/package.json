@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
-    "antd": "^4.15.4"
+    "@types/react-router-dom": "^5.1.7",
+    "antd": "^4.15.4",
+    "react-router-dom": "^5.2.0"
   }
 }
