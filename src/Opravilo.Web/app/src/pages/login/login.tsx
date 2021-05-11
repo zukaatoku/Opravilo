@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FC, FunctionComponent} from "react";
+import { FC } from "react";
 import { Form, Input, Button } from "antd";
 
 const layout = {

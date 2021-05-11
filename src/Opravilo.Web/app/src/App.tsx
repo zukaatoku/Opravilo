@@ -1,10 +1,8 @@
+import "antd/dist/antd.css";
 import * as React from "react";
 import {FC} from "react";
-import { Layout } from "antd";
 import { LoginPage } from "./pages/login/login";
-import "antd/dist/antd.css";
-
-const { Header, Footer, Sider, Content } = Layout;
+import {AnonymousLayout} from "./layouts/AnonymousLayout";
 
 export interface HelloWorldProps {
     userName: string,
@@ -12,11 +10,7 @@ export interface HelloWorldProps {
 }
 
 export const App: FC<HelloWorldProps> = (props: HelloWorldProps) => (
-    <Layout style={{height: "100vh"}}>
-        <Header>Header</Header>
-        <Content style={{padding: 24, margin: 0, minHeight: 280 }} >
-            <LoginPage /> 
-        </Content>
-        <Footer>Footer</Footer>
-    </Layout>
+    <AnonymousLayout>
+        <LoginPage />
+    </AnonymousLayout>
 );
