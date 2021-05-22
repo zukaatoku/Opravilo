@@ -4,7 +4,7 @@ import {FC} from "react";
 const style = {
     backgroundColor: "rgb(28, 135, 223)",
     borderRadius: "50%",
-    borderColor: "rgba(0, 0, 0, 0.25)",
+    borderColor: "rgba(28, 135, 223, 1)",
     borderStyle: "solid",
     borderWidth: "2px"
 } as React.CSSProperties;

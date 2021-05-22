@@ -1,10 +1,8 @@
 import * as React from "react";
 import { FC } from "react";
-import { Form, Input, Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import {Card} from "antd";
-
-const {Meta} = Card;
 
 const layout = {
     lg: {
@@ -26,7 +24,7 @@ const layout = {
 const LoginPage: FC = () => (
     <Row>
         <Col {...layout}>
-            <Card title="Sign in" extra={<a>New user?</a>}>
+            <Card title="Sign in" extra={<a href="/registration">New user?</a>}>
                 <LoginForm />
             </Card>
         </Col>

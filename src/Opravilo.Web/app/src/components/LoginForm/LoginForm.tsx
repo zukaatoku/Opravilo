@@ -5,11 +5,6 @@ import VkLogo from "../VkLogo/VkLogo";
 
 const Item = Form.Item;
 
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-};
-
 const socialStyle = {
     textAlign: "center"
 } as React.CSSProperties;
