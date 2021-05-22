@@ -1,6 +1,7 @@
 import {Button, Divider, Form, Input} from "antd";
 import * as React from "react";
 import {FC} from "react";
+import VkLogo from "../VkLogo/VkLogo";
 
 const Item = Form.Item;
 
@@ -8,6 +9,10 @@ const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
 };
+
+const socialStyle = {
+    textAlign: "center"
+} as React.CSSProperties;
 
 const LoginForm: FC = () => (
         <Form>
@@ -23,6 +28,9 @@ const LoginForm: FC = () => (
                 </Button>
             </Item>
             <Divider>OR</Divider>
+            <div style={socialStyle}>
+                <VkLogo />
+            </div>
         </Form>
 );
 
