@@ -1,10 +1,10 @@
-import "antd/dist/antd.css";
+import "./style.scss";
 import * as React from "react";
 import {FC} from "react";
-import { AnonymousLayout } from "./layouts/AnonymousLayout";
+import { AnonymousLayout } from "../layouts/AnonymousLayout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import LoginPage from "./pages/login/LoginPage";
-import RegistrationPage from "./pages/registration/RegistrationPage";
+import LoginPage from "../pages/login/LoginPage";
+import RegistrationPage from "../pages/registration/RegistrationPage";
 
 export interface HelloWorldProps {
     userName: string,

@@ -1,3 +1,4 @@
+import "./style.scss";
 import {FunctionComponent} from "react";
 import {Layout} from "antd";
 import * as React from "react";
@@ -10,6 +11,8 @@ export const AnonymousLayout: FunctionComponent = (props) => (
         <Content style={{padding: 24, margin: 0, minHeight: 280 }} >
             {props.children}
         </Content>
-        <Footer><GithubLogo prompt="Project repository" url="https://github.com/ejenin/Opravilo"/></Footer>
+        <Footer>
+            <GithubLogo prompt="Project repository" url="https://github.com/ejenin/Opravilo" cssClass="hoverableTransition"/>
+        </Footer>
     </Layout>
 );
