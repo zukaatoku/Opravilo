@@ -37,6 +37,18 @@ const RegistrationForm: FC = () => {
         <Item name="password" rules={[{required: true, message: "Please input your password!"}]}>
             <Input.Password placeholder="Password"/>
         </Item>
+        <Item name="confirm" dependencies={["password"]} hasFeedback
+              rules={[{required: true, message: "Please input your password!"},
+                  ({getFieldValue}) => ({
+                      validator(_, value) {
+                          if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                          }
+                          return Promise.reject(new Error("The two password that you entered do not match!"));
+                      }
+                  })]}>
+            <Input.Password placeholder="Confirm Password"/>
+        </Item>
         <Item>
             <Button type="primary" htmlType="submit" block>
                 Register
