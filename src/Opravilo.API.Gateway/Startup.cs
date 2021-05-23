@@ -35,6 +35,11 @@ namespace Opravilo.API.Gateway
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(c => c
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
+            
             app.UseRouting();
             app.UseHttpsRedirection();
 
