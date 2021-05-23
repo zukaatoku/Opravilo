@@ -23,6 +23,8 @@ namespace Opravilo.API.Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot(Configuration);
+            services.AddSwaggerForOcelot(Configuration);
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +37,11 @@ namespace Opravilo.API.Gateway
 
             app.UseRouting();
             app.UseHttpsRedirection();
+
+            app.UseSwaggerForOcelotUI(opt =>
+            {
+                opt.PathToSwaggerGenerator = "/swagger/docs";
+            });
 
             await app.UseOcelot();
 

@@ -10,7 +10,8 @@
         }
       ],
       "UpstreamPathTemplate": "/api/account/login",
-      "UpstreamHttpMethod": ["Get"]
+      "UpstreamHttpMethod": ["Get"],
+      "SwaggerKey": "account"
     },
     {
       "DownstreamPathTemplate": "/api/account/vkLogin",
@@ -22,7 +23,8 @@
         }
       ],
       "UpstreamPathTemplate": "/api/account/vkLogin",
-      "UpstreamHttpMethod": ["Get"]
+      "UpstreamHttpMethod": ["Get"],
+      "SwaggerKey": "account"
     },
     {
       "DownstreamPathTemplate": "/api/account/login",
@@ -34,7 +36,20 @@
         }
       ],
       "UpstreamPathTemplate": "/api/account/login",
-      "UpstreamHttpMethod": ["Post"]
+      "UpstreamHttpMethod": ["Post"],
+      "SwaggerKey": "account"
+    }
+  ],
+  "SwaggerEndpoints": [
+    {
+      "Key": "account",
+      "Config": [
+        {
+          "Name": "Account API",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
