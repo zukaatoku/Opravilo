@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="9mm"
+   height="9mm"
+   viewBox="0 0 63.180096 63.259121"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <g
+     id="layer1"
+     transform="translate(0.1390053,-0.12288751)">
+    <rect
+       style="fill:#ff8080;stroke-width:0.264583"
+       id="rect26"
+       width="57"
+       height="57"
+       x="-0.1390053"
+       y="0.12288751" />
+    <rect
+       style="fill:#ffe680;stroke-width:0.264583"
+       id="rect20"
+       width="57"
+       height="57"
+       x="2.5635111"
+       y="3.4516611" />
+    <rect
+       style="fill:#ff5555;stroke-width:0.264583"
+       id="rect30"
+       width="57"
+       height="12"
+       x="-0.1390053"
+       y="0.12288751" />
+    <rect
+       style="fill:#d4aa00;stroke-width:0.264583"
+       id="rect22"
+       width="57"
+       height="12"
+       x="2.5635111"
+       y="3.4516611" />
+    <rect
+       style="fill:#87deaa;stroke-width:0.264583"
+       id="rect32"
+       width="57"
+       height="57"
+       x="6.0410886"
+       y="6.3820086" />
+    <rect
+       style="fill:#37c871;stroke-width:0.264583"
+       id="rect38"
+       width="57"
+       height="12"
+       x="6.0410886"
+       y="6.3820086" />
+  </g>
+</svg>

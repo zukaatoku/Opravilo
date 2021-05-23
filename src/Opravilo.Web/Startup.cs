@@ -33,7 +33,7 @@ namespace Opravilo.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapFallbackToFile("/index.html");
             });
         }
     }
