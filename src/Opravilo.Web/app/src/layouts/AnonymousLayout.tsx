@@ -9,7 +9,10 @@ import Logo from "../assets/logo.svg";
 export const AnonymousLayout: FunctionComponent = (props) => (
     <Layout style={{height: "100vh"}}>
         <Header>
-            <div className="headerText"><img src={Logo} alt="Logo"/> OPRAVILO</div> 
+            <div>
+                <img src={Logo} alt="Logo" className="headerLogo"/>
+                <span className="headerText">OPRAVILO</span>
+            </div>
         </Header>
         <Content style={{padding: 24, margin: 0, minHeight: 280 }} >
             {props.children}
