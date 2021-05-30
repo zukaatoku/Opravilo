@@ -50,7 +50,7 @@ namespace Opravilo.API.Auth
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
+                new Claim("nickname", userName),
                 new Claim("sub", userId.ToString())
             };
 

@@ -19,7 +19,6 @@ const RegistrationForm: FC = () => {
     const [spinning, setSpinning] = useState(false);
     
     const onFinish = (values: FormProperties) => {
-      console.log(values);
       setSpinning(true);
       const client = new Client();
       const request: RegistrationRequest = new RegistrationRequest({
