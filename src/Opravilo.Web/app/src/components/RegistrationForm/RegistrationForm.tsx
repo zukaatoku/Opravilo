@@ -26,7 +26,7 @@ const RegistrationForm: FC = () => {
           password: values.password,
           displayName: values.displayName
       });
-       const result = client
+      const result = client
            .register(request)
            .then((res) => {
            if (!res.isSuccess) {
@@ -38,7 +38,7 @@ const RegistrationForm: FC = () => {
                AuthManager.setTokens(res.token, res.refreshToken);
            }
            setSpinning(false);
-       });
+      });
     };
 
     return (<Form form={form} onFinish={onFinish}>
