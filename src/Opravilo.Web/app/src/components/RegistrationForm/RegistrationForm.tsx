@@ -1,8 +1,7 @@
-import {FC} from "react";
-import {Button, Form, Input} from "antd";
+import {FC, useState} from "react";
+import {Button, Form, Input, Alert} from "antd";
 import * as React from "react";
-import * as Api from "../../api/client";
-import {Client, IRegistrationRequest, RegistrationRequest} from "../../api/client";
+import {Client, RegistrationRequest} from "../../api/client";
 
 const Item = Form.Item;
 
@@ -14,6 +13,8 @@ interface FormProperties {
 
 const RegistrationForm: FC = () => {
     const [form] = Form.useForm();
+    const [showError, setShowError] = useState(false);
+    const [error, setError] = useState("");
     
     const onFinish = async (values: FormProperties) => {
       console.log(values);
@@ -23,8 +24,17 @@ const RegistrationForm: FC = () => {
           password: values.password,
           displayName: values.displayName
       });
-       const result = await client.register(request);
-       console.log(result);
+       const result = await client
+           .register(request)
+           .then((res) => {
+           if (!res.isSuccess) {
+               setShowError(true);
+               setError(res.errors[0]);
+           }
+           else {
+               setShowError(false);
+           }
+       });
     };
 
     return (<Form form={form} onFinish={onFinish}>
@@ -54,6 +64,11 @@ const RegistrationForm: FC = () => {
                 Register
             </Button>
         </Item>
+        {
+            showError
+                ? <Alert message={error} type="error" />
+                : <></>
+        }
     </Form>)
 };
 
