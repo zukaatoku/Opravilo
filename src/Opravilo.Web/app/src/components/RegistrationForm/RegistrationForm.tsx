@@ -2,6 +2,7 @@ import {FC, useState} from "react";
 import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
 import {Client, RegistrationRequest} from "../../api/client";
+import AuthManager from "../../auth/AuthManager";
 
 const Item = Form.Item;
 
@@ -35,6 +36,7 @@ const RegistrationForm: FC = () => {
            }
            else {
                setShowError(false);
+               AuthManager.setTokens(res.token, res.refreshToken);
            }
            setSpinning(false);
        });
