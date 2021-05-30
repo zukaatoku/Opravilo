@@ -1,5 +1,5 @@
 import {FC, useState} from "react";
-import {Button, Form, Input, Alert} from "antd";
+import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
 import {Client, RegistrationRequest} from "../../api/client";
 
@@ -15,16 +15,18 @@ const RegistrationForm: FC = () => {
     const [form] = Form.useForm();
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
+    const [spinning, setSpinning] = useState(false);
     
-    const onFinish = async (values: FormProperties) => {
+    const onFinish = (values: FormProperties) => {
       console.log(values);
-      const client = new Client("https://localhost:5008");
+      setSpinning(true);
+      const client = new Client();
       const request: RegistrationRequest = new RegistrationRequest({
           login: values.username,
           password: values.password,
           displayName: values.displayName
       });
-       const result = await client
+       const result = client
            .register(request)
            .then((res) => {
            if (!res.isSuccess) {
@@ -34,6 +36,7 @@ const RegistrationForm: FC = () => {
            else {
                setShowError(false);
            }
+           setSpinning(false);
        });
     };
 
@@ -60,9 +63,11 @@ const RegistrationForm: FC = () => {
             <Input.Password placeholder="Confirm Password"/>
         </Item>
         <Item>
-            <Button type="primary" htmlType="submit" block>
-                Register
-            </Button>
+            <Spin spinning={spinning}>
+                <Button type="primary" htmlType="submit" block>
+                    Register
+                </Button>
+            </Spin>
         </Item>
         {
             showError
