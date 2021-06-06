@@ -8,13 +8,9 @@ import RegistrationPage from "../pages/registration/RegistrationPage";
 import UserLayout from "../layouts/UserLayout/UserLayout";
 import HomePage from "../pages/home/HomePage";
 import {PrivateRoute} from "../components/PrivateRoute/PrivateRoute";
+import VkLoginCallback from "../pages/login/VkLoginCallback";
 
-export interface HelloWorldProps {
-    userName: string,
-    lang: string
-}
-
-export const App: FC<HelloWorldProps> = (props: HelloWorldProps) => (
+export const App: FC = () => (
     <Router>
         <Switch>
             <Route path={["/home"]}>
@@ -29,8 +25,14 @@ export const App: FC<HelloWorldProps> = (props: HelloWorldProps) => (
                     <Switch>
                         <Route exact path="/" component={LoginPage} />
                         <Route exact path="/registration" component={RegistrationPage} />
+                        <Route exact path="/vk-login-callback" component={VkLoginCallback} />
                     </Switch>
                 </AnonymousLayout>
+            </Route>
+            <Route path={["/vk-login-callback"]}>
+                <Switch>
+                    <Route exact path="/vk-login-callback:code" component={VkLoginCallback} />
+                </Switch>
             </Route>
         </Switch>
     </Router>

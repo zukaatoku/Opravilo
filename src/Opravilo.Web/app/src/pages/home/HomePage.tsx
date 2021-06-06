@@ -2,7 +2,7 @@ import * as React from "react";
 import {FC} from "react";
 import {Button} from "antd";
 import AuthManager from "../../auth/AuthManager";
-import {Redirect, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const HomePage: FC = () => {
     const history = useHistory();

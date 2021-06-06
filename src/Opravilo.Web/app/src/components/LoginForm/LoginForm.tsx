@@ -5,6 +5,7 @@ import VkLogo from "../VkLogo/VkLogo";
 import {Client, LoginRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
 import {useHistory} from "react-router-dom";
+import OauthPopup from "react-oauth-popup";
 
 const Item = Form.Item;
 
@@ -28,7 +29,7 @@ const LoginForm: FC = () => {
             login: values.username,
             password: values.password
         });
-        const result = client
+        client
             .login2(request)
             .then((res) => {
                 if (!res.isSuccess) {
@@ -42,6 +43,21 @@ const LoginForm: FC = () => {
                 }
             });
     };
+    
+    const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011";
+    
+    const onClose = () => {
+      console.log("modal closed");  
+    };
+    
+    const onCode = (code: string, params: URLSearchParams) => {
+        console.log(code);
+        console.log(params);
+        history.push({
+            pathname: "/vk-login-callback",
+            search: "?code="+code
+        });
+    }
     
     return (<Form onFinish={onFinish}>
         <Item name="username" rules={[{required: true, message: "Please input your username!"}]}>
@@ -61,9 +77,11 @@ const LoginForm: FC = () => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <div style={socialStyle}>
-            <VkLogo/>
-        </div>
+        <OauthPopup url={authUrl} title="Vk auth" onClose={onClose} onCode={onCode}>
+            <div style={socialStyle}>
+                <VkLogo/>
+            </div>
+        </OauthPopup>
     </Form>)
 };
 
