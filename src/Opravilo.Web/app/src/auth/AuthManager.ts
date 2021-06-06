@@ -6,18 +6,19 @@ interface JwtPayload {
 }
 
 const AuthManager = () => {
-    let displayName: string = null;
-    let userId: string = null;
+    
+    const authenticated = function() : boolean {
+      return window.localStorage.getItem("jwt") !== null;  
+    };
     
     const setTokens = function (jwt: string, refresh: string) : boolean {
         window.localStorage.setItem("jwt", jwt);
         window.localStorage.setItem("refresh", refresh);
         
         const decoded = jwt_decode<JwtPayload>(jwt);
-        userId = decoded.sub;
-        displayName = decoded.nickname;
-        
-        console.log(displayName);
+
+        window.localStorage.setItem("displayName", decoded.nickname);
+        window.localStorage.setItem("userId", decoded.sub);
         
         return true;
     };
@@ -25,17 +26,25 @@ const AuthManager = () => {
     const removeTokens = function() {
         window.localStorage.removeItem("jwt");
         window.localStorage.removeItem("refresh");
+        window.localStorage.removeItem("displayName");
+        window.localStorage.removeItem("userId");
         return true;
     };
     
     const getJwtToken = function() : string {
         return window.localStorage.getItem("jwt");
-    }
+    };
+    
+    const getDisplayName = function() : string {
+        return window.localStorage.getItem("displayName");
+    };
     
     return {
         setTokens,
         removeTokens,
-        getJwtToken
+        getJwtToken,
+        getDisplayName,
+        authenticated
     }
 };
 

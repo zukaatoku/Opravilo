@@ -3,6 +3,7 @@ import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
 import {Client, RegistrationRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
+import {useHistory} from "react-router-dom";
 
 const Item = Form.Item;
 
@@ -13,6 +14,7 @@ interface FormProperties {
 }
 
 const RegistrationForm: FC = () => {
+    const history = useHistory();
     const [form] = Form.useForm();
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
@@ -36,6 +38,7 @@ const RegistrationForm: FC = () => {
            else {
                setShowError(false);
                AuthManager.setTokens(res.token, res.refreshToken);
+               history.push("/home");
            }
            setSpinning(false);
       });

@@ -4,6 +4,7 @@ import {FC, useState} from "react";
 import VkLogo from "../VkLogo/VkLogo";
 import {Client, LoginRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
+import {useHistory} from "react-router-dom";
 
 const Item = Form.Item;
 
@@ -17,7 +18,7 @@ interface FormProperties {
 }
 
 const LoginForm: FC = () => {
-
+    const history = useHistory();
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
     
@@ -37,6 +38,7 @@ const LoginForm: FC = () => {
                 else {
                     setShowError(false);
                     AuthManager.setTokens(res.token, res.refreshToken);
+                    history.push("/home");
                 }
             });
     };

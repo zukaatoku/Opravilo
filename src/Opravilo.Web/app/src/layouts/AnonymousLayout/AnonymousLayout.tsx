@@ -2,11 +2,11 @@ import "./style.scss";
 import {FunctionComponent} from "react";
 import {Layout} from "antd";
 import * as React from "react";
-import GithubLogo from "../components/GithubLogo/GithubLogo";
+import GithubLogo from "../../components/GithubLogo/GithubLogo";
 const { Header, Footer, Content } = Layout;
-import Logo from "../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 
-export const AnonymousLayout: FunctionComponent = (props) => (
+const AnonymousLayout: FunctionComponent = (props) => (
     <Layout style={{height: "100vh"}}>
         <Header>
             <div>
@@ -22,3 +22,5 @@ export const AnonymousLayout: FunctionComponent = (props) => (
         </Footer>
     </Layout>
 );
+
+export default AnonymousLayout;
