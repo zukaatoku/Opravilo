@@ -36,7 +36,7 @@ namespace Opravilo.API.Auth
 
             var user = registrationResult.CreatedUser;
             
-            return Authenticate(login, user.Id);
+            return Authenticate(displayName, user.Id);
         }
 
         public AuthenticationResult Authenticate(string login, string hashedPassword)
@@ -48,7 +48,7 @@ namespace Opravilo.API.Auth
                 return Fail("Failed to find user!");
             }
 
-            return Authenticate(login, user.Id);
+            return Authenticate(user.DisplayName, user.Id);
         }
 
         public AuthenticationResult AuthenticateOrCreate(string vkId, string givenName, string surname)
@@ -81,7 +81,7 @@ namespace Opravilo.API.Auth
                 return Fail("JWT token not expired yet!");
             }
             
-            var loginClaim = principal.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+            var nicknameClaim = principal.Claims.First(c => c.Type == "nickname").Value;
             var idClaim = Convert.ToInt32(principal.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
             
             var savedToken = _userService.FindToken(idClaim);
@@ -96,7 +96,7 @@ namespace Opravilo.API.Auth
                 return Fail("Refresh token expired!");
             }
 
-            return Authenticate(loginClaim, idClaim);
+            return Authenticate(nicknameClaim, idClaim);
         }
 
         private AuthenticationResult Authenticate(string displayName, long userId)
