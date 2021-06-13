@@ -16,16 +16,12 @@ const VkLoginCallback: FC = () => {
     client
         .loginVK(code)
         .then((res) => {
-            if (!res.isSuccess) {
-                history.push("/");
-            }
-            else {
+            if (res.isSuccess) {
                 AuthManager.setTokens(res.token, res.refreshToken);
-                history.push("/home");
-            } 
+            }
         });
     
-    return <h1>Lol</h1>
+    return <h1>Authorizing...</h1>
 };
 
 export default VkLoginCallback;

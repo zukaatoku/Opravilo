@@ -44,18 +44,18 @@ const LoginForm: FC = () => {
             });
     };
     
-    const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011";
+    const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011/vk-login-callback";
     
     const onClose = () => {
       console.log("modal closed");  
     };
     
     const onCode = (code: string, params: URLSearchParams) => {
-        console.log(code);
-        console.log(params);
+        // console.log(code);
+        // console.log(params);
+        console.log(AuthManager.getDisplayName());
         history.push({
-            pathname: "/vk-login-callback",
-            search: "?code="+code
+            pathname: "/home"
         });
     }
     
@@ -77,7 +77,7 @@ const LoginForm: FC = () => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <OauthPopup url={authUrl} title="Vk auth" onClose={onClose} onCode={onCode} width="780" height="500">
+        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width="780" height="500">
             <div style={socialStyle}>
                 <VkLogo/>
             </div>

@@ -23,7 +23,7 @@ namespace Opravilo.API.Auth.External
             const string accessTokenUrl = "https://oauth.vk.com/access_token?client_id={0}&client_secret={1}&redirect_uri={2}&code={3}";
             using (var client = _clientFactory.CreateClient())
             {
-                var url = string.Format(accessTokenUrl, _options.ClientId, _options.Secret, "https://localhost:5011", code);
+                var url = string.Format(accessTokenUrl, _options.ClientId, _options.Secret, "https://localhost:5011/vk-login-callback", code);
                 var result = await client.GetAsync(url);
 
                 result.EnsureSuccessStatusCode();
