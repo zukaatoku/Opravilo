@@ -30,7 +30,8 @@ namespace Opravilo.API
 
             var vkAuthOptions = Configuration.GetSection(VkAuthOptions.OptionName).Get<VkAuthOptions>();
             services.AddSingleton(vkAuthOptions);
-            
+
+            services.AddHttpClient();
             services.InstallAuthentication(authOptions, vkAuthOptions);
             services.InstallServices();
             services.InstallApplication();

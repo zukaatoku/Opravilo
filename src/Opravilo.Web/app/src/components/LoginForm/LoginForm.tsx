@@ -30,7 +30,7 @@ const LoginForm: FC = () => {
             password: values.password
         });
         client
-            .login2(request)
+            .login(request)
             .then((res) => {
                 if (!res.isSuccess) {
                     setShowError(true);
@@ -77,7 +77,7 @@ const LoginForm: FC = () => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <OauthPopup url={authUrl} title="Vk auth" onClose={onClose} onCode={onCode}>
+        <OauthPopup url={authUrl} title="Vk auth" onClose={onClose} onCode={onCode} width="780" height="500">
             <div style={socialStyle}>
                 <VkLogo/>
             </div>
