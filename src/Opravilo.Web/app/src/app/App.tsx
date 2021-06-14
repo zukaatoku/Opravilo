@@ -9,18 +9,19 @@ import UserLayout from "../layouts/UserLayout/UserLayout";
 import HomePage from "../pages/home/HomePage";
 import {PrivateRoute} from "../components/PrivateRoute/PrivateRoute";
 import VkLoginCallback from "../pages/login/VkLoginCallback";
+import {AnonymousRoute} from "../components/AnonymousRoute/AnonymousRoute";
 
 export const App: FC = () => (
     <Router>
         <Switch>
-            <Route path={["/home"]}>
+            <PrivateRoute path={["/home"]}>
                 <UserLayout>
                     <Switch>
-                        <PrivateRoute exact path="/home" component={HomePage}/>
+                        <Route exact path="/home" component={HomePage}/>
                     </Switch>
                 </UserLayout>
-            </Route>
-            <Route path={["/", "/registration"]}>
+            </PrivateRoute>
+            <AnonymousRoute path={["/", "/registration"]} redirectPath="/home">
                 <AnonymousLayout>
                     <Switch>
                         <Route exact path="/" component={LoginPage} />
@@ -28,7 +29,7 @@ export const App: FC = () => (
                         <Route exact path="/vk-login-callback" component={VkLoginCallback} />
                     </Switch>
                 </AnonymousLayout>
-            </Route>
+            </AnonymousRoute>
             <Route path={["/vk-login-callback"]}>
                 <Switch>
                     <Route exact path="/vk-login-callback:code" component={VkLoginCallback} />
