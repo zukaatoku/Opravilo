@@ -27,7 +27,7 @@
       "SwaggerKey": "account"
     },
     {
-      "DownstreamPathTemplate": "/api/account/vkLogin",
+      "DownstreamPathTemplate": "/api/account/loginVK",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -35,7 +35,7 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/account/vkLogin",
+      "UpstreamPathTemplate": "/api/account/loginVK",
       "UpstreamHttpMethod": ["Get"],
       "SwaggerKey": "account"
     },

@@ -1,10 +1,12 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AspNet.Security.OAuth.Vkontakte;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;
+using Opravilo.API.Auth.External;
 using Opravilo.API.Models.Requests;
 using Opravilo.API.Models.Responses;
 
@@ -17,31 +19,29 @@ namespace Opravilo.API.Controllers
     {
         private readonly IUserManager _authManager;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IExternalAuth _externalAuth;
         
-        public AccountController(IUserManager authManager, IPasswordHasher passwordHasher)
+        public AccountController(IUserManager authManager, IPasswordHasher passwordHasher, IExternalAuth externalAuth)
         {
             _authManager = authManager;
             _passwordHasher = passwordHasher;
+            _externalAuth = externalAuth;
         }
-        
-        [HttpGet("vkLogin")]
-        [Authorize(AuthenticationSchemes = VkontakteAuthenticationDefaults.AuthenticationScheme)]
-        public AuthenticationResult AuthenticateVkontakte()
+
+        [AllowAnonymous]
+        [HttpGet("loginVK")]
+        public async Task<AuthenticationResult> LoginVk(string code)
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var externalInfo = await _externalAuth.Validate(code);
+            var userExists = _authManager.UserExists(externalInfo.user_id);
+
+            if (userExists)
+            {
+                return _authManager.AuthenticateVkontakte(externalInfo.user_id);
+            }
             
-            var id = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var firstName = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.GivenName).Value;
-            var secondName = claimsIdentity.Claims.First(c => c.Type == ClaimTypes.Surname).Value;
-            
-            return _authManager.AuthenticateOrCreate(id, firstName, secondName);
-        }
-        
-        [HttpGet("login")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public string GetLogin()
-        {
-            return User?.Identity?.Name;
+            var credentials = await _externalAuth.GetUserInfo(externalInfo.user_id, externalInfo.access_token);
+            return _authManager.CreateAndAuthenticate(credentials.id.ToString(), credentials.first_name, credentials.last_name);
         }
         
         [AllowAnonymous]

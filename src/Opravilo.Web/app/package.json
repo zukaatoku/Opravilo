@@ -38,6 +38,7 @@
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.15.4",
     "jwt-decode": "^3.1.2",
+    "react-oauth-popup": "^1.0.3",
     "react-router-dom": "^5.2.0"
   }
 }

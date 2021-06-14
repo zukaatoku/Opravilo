@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
 using Opravilo.API.Auth;
+using Opravilo.API.Auth.External;
 using Opravilo.API.Options;
 
 namespace Opravilo.API.Installers
@@ -31,6 +32,7 @@ namespace Opravilo.API.Installers
                 });
 
             services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);
+            services.AddTransient<IExternalAuth, VkontakteExternalAuth>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();

@@ -5,6 +5,7 @@ import VkLogo from "../VkLogo/VkLogo";
 import {Client, LoginRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
 import {useHistory} from "react-router-dom";
+import OauthPopup from "react-oauth-popup";
 
 const Item = Form.Item;
 
@@ -28,8 +29,8 @@ const LoginForm: FC = () => {
             login: values.username,
             password: values.password
         });
-        const result = client
-            .login2(request)
+        client
+            .login(request)
             .then((res) => {
                 if (!res.isSuccess) {
                     setShowError(true);
@@ -42,6 +43,28 @@ const LoginForm: FC = () => {
                 }
             });
     };
+    
+    const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011/vk-login-callback";
+    
+    const onClose = () => {
+      console.log("modal closed");  
+    };
+    
+    // todo: move to new component
+    const onCode = (code: string, params: URLSearchParams) => {
+        const client = new Client();
+        client
+            .loginVK(code)
+            .then((res) => {
+                if (res.isSuccess) {
+                    AuthManager.setTokens(res.token, res.refreshToken);
+                    console.log(AuthManager.getDisplayName());
+                    history.push({
+                        pathname: "/home"
+                    });
+                }
+            });
+    }
     
     return (<Form onFinish={onFinish}>
         <Item name="username" rules={[{required: true, message: "Please input your username!"}]}>
@@ -61,9 +84,11 @@ const LoginForm: FC = () => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <div style={socialStyle}>
-            <VkLogo/>
-        </div>
+        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width="780" height="500">
+            <div style={socialStyle}>
+                <VkLogo/>
+            </div>
+        </OauthPopup>
     </Form>)
 };
 

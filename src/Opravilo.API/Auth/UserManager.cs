@@ -51,14 +51,20 @@ namespace Opravilo.API.Auth
             return Authenticate(user.DisplayName, user.Id);
         }
 
-        public AuthenticationResult AuthenticateOrCreate(string vkId, string givenName, string surname)
+        public bool UserExists(string vkId)
+        {
+            return _userService.FindUser(vkId) != null;
+        }
+
+        public AuthenticationResult AuthenticateVkontakte(string vkId)
         {
             var user = _userService.FindUser(vkId);
-            if (user == null)
-            {
-                user = _userService.CreateVkUser(givenName, surname, vkId);
-            }
+            return Authenticate(user.DisplayName, user.Id);
+        }
 
+        public AuthenticationResult CreateAndAuthenticate(string vkId, string givenName, string surname)
+        {
+            var user = _userService.CreateVkUser(givenName, surname, vkId);
             return Authenticate(user.DisplayName, user.Id);
         }
 
