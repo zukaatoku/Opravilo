@@ -50,13 +50,20 @@ const LoginForm: FC = () => {
       console.log("modal closed");  
     };
     
+    // todo: move to new component
     const onCode = (code: string, params: URLSearchParams) => {
-        // console.log(code);
-        // console.log(params);
-        console.log(AuthManager.getDisplayName());
-        history.push({
-            pathname: "/home"
-        });
+        const client = new Client();
+        client
+            .loginVK(code)
+            .then((res) => {
+                if (res.isSuccess) {
+                    AuthManager.setTokens(res.token, res.refreshToken);
+                    console.log(AuthManager.getDisplayName());
+                    history.push({
+                        pathname: "/home"
+                    });
+                }
+            });
     }
     
     return (<Form onFinish={onFinish}>
