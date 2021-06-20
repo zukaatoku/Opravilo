@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Opravilo.API.Auth;
 using Opravilo.API.Auth.External;
@@ -13,7 +14,7 @@ namespace Opravilo.API.Installers
             var tokenParametersCreator = new TokenValidationParametersCreator();
 
             services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
                     opt.RequireHttpsMetadata = false;

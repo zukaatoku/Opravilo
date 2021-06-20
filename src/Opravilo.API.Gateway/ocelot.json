@@ -11,7 +11,7 @@
       ],
       "UpstreamPathTemplate": "/api/account/register",
       "UpstreamHttpMethod": ["Post"],
-      "SwaggerKey": "account"
+      "SwaggerKey": "main"
     },
     {
       "DownstreamPathTemplate": "/api/account/login",
@@ -24,7 +24,7 @@
       ],
       "UpstreamPathTemplate": "/api/account/login",
       "UpstreamHttpMethod": ["Get"],
-      "SwaggerKey": "account"
+      "SwaggerKey": "main"
     },
     {
       "DownstreamPathTemplate": "/api/account/loginVK",
@@ -37,7 +37,7 @@
       ],
       "UpstreamPathTemplate": "/api/account/loginVK",
       "UpstreamHttpMethod": ["Get"],
-      "SwaggerKey": "account"
+      "SwaggerKey": "main"
     },
     {
       "DownstreamPathTemplate": "/api/account/login",
@@ -50,15 +50,28 @@
       ],
       "UpstreamPathTemplate": "/api/account/login",
       "UpstreamHttpMethod": ["Post"],
-      "SwaggerKey": "account"
+      "SwaggerKey": "main"
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/displayName",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/displayName",
+      "UpstreamHttpMethod": ["Get"],
+      "SwaggerKey": "main"
     }
   ],
   "SwaggerEndpoints": [
     {
-      "Key": "account",
+      "Key": "main",
       "Config": [
         {
-          "Name": "Account API",
+          "Name": "Main API",
           "Version": "v1",
           "Url": "https://localhost:5001/swagger/v1/swagger.json"
         }
