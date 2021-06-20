@@ -1,8 +1,4 @@
-using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNet.Security.OAuth.Vkontakte;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;

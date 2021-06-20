@@ -8,27 +8,16 @@ namespace Opravilo.API.Installers
 {
     public static class AuthInstaller
     {
-        public static void InstallAuthentication(this IServiceCollection services, JwtAuthOptions authOptions, VkAuthOptions vkAuthOptions)
+        public static void InstallAuthentication(this IServiceCollection services, JwtAuthOptions authOptions)
         {
             var tokenParametersCreator = new TokenValidationParametersCreator();
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
                     opt.RequireHttpsMetadata = false;
                     opt.TokenValidationParameters = tokenParametersCreator.Create(authOptions, true);
-                })
-                .AddVkontakte(vkOptions =>
-                {
-                    vkOptions.ClientId = vkAuthOptions.ClientId;
-                    vkOptions.ClientSecret = vkAuthOptions.Secret;
-                    
-                    // vkOptions.CallbackPath = "/api/account/vkLogin";
-                    vkOptions.Fields.Add("uid");
-                    vkOptions.Fields.Add("first_name");
-                    vkOptions.Fields.Add("last_name");
                 });
 
             services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);

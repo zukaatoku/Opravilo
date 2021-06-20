@@ -32,7 +32,7 @@ namespace Opravilo.API
             services.AddSingleton(vkAuthOptions);
 
             services.AddHttpClient();
-            services.InstallAuthentication(authOptions, vkAuthOptions);
+            services.InstallAuthentication(authOptions);
             services.InstallServices();
             services.InstallApplication();
             services.InstallDatabase(Configuration);
