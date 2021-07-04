@@ -35,6 +35,10 @@ const AuthManager = () => {
         return window.localStorage.getItem("jwt");
     };
     
+    const getRefreshToken = function() : string {
+        return window.localStorage.getItem("refresh");
+    }
+    
     const getDisplayName = function() : string {
         return window.localStorage.getItem("displayName");
     };
@@ -43,6 +47,7 @@ const AuthManager = () => {
         setTokens,
         removeTokens,
         getJwtToken,
+        getRefreshToken,
         getDisplayName,
         authenticated
     }

@@ -40,9 +40,7 @@ export class Client extends BaseClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -97,9 +95,7 @@ export class Client extends BaseClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -154,9 +150,7 @@ export class Client extends BaseClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -168,6 +162,62 @@ export class Client extends BaseClient {
     }
 
     protected processRegister(response: AxiosResponse): Promise<AuthenticationResult> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = AuthenticationResult.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<AuthenticationResult>(<any>null);
+    }
+
+    /**
+     * @param token (optional)
+     * @param refreshToken (optional)
+     * @return Success
+     */
+    refresh(token: string | null | undefined, refreshToken: string | null | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResult> {
+        let url_ = this.baseUrl + "/api/account/refresh?";
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (refreshToken !== undefined && refreshToken !== null)
+            url_ += "refreshToken=" + encodeURIComponent("" + refreshToken) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processRefresh(_response);
+        });
+    }
+
+    protected processRefresh(response: AxiosResponse): Promise<AuthenticationResult> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -205,10 +255,7 @@ export class Client extends BaseClient {
             },
             cancelToken
         };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
