@@ -2,6 +2,7 @@ import * as React from "react";
 import { FC } from "react";
 import {Card, Col, Row} from "antd";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import { Link } from "react-router-dom";
 
 const layout = {
     lg: {
@@ -23,7 +24,7 @@ const layout = {
 const RegistrationPage: FC = () => (
     <Row>
         <Col {...layout}>
-            <Card title="Sign up" extra={<a href="/">Back</a>}>
+            <Card title="Sign up" extra={<Link to="/">Back</Link>}>
                 <RegistrationForm />
             </Card>
         </Col>

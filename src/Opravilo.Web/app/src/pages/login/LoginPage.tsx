@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Col, Row } from "antd";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import {Card} from "antd";
+import { Link } from "react-router-dom";
 
 const layout = {
     lg: {
@@ -24,7 +25,7 @@ const layout = {
 const LoginPage: FC = () => (
     <Row>
         <Col {...layout}>
-            <Card title="Sign in" extra={<a href="/registration">New user?</a>}>
+            <Card title="Sign in" extra={<Link to="/registration">New user?</Link>}>
                 <LoginForm />
             </Card>
         </Col>
