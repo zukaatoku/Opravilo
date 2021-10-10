@@ -54,13 +54,12 @@ const LoginForm: FC = () => {
     
     // todo: move to new component
     const onCode = (code: string, params: URLSearchParams) => {
-        const client = new Client();
+        const client = getClient();
         client
             .loginVK(code)
             .then((res) => {
                 if (res.isSuccess) {
-                    AuthManager.setTokens(res.token, res.refreshToken);
-                    console.log(AuthManager.getDisplayName());
+                    AuthManager.authenticate();
                     history.push({
                         pathname: "/home"
                     });

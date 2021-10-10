@@ -1,9 +1,10 @@
 import {FC, useState} from "react";
 import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
-import {Client, RegistrationRequest} from "../../api/client";
+import {RegistrationRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
 import {useHistory} from "react-router-dom";
+import {getClient} from "../../api/BaseClient";
 
 const Item = Form.Item;
 
@@ -22,7 +23,7 @@ const RegistrationForm: FC = () => {
     
     const onFinish = (values: FormProperties) => {
       setSpinning(true);
-      const client = new Client();
+      const client = getClient();
       const request: RegistrationRequest = new RegistrationRequest({
           login: values.username,
           password: values.password,
@@ -37,7 +38,7 @@ const RegistrationForm: FC = () => {
            }
            else {
                setShowError(false);
-               AuthManager.setTokens(res.token, res.refreshToken);
+               AuthManager.authenticate();
                history.push("/home");
            }
            setSpinning(false);

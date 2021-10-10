@@ -13,15 +13,14 @@ import {getClient} from "../../api/BaseClient";
 const { SubMenu } = Menu;
 
 const UserLayout: FunctionComponent = (props) => {
-    const userName = AuthManager.getDisplayName();
+    const userName = "AuthManager.getDisplayName()";
     const history = useHistory();
     
     const onLogout = () => {
-        // AuthManager.removeTokens();
         const client = getClient();
-        // client.logout
         client.logout()
             .then(() => {
+                AuthManager.deauthenticate();
                 history.push("/");  
             })
     };
