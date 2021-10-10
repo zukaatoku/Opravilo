@@ -131,12 +131,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public void CleanRefreshTokens(long userId)
         {
-            var user = _context.Users
-                .Include(u => u.RefreshTokens)
-                .FirstOrDefault(u => u.Id == userId);
-            
-            user.RefreshTokens.Clear();
-
+            _context.RemoveRange(_context.RefreshTokens.Where(r => r.UserId == userId));
             _context.SaveChanges();
         }
 

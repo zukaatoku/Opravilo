@@ -41,7 +41,6 @@ namespace ApplicationTests.Services
             _service = new UserService(_repository.Object);
 
             _service.CleanRefreshTokens(0);
-            
             _repository.Verify(r => r.CleanRefreshTokens(It.IsAny<long>()), Times.Exactly(1));
         }
         

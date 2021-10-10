@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Opravilo.API.Installers;
+using Opravilo.API.Extensions;
 using Opravilo.API.Middlewares;
 using Opravilo.API.Options;
 
@@ -22,8 +24,6 @@ namespace Opravilo.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.InstallSwagger();
 
             var authOptions = Configuration.GetSection(JwtAuthOptions.OptionName).Get<JwtAuthOptions>();
             services.AddSingleton(authOptions);
@@ -31,11 +31,12 @@ namespace Opravilo.API
             var vkAuthOptions = Configuration.GetSection(VkAuthOptions.OptionName).Get<VkAuthOptions>();
             services.AddSingleton(vkAuthOptions);
 
-            services.AddHttpClient();
-            services.InstallAuthentication(authOptions);
-            services.InstallServices();
-            services.InstallApplication();
-            services.InstallDatabase(Configuration);
+            services
+                .AddHttpClient()
+                .AddApplicationServices()
+                .AddAuthenticationServices(authOptions)
+                .AddDatabase(Configuration)
+                .AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,7 @@ namespace Opravilo.API
             }
 
             app.UseMiddleware<ProfilingMiddleware>();
+            app.UseMiddleware<ReplaceTokenMiddleware>();
 
             app.UseHttpsRedirection();
 
@@ -56,6 +58,13 @@ namespace Opravilo.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
