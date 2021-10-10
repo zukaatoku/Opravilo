@@ -6,6 +6,7 @@ import {Client, LoginRequest} from "../../api/client";
 import AuthManager from "../../auth/AuthManager";
 import {useHistory} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
+import {getClient} from "../../api/BaseClient";
 
 const Item = Form.Item;
 
@@ -24,7 +25,7 @@ const LoginForm: FC = () => {
     const [error, setError] = useState("");
     
     const onFinish = (values: FormProperties) => {
-        const client = new Client();
+        const client = getClient();
         const request: LoginRequest = new LoginRequest({
             login: values.username,
             password: values.password
@@ -38,7 +39,8 @@ const LoginForm: FC = () => {
                 }
                 else {
                     setShowError(false);
-                    AuthManager.setTokens(res.token, res.refreshToken);
+                    AuthManager.authenticate();
+                    // AuthManager.setTokens(res.token, res.refreshToken);
                     history.push("/home");
                 }
             });

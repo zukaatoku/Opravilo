@@ -8,8 +8,16 @@ interface JwtPayload {
 const AuthManager = () => {
     
     const authenticated = function() : boolean {
-      return window.localStorage.getItem("jwt") !== null;  
+      return window.localStorage.getItem("authenticated") === "true";  
     };
+    
+    const authenticate = function() : void {
+        window.localStorage.setItem("authenticated", "true");
+    }
+    
+    const deauthenticate = function() : void {
+        window.localStorage.setItem("authenticated", undefined);
+    }
     
     const setTokens = function (jwt: string, refresh: string) : boolean {
         window.localStorage.setItem("jwt", jwt);
@@ -45,6 +53,8 @@ const AuthManager = () => {
     
     return {
         setTokens,
+        authenticate,
+        deauthenticate,
         removeTokens,
         getJwtToken,
         getRefreshToken,

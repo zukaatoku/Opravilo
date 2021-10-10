@@ -83,9 +83,19 @@ namespace Opravilo.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("refresh")]
-        public AuthenticationResult RefreshToken(string token, string refreshToken)
+        public AuthenticationResult RefreshToken()
         {
-            return _authManager.RefreshToken(token, refreshToken);
+            var jwt = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
+            var refresh = HttpContext.Request.Headers["Refresh"];
+            
+            var result = _authManager.RefreshToken(jwt, refresh);
+
+            if (result.IsSuccess)
+            {
+                AppendCookie(result);
+            }
+            
+            return result;
         }
 
         [HttpPost("logout")]
@@ -98,13 +108,14 @@ namespace Opravilo.API.Controllers
 
         private void AppendCookie(AuthenticationResult result)
         {
+            // todo: decide cookie lifetime - mb options ?
             HttpContext.Response.Cookies.Append("X-AUTH-TOKEN", result.Token, new CookieOptions()
             {
-                MaxAge = TimeSpan.FromMinutes(_authOptions.Lifetime)
+                MaxAge = TimeSpan.FromMinutes(_authOptions.Lifetime + 1440)
             });
             HttpContext.Response.Cookies.Append("X-REFRESH-TOKEN", result.RefreshToken, new CookieOptions()
             {
-                MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime)
+                MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime + 1440)
             });
         }
     }

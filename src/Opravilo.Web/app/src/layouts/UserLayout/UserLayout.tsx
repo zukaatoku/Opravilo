@@ -8,6 +8,7 @@ import CustomFooter from "../../components/CustomFooter/CustomFooter";
 import { Menu } from 'antd';
 import {UserOutlined} from "@ant-design/icons";
 import {useHistory} from "react-router-dom";
+import {getClient} from "../../api/BaseClient";
 
 const { SubMenu } = Menu;
 
@@ -16,8 +17,13 @@ const UserLayout: FunctionComponent = (props) => {
     const history = useHistory();
     
     const onLogout = () => {
-        AuthManager.removeTokens();
-        history.push("/");
+        // AuthManager.removeTokens();
+        const client = getClient();
+        // client.logout
+        client.logout()
+            .then(() => {
+                history.push("/");  
+            })
     };
     
     // todo: avatar

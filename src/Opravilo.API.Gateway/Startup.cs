@@ -36,9 +36,11 @@ namespace Opravilo.API.Gateway
             }
 
             app.UseCors(c => c
+                .SetIsOriginAllowed(_ => true)
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin());
+                // .AllowAnyOrigin()
+                .AllowCredentials());
             
             app.UseRouting();
             app.UseHttpsRedirection();
