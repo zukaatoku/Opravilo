@@ -1,4 +1,4 @@
-import "./style.scss";
+import "./vk-logo.scss";
 import React from "react";
 
 export const VkLogo = (): JSX.Element => (

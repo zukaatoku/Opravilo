@@ -1,6 +1,6 @@
 import {Alert, Button, Divider, Form, Input} from "antd";
 import React, {useState} from "react";
-import {VkLogo} from "../VkLogo";
+import {VkLogo} from "../vk-logo";
 import {LoginRequest} from "../../api/client";
 import {useHistory} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";

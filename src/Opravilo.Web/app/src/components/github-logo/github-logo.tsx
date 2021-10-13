@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.scss";
+import "./github-logo.scss";
 import {GithubLogoProps} from "./types";
 
 export const GithubLogo = (props: GithubLogoProps): JSX.Element => (

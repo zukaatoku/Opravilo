@@ -5,7 +5,7 @@ import { Menu } from 'antd';
 import {UserOutlined} from "@ant-design/icons";
 import {useHistory} from "react-router-dom";
 import {getClient} from "../../api/BaseClient";
-import {CustomFooter} from "../../components/CustomFooter";
+import {CustomFooter} from "../../components/custom-footer";
 
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;

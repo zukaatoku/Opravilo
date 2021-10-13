@@ -1,14 +1,14 @@
-import "./style.scss";
+import "./app.scss";
 import React from "react";
-import {AnonymousLayout}  from "../layouts/AnonymousLayout";
+import {AnonymousLayout}  from "../layouts/anonymous-layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import {LoginPage} from "../pages/login";
 import {RegistrationPage} from "../pages/registration";
-import {UserLayout} from "../layouts/UserLayout";
+import {UserLayout} from "../layouts/user-layout";
 import {HomePage} from "../pages/home";
-import {PrivateRoute} from "../components/PrivateRoute";
+import {PrivateRoute} from "../components/private-route";
 import {VkLoginCallback} from "../pages/login";
-import {AnonymousRoute} from "../components/AnonymousRoute";
+import {AnonymousRoute} from "../components/anonymous-route";
 
 export const App = (): JSX.Element => {
     return <Router>

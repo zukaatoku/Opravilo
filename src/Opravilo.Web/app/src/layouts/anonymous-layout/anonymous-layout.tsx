@@ -1,8 +1,8 @@
-import "./style.scss";
+import "./anonymous-layout.scss";
 import {Layout} from "antd";
 import React from "react";
 import Logo from "../../assets/logo.svg";
-import {CustomFooter} from "../../components/CustomFooter";
+import {CustomFooter} from "../../components/custom-footer";
 
 const { Header, Content } = Layout;
 
