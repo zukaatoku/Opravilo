@@ -1,12 +1,12 @@
 import "./style.scss";
-import {FunctionComponent} from "react";
 import {Layout} from "antd";
-import * as React from "react";
-const { Header, Content } = Layout;
+import React from "react";
 import Logo from "../../assets/logo.svg";
-import CustomFooter from "../../components/CustomFooter/CustomFooter";
+import {CustomFooter} from "../../components/CustomFooter";
 
-const AnonymousLayout: FunctionComponent = (props) => (
+const { Header, Content } = Layout;
+
+export const AnonymousLayout = (props: any): JSX.Element => (
     <Layout style={{height: "100vh"}}>
         <Header>
             <a href="/home">
@@ -20,5 +20,3 @@ const AnonymousLayout: FunctionComponent = (props) => (
         <CustomFooter />
     </Layout>
 );
-
-export default AnonymousLayout;

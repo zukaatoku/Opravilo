@@ -1,14 +1,11 @@
-import {FC} from "react";
-import GithubLogo from "../GithubLogo/GithubLogo";
-import * as React from "react";
+import React from "react";
 import {Layout} from "antd";
+import {GithubLogo} from "../GithubLogo";
 const { Footer } = Layout;
 
-const CustomFooter: FC = () => (
+export const CustomFooter = (): JSX.Element => (
     <Footer>
         <GithubLogo prompt="Project repository" url="https://github.com/ejenin/Opravilo"
                     cssClass="hoverableTransition"/>
     </Footer>
 );
-
-export default CustomFooter;

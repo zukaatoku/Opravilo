@@ -1,18 +1,16 @@
-import {FunctionComponent} from "react";
 import {Layout} from "antd";
 import Logo from "../../assets/logo.svg";
-const { Header, Content } = Layout;
-import * as React from "react";
-import AuthManager from "../../auth/AuthManager";
-import CustomFooter from "../../components/CustomFooter/CustomFooter";
+import React from "react";
 import { Menu } from 'antd';
 import {UserOutlined} from "@ant-design/icons";
 import {useHistory} from "react-router-dom";
 import {getClient} from "../../api/BaseClient";
+import {CustomFooter} from "../../components/CustomFooter";
 
+const { Header, Content } = Layout;
 const { SubMenu } = Menu;
 
-const UserLayout: FunctionComponent = (props) => {
+export const UserLayout = (props: any): JSX.Element => {
     const userName = "AuthManager.getDisplayName()";
     const history = useHistory();
     
@@ -44,5 +42,3 @@ const UserLayout: FunctionComponent = (props) => {
         <CustomFooter />
     </Layout>)
 }
-
-export default UserLayout;

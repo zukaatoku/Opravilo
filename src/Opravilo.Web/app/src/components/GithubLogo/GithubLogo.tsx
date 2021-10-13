@@ -1,14 +1,8 @@
+import React from "react";
 import "./style.scss";
-import * as React from "react";
-import {FC} from "react";
+import {GithubLogoProps} from "./types";
 
-export interface GithubLogoProps {
-    prompt: string,
-    url: string,
-    cssClass: string,
-}
-
-const GithubLogo: FC<GithubLogoProps> = (props: GithubLogoProps) => (
+export const GithubLogo = (props: GithubLogoProps): JSX.Element => (
     <a href={props.url} target="_blank" title={props.prompt} className={props.cssClass}>
         <svg height="30" width="30" viewBox="4 3.9756237999999975 36 36.14625720000001" xmlns="http://www.w3.org/2000/svg" className="githubIcon">
             <g>
@@ -17,5 +11,3 @@ const GithubLogo: FC<GithubLogoProps> = (props: GithubLogoProps) => (
         </svg>
     </a>
 );
-
-export default GithubLogo;

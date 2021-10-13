@@ -1,8 +1,5 @@
-import * as React from "react";
-import {FC} from "react";
+import React from "react";
 
-const VkLoginCallback: FC = () => {
+export const VkLoginCallback = (): JSX.Element => {
     return <h1>Authorizing...</h1>
 };
-
-export default VkLoginCallback;

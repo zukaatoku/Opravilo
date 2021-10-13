@@ -1,11 +1,9 @@
-import * as React from "react";
-import {FC, useState} from "react";
+import React, {useState} from "react";
 import {Empty} from "antd";
-import {Client} from "../../api/client";
 import {getClient} from "../../api/BaseClient";
 import {Button} from "antd";
 
-const HomePage: FC = () => {
+export const HomePage = (): JSX.Element => {
     const [name, setName] = useState("");
     
     const onClick = () => {
@@ -31,5 +29,3 @@ const HomePage: FC = () => {
         <Empty />
     </div>)
 };
-
-export default HomePage;

@@ -1,8 +1,7 @@
-import * as React from "react";
-import { FC } from "react";
+import React from "react";
 import {Card, Col, Row} from "antd";
-import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
 import { Link } from "react-router-dom";
+import {RegistrationForm} from "../../components/RegistrationForm";
 
 const layout = {
     lg: {
@@ -21,7 +20,7 @@ const layout = {
     }
 };
 
-const RegistrationPage: FC = () => (
+export const RegistrationPage = (): JSX.Element => (
     <Row>
         <Col {...layout}>
             <Card title="Sign up" extra={<Link to="/">Back</Link>}>
@@ -30,5 +29,3 @@ const RegistrationPage: FC = () => (
         </Col>
     </Row>
 );
-
-export default RegistrationPage;

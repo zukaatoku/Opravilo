@@ -1,13 +1,9 @@
-import * as React from "react";
-import {Redirect, Route, RouteProps} from "react-router-dom";
-import {FC} from "react";
+import React from "react";
+import {Redirect, Route} from "react-router-dom";
 import AuthManager from "../../auth/AuthManager";
+import {AnonymousRouteProps} from "./types";
 
-export interface AnonymousRouteProps extends RouteProps{
-    redirectPath: string
-}
-
-export const AnonymousRoute: FC<AnonymousRouteProps> = (props: AnonymousRouteProps) => {
+export const AnonymousRoute = (props: AnonymousRouteProps): JSX.Element => {
   const authenticated = AuthManager.authenticated(); 
   
   if (authenticated) {

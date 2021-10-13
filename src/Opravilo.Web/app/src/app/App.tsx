@@ -1,18 +1,17 @@
 import "./style.scss";
-import * as React from "react";
-import {FC} from "react";
-import AnonymousLayout  from "../layouts/AnonymousLayout/AnonymousLayout";
+import React from "react";
+import {AnonymousLayout}  from "../layouts/AnonymousLayout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import LoginPage from "../pages/login/LoginPage";
-import RegistrationPage from "../pages/registration/RegistrationPage";
-import UserLayout from "../layouts/UserLayout/UserLayout";
-import HomePage from "../pages/home/HomePage";
-import {PrivateRoute} from "../components/PrivateRoute/PrivateRoute";
-import VkLoginCallback from "../pages/login/VkLoginCallback";
-import {AnonymousRoute} from "../components/AnonymousRoute/AnonymousRoute";
+import {LoginPage} from "../pages/login";
+import {RegistrationPage} from "../pages/registration";
+import {UserLayout} from "../layouts/UserLayout";
+import {HomePage} from "../pages/home";
+import {PrivateRoute} from "../components/PrivateRoute";
+import {VkLoginCallback} from "../pages/login";
+import {AnonymousRoute} from "../components/AnonymousRoute";
 
-export const App: FC = () => (
-    <Router>
+export const App = (): JSX.Element => {
+    return <Router>
         <Switch>
             <PrivateRoute path={["/home"]}>
                 <UserLayout>
@@ -24,17 +23,17 @@ export const App: FC = () => (
             <AnonymousRoute path={["/", "/registration"]} redirectPath="/home">
                 <AnonymousLayout>
                     <Switch>
-                        <Route exact path="/" component={LoginPage} />
-                        <Route exact path="/registration" component={RegistrationPage} />
-                        <Route exact path="/vk-login-callback" component={VkLoginCallback} />
+                        <Route exact path="/" component={LoginPage}/>
+                        <Route exact path="/registration" component={RegistrationPage}/>
+                        <Route exact path="/vk-login-callback" component={VkLoginCallback}/>
                     </Switch>
                 </AnonymousLayout>
             </AnonymousRoute>
             <Route path={["/vk-login-callback"]}>
                 <Switch>
-                    <Route exact path="/vk-login-callback:code" component={VkLoginCallback} />
+                    <Route exact path="/vk-login-callback:code" component={VkLoginCallback}/>
                 </Switch>
             </Route>
         </Switch>
     </Router>
-);
+};

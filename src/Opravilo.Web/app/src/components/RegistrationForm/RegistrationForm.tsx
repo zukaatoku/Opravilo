@@ -1,8 +1,7 @@
-import {FC, useState} from "react";
+import {useState} from "react";
 import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
 import {RegistrationRequest} from "../../api/client";
-import AuthManager from "../../auth/AuthManager";
 import {useHistory} from "react-router-dom";
 import {getClient} from "../../api/BaseClient";
 
@@ -14,7 +13,7 @@ interface FormProperties {
     password: string
 }
 
-const RegistrationForm: FC = () => {
+export const RegistrationForm = (): JSX.Element => {
     const history = useHistory();
     const [form] = Form.useForm();
     const [showError, setShowError] = useState(false);
@@ -80,5 +79,3 @@ const RegistrationForm: FC = () => {
         }
     </Form>)
 };
-
-export default RegistrationForm;

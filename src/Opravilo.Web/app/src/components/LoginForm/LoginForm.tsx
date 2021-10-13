@@ -1,12 +1,11 @@
 import {Alert, Button, Divider, Form, Input} from "antd";
-import * as React from "react";
-import {FC, useState} from "react";
-import VkLogo from "../VkLogo/VkLogo";
-import {Client, LoginRequest} from "../../api/client";
-import AuthManager from "../../auth/AuthManager";
+import React, {useState} from "react";
+import {VkLogo} from "../VkLogo";
+import {LoginRequest} from "../../api/client";
 import {useHistory} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
 import {getClient} from "../../api/BaseClient";
+import {FormProperties} from "./types";
 
 const Item = Form.Item;
 
@@ -14,12 +13,7 @@ const socialStyle = {
     textAlign: "center"
 } as React.CSSProperties;
 
-interface FormProperties {
-    username: string,
-    password: string
-}
-
-const LoginForm: FC = () => {
+export const LoginForm = (): JSX.Element => {
     const history = useHistory();
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
@@ -89,5 +83,3 @@ const LoginForm: FC = () => {
         </OauthPopup>
     </Form>)
 };
-
-export default LoginForm;

@@ -1,0 +1,1 @@
+export {VkLogo} from './VkLogo'
