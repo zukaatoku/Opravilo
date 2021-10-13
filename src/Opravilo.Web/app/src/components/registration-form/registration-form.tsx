@@ -4,14 +4,9 @@ import * as React from "react";
 import {RegistrationRequest} from "../../api/client";
 import {useHistory} from "react-router-dom";
 import {getClient} from "../../api/BaseClient";
+import {IFormProperties} from "./types";
 
 const Item = Form.Item;
-
-interface FormProperties {
-    username: string,
-    displayName: string,
-    password: string
-}
 
 export const RegistrationForm = (): JSX.Element => {
     const history = useHistory();
@@ -20,7 +15,7 @@ export const RegistrationForm = (): JSX.Element => {
     const [error, setError] = useState("");
     const [spinning, setSpinning] = useState(false);
     
-    const onFinish = (values: FormProperties) => {
+    const onFinish = (values: IFormProperties) => {
       setSpinning(true);
       const client = getClient();
       const request: RegistrationRequest = new RegistrationRequest({

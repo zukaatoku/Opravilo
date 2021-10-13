@@ -6,12 +6,9 @@ import {useHistory} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
 import {getClient} from "../../api/BaseClient";
 import {FormProperties} from "./types";
+import "./login-form.scss"
 
 const Item = Form.Item;
-
-const socialStyle = {
-    textAlign: "center"
-} as React.CSSProperties;
 
 export const LoginForm = (): JSX.Element => {
     const history = useHistory();
@@ -58,7 +55,7 @@ export const LoginForm = (): JSX.Element => {
             });
     }
     
-    return (<Form onFinish={onFinish}>
+    return (<Form onFinish={onFinish} className="login-form">
         <Item name="username" rules={[{required: true, message: "Please input your username!"}]}>
             <Input placeholder="Username"/>
         </Item>
@@ -77,7 +74,7 @@ export const LoginForm = (): JSX.Element => {
         }
         <Divider>OR</Divider>
         <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width={780} height={500}>
-            <div style={socialStyle}>
+            <div className="social-icons">
                 <VkLogo/>
             </div>
         </OauthPopup>
