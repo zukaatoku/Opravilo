@@ -1,6 +1,7 @@
-.anonymous-layout {
+.user-layout {
   height: 100vh;
-  
+
+  // todo: копипаста с anonymous-layout.scss
   .header-text {
     color: white;
     font-family: Bahnschrift, serif;
@@ -14,6 +15,10 @@
     margin-top: -2px;
   }
   
+  .header-menu {
+    float: right;
+  }
+
   .content-body {
     padding: 24px;
     margin: 0;

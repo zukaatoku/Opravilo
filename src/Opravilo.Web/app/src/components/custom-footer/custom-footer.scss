@@ -1,0 +1,10 @@
+.custom-footer {
+  .transparent-icon {
+    opacity: 0.3;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

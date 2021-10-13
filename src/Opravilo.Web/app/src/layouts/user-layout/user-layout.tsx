@@ -6,6 +6,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {useHistory} from "react-router-dom";
 import {getClient} from "../../api/BaseClient";
 import {CustomFooter} from "../../components/custom-footer";
+import "./user-layout.scss"
 
 const { Header, Content } = Layout;
 const { SubMenu } = Menu;
@@ -24,19 +25,19 @@ export const UserLayout = (props: any): JSX.Element => {
     
     // todo: avatar
     
-    return (<Layout style={{height: "100vh"}}>
+    return (<Layout className="user-layout">
         <Header>
             <a href="/home">
-                <img src={Logo} alt="Logo" className="headerLogo"/>
-                <span className="headerText">OPRAVILO</span>
+                <img src={Logo} alt="Logo" className="header-logo"/>
+                <span className="header-text">OPRAVILO</span>
             </a>
-            <Menu mode="horizontal" theme="dark" style={{float: "right"}}>
+            <Menu mode="horizontal" theme="dark" className="header-menu">
                 <SubMenu title={userName} icon={<UserOutlined/>}>
                     <Menu.Item onClick={onLogout} danger>Logout</Menu.Item>
                 </SubMenu>
             </Menu>
         </Header>
-        <Content style={{padding: 24, margin: 0, minHeight: 280}}>
+        <Content className="content-body">
             {props.children}
         </Content>
         <CustomFooter />

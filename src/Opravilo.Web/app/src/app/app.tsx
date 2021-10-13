@@ -1,7 +1,7 @@
 import "./app.scss";
 import React from "react";
-import {AnonymousLayout}  from "../layouts/anonymous-layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import {AnonymousLayout}  from "../layouts/anonymous-layout";
 import {LoginPage} from "../pages/login";
 import {RegistrationPage} from "../pages/registration";
 import {UserLayout} from "../layouts/user-layout";
