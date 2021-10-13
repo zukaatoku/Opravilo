@@ -101,9 +101,10 @@ namespace Opravilo.API.Controllers
         [HttpPost("logout")]
         public void Logout()
         {
-            // todo: clean refresh tokens
+            // todo: clean refresh tokens from db
             HttpContext.Response.Cookies.Delete("X-AUTH-TOKEN");
             HttpContext.Response.Cookies.Delete("X-REFRESH-TOKEN");
+            HttpContext.Response.Cookies.Delete("X-AUTH-STATE");
         }
 
         private void AppendCookie(AuthenticationResult result)
@@ -111,11 +112,18 @@ namespace Opravilo.API.Controllers
             // todo: decide cookie lifetime - mb options ?
             HttpContext.Response.Cookies.Append("X-AUTH-TOKEN", result.Token, new CookieOptions()
             {
-                MaxAge = TimeSpan.FromMinutes(_authOptions.Lifetime + 1440)
+                MaxAge = TimeSpan.FromMinutes(_authOptions.Lifetime + 1440),
+                HttpOnly = true
             });
             HttpContext.Response.Cookies.Append("X-REFRESH-TOKEN", result.RefreshToken, new CookieOptions()
             {
-                MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime + 1440)
+                MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime + 1440),
+                HttpOnly = true
+            });
+            HttpContext.Response.Cookies.Append("X-AUTH-STATE", "true", new CookieOptions()
+            {
+                MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime + 1440),
+                HttpOnly = false
             });
         }
     }

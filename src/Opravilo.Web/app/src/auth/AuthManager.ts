@@ -1,20 +1,12 @@
+import Cookies from "js-cookie"
+
 const AuthManager = () => {
     
     const authenticated = function() : boolean {
-      return window.localStorage.getItem("authenticated") === "true";  
+        return Cookies.get("X-AUTH-STATE") == "true";
     };
     
-    const authenticate = function() : void {
-        window.localStorage.setItem("authenticated", "true");
-    }
-    
-    const deauthenticate = function() : void {
-        window.localStorage.setItem("authenticated", undefined);
-    }
-    
     return {
-        authenticate,
-        deauthenticate,
         authenticated
     }
 };

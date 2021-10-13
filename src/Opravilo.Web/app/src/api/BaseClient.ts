@@ -39,7 +39,6 @@ export function getClient(): Client {
                 const success = await tryRefreshToken();
 
                 if (!success) {
-                    AuthManager.deauthenticate();
                     window.location.href = "/";
                 }
                 else {

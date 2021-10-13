@@ -36,9 +36,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@types/js-cookie": "^3.0.0",
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.15.4",
     "axios": "^0.21.1",
+    "js-cookie": "^3.0.1",
     "react-oauth-popup": "^1.0.3",
     "react-router-dom": "^5.2.0"
   }

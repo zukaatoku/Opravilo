@@ -5,6 +5,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{61323C6F-A866-4A27-A11C-4AE133CAC994}"
 ProjectSection(SolutionItems) = preProject
 	..\.gitignore = ..\.gitignore
+	..\tools\client_gen.nswag = ..\tools\client_gen.nswag
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{956D2781-4DE3-4752-B197-ECB408D043A5}"

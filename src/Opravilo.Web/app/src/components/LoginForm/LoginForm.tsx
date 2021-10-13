@@ -39,8 +39,6 @@ const LoginForm: FC = () => {
                 }
                 else {
                     setShowError(false);
-                    AuthManager.authenticate();
-                    // AuthManager.setTokens(res.token, res.refreshToken);
                     history.push("/home");
                 }
             });
@@ -59,7 +57,6 @@ const LoginForm: FC = () => {
             .loginVK(code)
             .then((res) => {
                 if (res.isSuccess) {
-                    AuthManager.authenticate();
                     history.push({
                         pathname: "/home"
                     });
@@ -85,7 +82,7 @@ const LoginForm: FC = () => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width="780" height="500">
+        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width={780} height={500}>
             <div style={socialStyle}>
                 <VkLogo/>
             </div>

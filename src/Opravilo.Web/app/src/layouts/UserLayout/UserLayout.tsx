@@ -20,7 +20,6 @@ const UserLayout: FunctionComponent = (props) => {
         const client = getClient();
         client.logout()
             .then(() => {
-                AuthManager.deauthenticate();
                 history.push("/");  
             })
     };

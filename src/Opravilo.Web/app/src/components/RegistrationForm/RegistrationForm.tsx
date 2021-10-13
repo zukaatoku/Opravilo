@@ -38,7 +38,6 @@ const RegistrationForm: FC = () => {
            }
            else {
                setShowError(false);
-               AuthManager.authenticate();
                history.push("/home");
            }
            setSpinning(false);
