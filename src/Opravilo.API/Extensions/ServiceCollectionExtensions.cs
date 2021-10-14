@@ -20,6 +20,7 @@ namespace Opravilo.API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IUserService, UserService>();
             services.AddHostedService<MigratorService>();
             

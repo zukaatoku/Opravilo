@@ -9,12 +9,13 @@ namespace ApplicationTests.Services
 {
     public class UserServiceTest
     {
-        private readonly Mock<IUserRepository> _repository;
-        private UserService _service;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
+        private readonly Mock<IRefreshTokenRepository> _refreshTokenRepositoryMock;
 
         public UserServiceTest()
         {
-            _repository = new Mock<IUserRepository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _refreshTokenRepositoryMock = new Mock<IRefreshTokenRepository>();
         }
 
         [Fact]
@@ -24,24 +25,24 @@ namespace ApplicationTests.Services
             var expectedDateTime = DateTime.Now;
             const string expectedToken = "refresh_token";
             
-            _repository.Setup(r => r.SaveRefreshToken(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<DateTime>()));
+            _refreshTokenRepositoryMock.Setup(r => r.SaveRefreshToken(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<DateTime>()));
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            _service.SaveRefreshToken(expectedUserId, expectedToken, expectedDateTime);
+            service.SaveRefreshToken(expectedUserId, expectedToken, expectedDateTime);
             
-            _repository.Verify(r => r.SaveRefreshToken(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Exactly(1));
+            _refreshTokenRepositoryMock.Verify(r => r.SaveRefreshToken(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Exactly(1));
         }
         
         [Fact]
         public void CleanRefreshTokens_ShouldCall_Repository()
         {
-            _repository.Setup(r => r.CleanRefreshTokens(It.IsAny<long>()));
+            _refreshTokenRepositoryMock.Setup(r => r.CleanRefreshTokens(It.IsAny<long>()));
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            _service.CleanRefreshTokens(0);
-            _repository.Verify(r => r.CleanRefreshTokens(It.IsAny<long>()), Times.Exactly(1));
+            service.CleanRefreshTokens(0);
+            _refreshTokenRepositoryMock.Verify(r => r.CleanRefreshTokens(It.IsAny<long>()), Times.Exactly(1));
         }
         
         [Fact]
@@ -50,16 +51,16 @@ namespace ApplicationTests.Services
             var expectedDateTime = DateTime.Now;
             var expectedToken = "refresh_token";
             
-            _repository.Setup(r => r.FindRefreshToken(It.IsAny<long>()))
+            _refreshTokenRepositoryMock.Setup(r => r.FindRefreshToken(It.IsAny<long>()))
                 .Returns((long userId) => new RefreshTokenDto()
                 {
                     ExpirationDate = expectedDateTime,
                     RefreshToken = expectedToken
                 });
 
-            _service = new UserService(_repository.Object);
-
-            var token = _service.FindToken(0);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
+            
+            var token = service.FindToken(0);
 
             Assert.NotNull(token);
             Assert.Equal(expectedDateTime, token.ExpirationDate);
@@ -69,12 +70,12 @@ namespace ApplicationTests.Services
         [Fact]
         public void FindToken_Should_Return_Null_When_No_Token()
         {
-            _repository.Setup(r => r.FindRefreshToken(It.IsAny<long>()))
+            _refreshTokenRepositoryMock.Setup(r => r.FindRefreshToken(It.IsAny<long>()))
                 .Returns(() => null);
 
-            _service = new UserService(_repository.Object);
-
-            var token = _service.FindToken(0);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
+            
+            var token = service.FindToken(0);
             Assert.Null(token);
         }
 
@@ -86,19 +87,19 @@ namespace ApplicationTests.Services
             const string fakePassword = "123";
             const string expectedDisplayName = "display_name";
             
-            _repository.Setup(r => r.LoginAvailable(It.IsAny<string>()))
+            _userRepositoryMock.Setup(r => r.LoginAvailable(It.IsAny<string>()))
                 .Returns(true);
             
-            _repository.Setup(r => r.AddUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            _userRepositoryMock.Setup(r => r.AddUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string login, string displayName, string password) => new UserDto()
                 {
                     DisplayName = expectedDisplayName,
                     Id = expectedId,
                 });
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            var result = _service.RegisterUser(expectedLogin, expectedDisplayName, fakePassword);
+            var result = service.RegisterUser(expectedLogin, expectedDisplayName, fakePassword);
 
             Assert.True(result.IsSuccess);
             Assert.Null(result.Errors);
@@ -109,12 +110,12 @@ namespace ApplicationTests.Services
         [Fact]
         public void RegisterUser_Should_ReturnError_WhenInvalidCredentials()
         {
-            _repository.Setup(r => r.LoginAvailable(It.IsAny<string>()))
+            _userRepositoryMock.Setup(r => r.LoginAvailable(It.IsAny<string>()))
                 .Returns(false);
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            var registrationResult = _service.RegisterUser("any login", "any_display_name", "any password");
+            var registrationResult = service.RegisterUser("any login", "any_display_name", "any password");
             
             Assert.False(registrationResult.IsSuccess);
             Assert.NotEmpty(registrationResult.Errors);
@@ -127,16 +128,16 @@ namespace ApplicationTests.Services
             const string expectedLogin = "test";
             const string expectedDisplayName = "display_name";
             const long expectedId = 1;
-            _repository.Setup(r => r.FindUser(It.IsAny<string>(), It.IsAny<string>()))
+            _userRepositoryMock.Setup(r => r.FindUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string login, string pwd) => new UserDto()
                 {
                     Id = expectedId,
                     DisplayName = expectedDisplayName,
                 });
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            var user = _service.FindUser(expectedLogin, "test");
+            var user = service.FindUser(expectedLogin, "test");
 
             Assert.NotNull(user);
             Assert.Equal(expectedDisplayName, user.DisplayName);
@@ -147,12 +148,12 @@ namespace ApplicationTests.Services
         [Fact]
         public void FindUser_Should_Return_Null_When_No_User()
         {
-            _repository.Setup(r => r.FindUser(It.IsAny<string>(), It.IsAny<string>()))
+            _userRepositoryMock.Setup(r => r.FindUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(() => null);
 
-            _service = new UserService(_repository.Object);
+            var service = new UserService(_userRepositoryMock.Object, _refreshTokenRepositoryMock.Object);
 
-            var user = _service.FindUser("test", "test2");
+            var user = service.FindUser("test", "test2");
             Assert.Null(user);
         }
     }

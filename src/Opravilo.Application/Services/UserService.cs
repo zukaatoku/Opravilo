@@ -9,10 +9,12 @@ namespace Opravilo.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
         {
             _userRepository = userRepository;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
         public UserModel FindUser(string vkId)
@@ -76,12 +78,12 @@ namespace Opravilo.Application.Services
 
         public void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime)
         {
-            _userRepository.SaveRefreshToken(userId, refreshToken, expirationTime);
+            _refreshTokenRepository.SaveRefreshToken(userId, refreshToken, expirationTime);
         }
 
         public RefreshTokenModel FindToken(long userId)
         {
-            var token = _userRepository.FindRefreshToken(userId);
+            var token = _refreshTokenRepository.FindRefreshToken(userId);
             if (token == null)
             {
                 return null;
@@ -96,7 +98,7 @@ namespace Opravilo.Application.Services
 
         public void CleanRefreshTokens(long userId)
         {
-            _userRepository.CleanRefreshTokens(userId);
+            _refreshTokenRepository.CleanRefreshTokens(userId);
         }
 
         public UserModel CreateVkUser(string givenName, string surname, string vkId)
