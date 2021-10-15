@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Auth;
 using Opravilo.API.Auth.External;
+using Opravilo.API.Models.Auth;
 using Opravilo.API.Models.Requests;
 using Opravilo.API.Models.Responses;
 using Opravilo.API.Options;
@@ -31,7 +32,7 @@ namespace Opravilo.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("loginVK")]
-        public async Task<AuthenticationResult> LoginVk(string code)
+        public async Task<AuthenticationResponse> LoginVk(string code)
         {
             var externalInfo = await _externalAuth.Validate(code);
             var userExists = _authManager.UserExists(externalInfo.user_id);
@@ -40,19 +41,19 @@ namespace Opravilo.API.Controllers
             {
                 var authResult = _authManager.AuthenticateVkontakte(externalInfo.user_id);
                 AppendCookie(authResult);
-                return authResult;
+                return ToResponse(authResult);
             }
             
             var credentials = await _externalAuth.GetUserInfo(externalInfo.user_id, externalInfo.access_token);
             var result = _authManager.CreateAndAuthenticate(credentials.id.ToString(), credentials.first_name, credentials.last_name);
             
             AppendCookie(result);
-            return result;
+            return ToResponse(result);
         }
         
         [AllowAnonymous]
         [HttpPost("login")]
-        public AuthenticationResult Login(
+        public AuthenticationResponse Login(
             [FromBody] LoginRequest request)
         {
             var hashedPassword = _passwordHasher.HashPassword(request.Password);
@@ -63,12 +64,12 @@ namespace Opravilo.API.Controllers
                 AppendCookie(result);
             }
             
-            return result;
+            return ToResponse(result);
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public AuthenticationResult RegisterUser(
+        public AuthenticationResponse RegisterUser(
             [FromBody] RegistrationRequest request)
         {
             var hashedPassword = _passwordHasher.HashPassword(request.Password);
@@ -78,15 +79,15 @@ namespace Opravilo.API.Controllers
                 AppendCookie(result);
             }
             
-            return result;
+            return ToResponse(result);
         }
 
         [AllowAnonymous]
         [HttpPost("refresh")]
-        public AuthenticationResult RefreshToken()
+        public ActionResult<AuthenticationResponse> RefreshToken()
         {
             var jwt = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
-            var refresh = HttpContext.Request.Headers["Refresh"];
+            var refresh = HttpContext.Request.Cookies["X-REFRESH-TOKEN"];
             
             var result = _authManager.RefreshToken(jwt, refresh);
 
@@ -94,8 +95,13 @@ namespace Opravilo.API.Controllers
             {
                 AppendCookie(result);
             }
+            else
+            {
+                Logout();
+                return Unauthorized();
+            }
             
-            return result;
+            return Ok(result);
         }
 
         [HttpPost("logout")]
@@ -105,6 +111,16 @@ namespace Opravilo.API.Controllers
             HttpContext.Response.Cookies.Delete("X-AUTH-TOKEN");
             HttpContext.Response.Cookies.Delete("X-REFRESH-TOKEN");
             HttpContext.Response.Cookies.Delete("X-AUTH-STATE");
+        }
+
+        private AuthenticationResponse ToResponse(AuthenticationResult result)
+        {
+            return new AuthenticationResponse()
+            {
+                Errors = result.Errors,
+                Token = result.Token,
+                IsSuccess = result.IsSuccess
+            };
         }
 
         private void AppendCookie(AuthenticationResult result)
@@ -118,6 +134,7 @@ namespace Opravilo.API.Controllers
             HttpContext.Response.Cookies.Append("X-REFRESH-TOKEN", result.RefreshToken, new CookieOptions()
             {
                 MaxAge = TimeSpan.FromMinutes(_authOptions.RefreshLifetime + 1440),
+                Path = "api/account/refresh",
                 HttpOnly = true
             });
             HttpContext.Response.Cookies.Append("X-AUTH-STATE", "true", new CookieOptions()

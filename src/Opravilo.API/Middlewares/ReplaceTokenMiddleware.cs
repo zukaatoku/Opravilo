@@ -14,14 +14,11 @@ namespace Opravilo.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Cookies.ContainsKey("X-AUTH-TOKEN") &&
-                context.Request.Cookies.ContainsKey("X-REFRESH-TOKEN"))
+            if (context.Request.Cookies.ContainsKey("X-AUTH-TOKEN"))
             {
                 var jwt = context.Request.Cookies["X-AUTH-TOKEN"];
-                var refresh = context.Request.Cookies["X-REFRESH-TOKEN"];
-                
+
                 context.Request.Headers.Append("Authorization", $"Bearer {jwt}");
-                context.Request.Headers.Append("Refresh", refresh);
             }
 
             await _next(context);

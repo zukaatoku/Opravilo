@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Opravilo.API.Models.Responses
+namespace Opravilo.API.Models.Auth
 {
     public class AuthenticationResult
     {

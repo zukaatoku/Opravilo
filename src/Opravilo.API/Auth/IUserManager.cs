@@ -1,4 +1,4 @@
-using Opravilo.API.Models.Responses;
+using Opravilo.API.Models.Auth;
 
 namespace Opravilo.API.Auth
 {

@@ -19,7 +19,6 @@ async function tryRefreshToken(): Promise<boolean> {
     try {
         const res = await client.refresh();
         return res.isSuccess;
-           
     } catch(e) {
         console.log(e);
         return false;
