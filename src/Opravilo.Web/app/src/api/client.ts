@@ -25,7 +25,7 @@ export class Client extends BaseClient {
      * @param code (optional)
      * @return Success
      */
-    loginVK(code: string | null | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResult> {
+    loginVK(code: string | null | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResponse> {
         let url_ = this.baseUrl + "/api/account/loginVK?";
         if (code !== undefined && code !== null)
             url_ += "code=" + encodeURIComponent("" + code) + "&";
@@ -53,7 +53,7 @@ export class Client extends BaseClient {
         });
     }
 
-    protected processLoginVK(response: AxiosResponse): Promise<AuthenticationResult> {
+    protected processLoginVK(response: AxiosResponse): Promise<AuthenticationResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -67,20 +67,20 @@ export class Client extends BaseClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = AuthenticationResult.fromJS(resultData200);
+            result200 = AuthenticationResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<AuthenticationResult>(<any>null);
+        return Promise.resolve<AuthenticationResponse>(<any>null);
     }
 
     /**
      * @param body (optional)
      * @return Success
      */
-    login(body: LoginRequest | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResult> {
+    login(body: LoginRequest | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResponse> {
         let url_ = this.baseUrl + "/api/account/login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -110,7 +110,7 @@ export class Client extends BaseClient {
         });
     }
 
-    protected processLogin(response: AxiosResponse): Promise<AuthenticationResult> {
+    protected processLogin(response: AxiosResponse): Promise<AuthenticationResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -124,20 +124,20 @@ export class Client extends BaseClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = AuthenticationResult.fromJS(resultData200);
+            result200 = AuthenticationResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<AuthenticationResult>(<any>null);
+        return Promise.resolve<AuthenticationResponse>(<any>null);
     }
 
     /**
      * @param body (optional)
      * @return Success
      */
-    register(body: RegistrationRequest | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResult> {
+    register(body: RegistrationRequest | undefined , cancelToken?: CancelToken | undefined): Promise<AuthenticationResponse> {
         let url_ = this.baseUrl + "/api/account/register";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -167,7 +167,7 @@ export class Client extends BaseClient {
         });
     }
 
-    protected processRegister(response: AxiosResponse): Promise<AuthenticationResult> {
+    protected processRegister(response: AxiosResponse): Promise<AuthenticationResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -181,19 +181,19 @@ export class Client extends BaseClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = AuthenticationResult.fromJS(resultData200);
+            result200 = AuthenticationResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<AuthenticationResult>(<any>null);
+        return Promise.resolve<AuthenticationResponse>(<any>null);
     }
 
     /**
      * @return Success
      */
-    refresh(  cancelToken?: CancelToken | undefined): Promise<AuthenticationResult> {
+    refresh(  cancelToken?: CancelToken | undefined): Promise<AuthenticationResponse> {
         let url_ = this.baseUrl + "/api/account/refresh";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -219,7 +219,7 @@ export class Client extends BaseClient {
         });
     }
 
-    protected processRefresh(response: AxiosResponse): Promise<AuthenticationResult> {
+    protected processRefresh(response: AxiosResponse): Promise<AuthenticationResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -233,13 +233,13 @@ export class Client extends BaseClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = AuthenticationResult.fromJS(resultData200);
+            result200 = AuthenticationResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<AuthenticationResult>(<any>null);
+        return Promise.resolve<AuthenticationResponse>(<any>null);
     }
 
     /**
@@ -343,13 +343,12 @@ export class Client extends BaseClient {
     }
 }
 
-export class AuthenticationResult implements IAuthenticationResult {
+export class AuthenticationResponse implements IAuthenticationResponse {
     token?: string | undefined;
-    refreshToken?: string | undefined;
     isSuccess?: boolean;
     errors?: string[] | undefined;
 
-    constructor(data?: IAuthenticationResult) {
+    constructor(data?: IAuthenticationResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -361,7 +360,6 @@ export class AuthenticationResult implements IAuthenticationResult {
     init(_data?: any) {
         if (_data) {
             this.token = _data["token"];
-            this.refreshToken = _data["refreshToken"];
             this.isSuccess = _data["isSuccess"];
             if (Array.isArray(_data["errors"])) {
                 this.errors = [] as any;
@@ -371,9 +369,9 @@ export class AuthenticationResult implements IAuthenticationResult {
         }
     }
 
-    static fromJS(data: any): AuthenticationResult {
+    static fromJS(data: any): AuthenticationResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new AuthenticationResult();
+        let result = new AuthenticationResponse();
         result.init(data);
         return result;
     }
@@ -381,7 +379,6 @@ export class AuthenticationResult implements IAuthenticationResult {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["token"] = this.token;
-        data["refreshToken"] = this.refreshToken;
         data["isSuccess"] = this.isSuccess;
         if (Array.isArray(this.errors)) {
             data["errors"] = [];
@@ -392,9 +389,8 @@ export class AuthenticationResult implements IAuthenticationResult {
     }
 }
 
-export interface IAuthenticationResult {
+export interface IAuthenticationResponse {
     token?: string | undefined;
-    refreshToken?: string | undefined;
     isSuccess?: boolean;
     errors?: string[] | undefined;
 }
