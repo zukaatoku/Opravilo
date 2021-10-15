@@ -4,6 +4,7 @@ using ApiUnitTests.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using Opravilo.API.Auth;
+using Opravilo.API.Models.Auth;
 using Opravilo.API.Models.Responses;
 using Opravilo.API.Options;
 using Opravilo.Application.Interfaces.Services;

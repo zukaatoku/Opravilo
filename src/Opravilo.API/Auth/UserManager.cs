@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using Opravilo.API.Models.Responses;
+using Opravilo.API.Models.Auth;
 using Opravilo.API.Options;
 using Opravilo.Application.Interfaces.Services;
 

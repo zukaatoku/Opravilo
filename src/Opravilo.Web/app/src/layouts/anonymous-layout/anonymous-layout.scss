@@ -1,0 +1,22 @@
+.anonymous-layout {
+  height: 100vh;
+  
+  .header-text {
+    color: white;
+    font-family: Bahnschrift, serif;
+    font-size: 25px;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  .header-logo {
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+  
+  .content-body {
+    padding: 24px;
+    margin: 0;
+    min-height: 280px;
+  }
+}
