@@ -2,15 +2,11 @@ import axios, {AxiosRequestConfig} from "axios";
 import AuthManager from "../auth/AuthManager";
 import {Client} from "./client";
 
-export class BaseClient {
-    constructor() {
-        console.log("constructor");
-    }
-    
-    protected transformOptions(options: AxiosRequestConfig) {
-        return Promise.resolve(options);
-    }
-}
+// export class BaseClient {
+//     protected transformOptions(options: AxiosRequestConfig) {
+//         return Promise.resolve(options);
+//     }
+// }
 
 async function tryRefreshToken(): Promise<boolean> {
     console.log("refreshing token...");

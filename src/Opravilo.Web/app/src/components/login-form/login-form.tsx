@@ -5,12 +5,12 @@ import {LoginRequest} from "../../api/client";
 import {useHistory} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
 import {getClient} from "../../api/BaseClient";
-import {FormProperties} from "./types";
+import {FormProperties, ILoginFormProps} from "./types";
 import "./login-form.scss"
 
 const Item = Form.Item;
 
-export const LoginForm = (): JSX.Element => {
+export const LoginForm = (props: ILoginFormProps): JSX.Element => {
     const history = useHistory();
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
