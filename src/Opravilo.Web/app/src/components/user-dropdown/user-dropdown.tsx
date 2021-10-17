@@ -16,8 +16,6 @@ export const UserDropdown = (props: IUserDropdownProps): JSX.Element => {
         }  
     })
     
-    console.log("redraw")
-    
     const logout = async () => {
         props.onLogout();
         history.push("/");

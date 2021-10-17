@@ -8,8 +8,6 @@ export const PrivateRoute = (props: RouteProps): JSX.Element => {
     if (authenticated) {
         return <Route {...props}/>;
     }
-
-    console.log("not authenticated")
     
     return <Redirect to="/"/>
 };
