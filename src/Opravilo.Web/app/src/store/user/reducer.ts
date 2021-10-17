@@ -1,6 +1,6 @@
 import {IUserState} from "./types";
 import {createReducer} from "@reduxjs/toolkit";
-import {fetchUserInfo, onLogout, tryLogin, tryVkLogin} from "./thunks";
+import {fetchUserInfo, onLogout, tryLogin, tryRegister, tryVkLogin} from "./thunks";
 import Cookies from "js-cookie";
 
 const initialState: IUserState = {
@@ -37,6 +37,15 @@ export const userReducer = createReducer(initialState, (builder) => {
             return {...state, errors: [...payload.errors], fetching: false}
         }
         return {...state, errors: [], fetching: false}
+    })
+    builder.addCase(tryRegister.pending, (state) => {
+        return {...state, fetching: true}
+    })
+    builder.addCase(tryRegister.fulfilled, (state, {payload}) => {
+        if (!payload.isSuccess) {
+            return {...state, registrationErrors: [...payload.errors], fetching: false}
+        }
+        return {...state, registrationErrors: [], fetching: false}
     })
     builder.addCase(onLogout.pending, (state) => {
         Cookies.remove("X-AUTH-STATE")

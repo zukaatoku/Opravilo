@@ -2,6 +2,7 @@ import React from "react";
 import {Card, Col, Row} from "antd";
 import { Link } from "react-router-dom";
 import {RegistrationForm} from "../../components/registration-form";
+import { RegistrationFormContainer } from "../../containers/registration-form-container";
 
 const layout = {
     lg: {
@@ -24,7 +25,7 @@ export const RegistrationPage = (): JSX.Element => (
     <Row>
         <Col {...layout}>
             <Card title="Sign up" extra={<Link to="/">Back</Link>}>
-                <RegistrationForm />
+                <RegistrationFormContainer />
             </Card>
         </Col>
     </Row>

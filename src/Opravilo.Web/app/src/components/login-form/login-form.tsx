@@ -32,7 +32,7 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
         props.onVkLogin(code)
     }
     
-    const showError = errors.length > 0
+    const showError = errors?.length > 0
     
     return (<Form onFinish={onFinish} className="login-form">
         <Item name="username" rules={[{required: true, message: "Please input your username!"}]}>

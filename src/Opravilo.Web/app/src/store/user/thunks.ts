@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {getClient} from "../../api/BaseClient";
-import {ITryLoginArgs} from "./types";
-import {LoginRequest} from "../../api/client";
+import {ITryLoginArgs, ITryRegisterArgs} from "./types";
+import {LoginRequest, RegistrationRequest} from "../../api/client";
 
 const client = getClient()
 
@@ -13,6 +13,18 @@ export const tryLogin = createAsyncThunk(
             password: credentials.password
         });
         return await client.login(request)
+    }
+)
+
+export const tryRegister = createAsyncThunk(
+    'tryRegister',
+    async (credentials: ITryRegisterArgs) => {
+        const request: RegistrationRequest = new RegistrationRequest({
+            login: credentials.login,
+            password: credentials.password,
+            displayName: credentials.displayName
+        });
+        return await client.register(request)
     }
 )
 

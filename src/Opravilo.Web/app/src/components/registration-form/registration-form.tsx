@@ -1,42 +1,23 @@
-import {useState} from "react";
 import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
-import {RegistrationRequest} from "../../api/client";
-import {useHistory} from "react-router-dom";
-import {getClient} from "../../api/BaseClient";
-import {IFormProperties} from "./types";
+import {Redirect, useHistory} from "react-router-dom";
+import {IFormProperties, IRegistrationFormProps} from "./types";
 
 const Item = Form.Item;
 
-export const RegistrationForm = (): JSX.Element => {
+export const RegistrationForm = (props: IRegistrationFormProps): JSX.Element => {
     const history = useHistory();
     const [form] = Form.useForm();
-    const [showError, setShowError] = useState(false);
-    const [error, setError] = useState("");
-    const [spinning, setSpinning] = useState(false);
+
+    if (props.loginSuccess) {
+        return <Redirect to="/home"/>
+    }
     
     const onFinish = (values: IFormProperties) => {
-      setSpinning(true);
-      const client = getClient();
-      const request: RegistrationRequest = new RegistrationRequest({
-          login: values.username,
-          password: values.password,
-          displayName: values.displayName
-      });
-      const result = client
-           .register(request)
-           .then((res) => {
-           if (!res.isSuccess) {
-               setShowError(true);
-               setError(res.errors[0]);
-           }
-           else {
-               setShowError(false);
-               history.push("/home");
-           }
-           setSpinning(false);
-      });
+        props.onRegister(values.username, values.password, values.displayName);
     };
+
+    const showError = props.errors?.length > 0
 
     return (<Form form={form} onFinish={onFinish}>
         <Item name="username" rules={[{required: true, message: "Please input your username!"}]}>
@@ -61,7 +42,7 @@ export const RegistrationForm = (): JSX.Element => {
             <Input.Password placeholder="Confirm Password"/>
         </Item>
         <Item>
-            <Spin spinning={spinning}>
+            <Spin spinning={props.fetching}>
                 <Button type="primary" htmlType="submit" block>
                     Register
                 </Button>
@@ -69,7 +50,7 @@ export const RegistrationForm = (): JSX.Element => {
         </Item>
         {
             showError
-                ? <Alert message={error} type="error" />
+                ? <Alert message={props.errors[0]} type="error" />
                 : <></>
         }
     </Form>)
