@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "antd";
 import {Card} from "antd";
 import { Link } from "react-router-dom";
-import { LoginFormContainer } from "../../containers/login-form-container";
+import { LoginFormContainer } from "../../containers";
 
 const layout = {
     lg: {

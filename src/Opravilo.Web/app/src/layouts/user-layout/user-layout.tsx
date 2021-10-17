@@ -1,13 +1,11 @@
 import {Layout} from "antd";
 import Logo from "../../assets/logo.svg";
 import React from "react";
-import { Menu } from 'antd';
 import {CustomFooter} from "../../components/custom-footer";
 import "./user-layout.scss"
-import { UserDropdownContainer } from "../../containers/user-dropdown-container";
+import { UserDropdownContainer } from "../../containers";
 
 const { Header, Content } = Layout;
-const { SubMenu } = Menu;
 
 export const UserLayout = (props: any): JSX.Element => {
     // todo: avatar

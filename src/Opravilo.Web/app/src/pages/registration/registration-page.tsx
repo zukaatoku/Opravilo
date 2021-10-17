@@ -1,8 +1,7 @@
 import React from "react";
 import {Card, Col, Row} from "antd";
 import { Link } from "react-router-dom";
-import {RegistrationForm} from "../../components/registration-form";
-import { RegistrationFormContainer } from "../../containers/registration-form-container";
+import { RegistrationFormContainer } from "../../containers";
 
 const layout = {
     lg: {
