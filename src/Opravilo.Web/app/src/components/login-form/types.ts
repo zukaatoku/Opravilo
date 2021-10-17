@@ -4,5 +4,9 @@ export interface FormProperties {
 }
 
 export interface ILoginFormProps {
-    onLogin: () => void
+    onLogin: (login: string, password: string) => void
+    onVkLogin: (code: string) => void
+    errors?: string[]
+    loginSuccess: boolean
+    fetching: boolean
 }
