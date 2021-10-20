@@ -21,7 +21,9 @@ namespace Opravilo.API.Extensions
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProjectService, ProjectService>();
             services.AddHostedService<MigratorService>();
             
             return services;

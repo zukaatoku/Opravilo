@@ -9,8 +9,14 @@ namespace Opravilo.DataAccess.EntityFramework
             : base(options)
         {
         }
-        
+
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
+        
+        public DbSet<ProjectModel> Projects { get; set; }
+        
+        public DbSet<ProjectPermissionModel> ProjectPermissions { get; set; }
+        
+        public DbSet<ProjectUserModel> ProjectUsers { get; set; }
     }
 }
