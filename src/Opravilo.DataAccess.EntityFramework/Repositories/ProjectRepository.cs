@@ -19,7 +19,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
         {
             var projects = _context
                 .Projects
-                .Where(p => p.UsersPermissions.Any(c => c.UserId == userId))
+                .Where(p => p.CreatorId == userId)
                 .Select(c => new ProjectDto()
                 {
                     Id = c.Id,

@@ -23,6 +23,7 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         [Column("CHANGED_DATE")]
         public DateTime ChangedDate { get; set; }
         
-        public virtual List<ProjectUserModel> UsersPermissions { get; set; } 
+        [Column("CREATOR_ID")]
+        public long CreatorId { get; set; }
     }
 }
