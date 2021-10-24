@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +24,8 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         
         [Column("CREATOR_ID")]
         public long CreatorId { get; set; }
+        
+        [ForeignKey(nameof(CreatorId))]
+        public virtual UserModel Creator { get; set; }
     }
 }

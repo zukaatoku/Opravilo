@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Extensions;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.Project;
+using Opravilo.Application.Models.Requests;
 
 namespace Opravilo.API.Controllers
 {
@@ -28,15 +28,17 @@ namespace Opravilo.API.Controllers
         }
 
         [HttpPost]
-        public ProjectModel CreateProject()
+        public ProjectModel CreateProject(
+            [FromBody] CreateProjectRequest request)
         {
-            throw new Exception();
+            var userId = this.GetUserId();
+            return _projectService.CreateProject(request, userId);
         }
         
         [HttpDelete("{id:long}")]
-        public ProjectModel DeleteProject(long id)
+        public void DeleteProject(long id)
         {
-            throw new Exception();
+            _projectService.RemoveProject(id);
         }
     }
 }
