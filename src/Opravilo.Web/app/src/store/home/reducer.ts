@@ -1,10 +1,13 @@
 import {IHomeState} from "./types";
 import {createReducer} from "@reduxjs/toolkit";
-import {fetchProjects} from "./thunks";
+import {createProject, fetchProjects} from "./thunks";
+import {hideCreateProjectModal, showCreateProjectModal} from "./actions";
 
 const initialState: IHomeState = {
     fetchingProjects: false,
-    projects: []
+    projects: [],
+    createProjectsModalVisible: false,
+    fetchingCreateProject: false
 }
 
 export const homeReducer = createReducer(initialState, (builder) => {
@@ -16,5 +19,20 @@ export const homeReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(fetchProjects.rejected, (state) => {
         return {...state, fetchingProjects: false}
+    })
+    builder.addCase(showCreateProjectModal, (state) => {
+        return {...state, createProjectsModalVisible: true}
+    })
+    builder.addCase(hideCreateProjectModal, (state) => {
+        return {...state, createProjectsModalVisible: false}
+    })
+    builder.addCase(createProject.pending, (state) => {
+        return {...state, fetchingCreateProject: true}
+    })
+    builder.addCase(createProject.fulfilled, (state) => {
+        return {...state, fetchingCreateProject: false, createProjectsModalVisible: false}
+    })
+    builder.addCase(createProject.rejected, (state) => {
+        return {...state, fetchingCreateProject: false}
     })
 })
