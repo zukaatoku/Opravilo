@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 const initialState: IUserState = {
     displayName: null,
     fetching: false,
-    
     errors: []
 }
 

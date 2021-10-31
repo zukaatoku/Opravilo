@@ -1,31 +1,29 @@
-import React, {useState} from "react";
-import {Empty} from "antd";
-import {getClient} from "../../api/BaseClient";
-import {Button} from "antd";
+import React, {useEffect, useState} from "react";
+import {EmptyProjectsList} from "../../components/empty-projects-list";
+import {IHomePageProps} from "./types";
+import {Button, Space, Spin} from "antd";
+import {PlusOutlined, RedoOutlined} from "@ant-design/icons";
+import {ProjectsListContainer} from "../../containers/projects-list-container";
 
-export const HomePage = (): JSX.Element => {
-    const [name, setName] = useState("");
+import "./home-page.scss"
+
+export const HomePage = (props: IHomePageProps): JSX.Element => {
     
-    const onClick = () => {
-        setName("loading...");
-        const client = getClient();
-        try {
-            client.displayName()
-                .then((res) => {
-                    console.log(res);
-                    setName(res);
-                }).catch((err) => {
-                console.log(err);
-            });   
-        }
-        catch (e) {
-            console.log(e);
-        }
-    };
+    const {fetchProjects, fetchingProjects, projectsEmpty} = props;
     
-    return (<div>
-        <Button onClick={onClick}>Refresh</Button>
-        <span>{name}</span>
-        <Empty />
+    useEffect(() => {
+       fetchProjects(); 
+    }, [fetchProjects]);
+    
+    return (<div className="home-page">
+        <Spin spinning={fetchingProjects}>
+            <div className="buttons-panel">
+                <Space className="space">
+                    <Button type="primary" icon={<RedoOutlined />} onClick={fetchProjects}>Refresh</Button>
+                    <Button type="primary" icon={<PlusOutlined />}>Create</Button>
+                </Space>
+            </div>
+            {projectsEmpty ? <EmptyProjectsList /> : <ProjectsListContainer />}
+        </Spin>
     </div>)
 };
