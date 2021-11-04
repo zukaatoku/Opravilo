@@ -440,6 +440,60 @@ export class Client {
     }
 
     /**
+     * @param body (optional)
+     * @return Success
+     */
+    projects3(id: number, body: UpdateProjectRequest | undefined , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/projects/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PATCH",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processProjects3(_response);
+        });
+    }
+
+    protected processProjects3(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     displayName(  cancelToken?: CancelToken | undefined): Promise<string> {
@@ -706,6 +760,46 @@ export class CreateProjectRequest implements ICreateProjectRequest {
 }
 
 export interface ICreateProjectRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+}
+
+export class UpdateProjectRequest implements IUpdateProjectRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+
+    constructor(data?: IUpdateProjectRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): UpdateProjectRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateProjectRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface IUpdateProjectRequest {
     name?: string | undefined;
     description?: string | undefined;
 }

@@ -21,6 +21,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             var projects = _context
                 .Projects
                 .Where(p => p.CreatorId == userId)
+                .OrderByDescending(p => p.ChangedDate)
                 .Select(c => new ProjectDto()
                 {
                     Id = c.Id,
@@ -71,6 +72,16 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
         {
             var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
             _context.Remove(project);
+            _context.SaveChanges();
+        }
+
+        public void UpdateProject(long projectId, string name, string description)
+        {
+            var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
+            project.Name = name;
+            project.Description = description;
+            project.ChangedDate = DateTime.Now;
+            _context.Update(project);
             _context.SaveChanges();
         }
     }

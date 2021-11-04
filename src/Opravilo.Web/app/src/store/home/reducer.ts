@@ -1,13 +1,13 @@
 import {IHomeState} from "./types";
 import {createReducer} from "@reduxjs/toolkit";
-import {createProject, fetchProjects} from "./thunks";
-import {hideCreateProjectModal, showCreateProjectModal} from "./actions";
+import {createProject, editProjectThunk, fetchProjects} from "./thunks";
+import {editProject, hideCreateProjectModal, showCreateProjectModal} from "./actions";
 
 const initialState: IHomeState = {
     fetchingProjects: false,
     projects: [],
     createProjectsModalVisible: false,
-    fetchingCreateProject: false
+    fetchingCreateOrEditProject: false
 }
 
 export const homeReducer = createReducer(initialState, (builder) => {
@@ -24,15 +24,28 @@ export const homeReducer = createReducer(initialState, (builder) => {
         return {...state, createProjectsModalVisible: true}
     })
     builder.addCase(hideCreateProjectModal, (state) => {
-        return {...state, createProjectsModalVisible: false}
+        return {...state, createProjectsModalVisible: false, editingProject: undefined}
     })
     builder.addCase(createProject.pending, (state) => {
-        return {...state, fetchingCreateProject: true}
+        return {...state, fetchingCreateOrEditProject: true}
     })
     builder.addCase(createProject.fulfilled, (state) => {
-        return {...state, fetchingCreateProject: false, createProjectsModalVisible: false}
+        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false}
     })
     builder.addCase(createProject.rejected, (state) => {
-        return {...state, fetchingCreateProject: false}
+        return {...state, fetchingCreateOrEditProject: false}
+    })
+    builder.addCase(editProject, (state, {payload}) => {
+       const selectedProject = state.projects.filter(p => p.id == payload)[0];
+       return {...state, createProjectsModalVisible: true, editingProject: selectedProject}
+    });
+    builder.addCase(editProjectThunk.pending, (state) => {
+        return {...state, fetchingCreateOrEditProject: true}
+    })
+    builder.addCase(editProjectThunk.fulfilled, (state) => {
+        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false, editingProject: undefined}
+    })
+    builder.addCase(editProjectThunk.rejected, (state) => {
+        return {...state, fetchingCreateOrEditProject: false, editingProject: undefined}
     })
 })

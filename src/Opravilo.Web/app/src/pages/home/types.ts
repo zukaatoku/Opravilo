@@ -1,4 +1,4 @@
-import {ICreateProjectArgs} from "../../store/home/types";
+import {ICreateProjectArgs, IEditProjectArgs, IProjectModel} from "../../store/home/types";
 
 export interface IHomePageProps {
     fetchingProjects: boolean
@@ -11,4 +11,7 @@ export interface IHomePageProps {
     
     onCreateProject: (args: ICreateProjectArgs) => void
     fetchingCreateProject: boolean
+    
+    editingProject?: IProjectModel
+    onEditProject: (args: IEditProjectArgs) => void
 }

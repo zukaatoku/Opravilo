@@ -17,13 +17,15 @@ export const HomePage = (props: IHomePageProps): JSX.Element => {
         createProjectModalVisible,
         hideCreateProjectModal,
         onCreateProject,
-        fetchingCreateProject
+        fetchingCreateProject,
+        editingProject,
+        onEditProject
     } = props;
 
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
-    
+        
     return (<div className="home-page">
         <Spin spinning={fetchingProjects}>
             <div className="buttons-panel">
@@ -33,7 +35,7 @@ export const HomePage = (props: IHomePageProps): JSX.Element => {
                 </Space>
             </div>
             {projectsEmpty ? <EmptyProjectsList/> : <ProjectsListContainer/>}
-            {createProjectModalVisible && <CreateProjectForm onCancel={hideCreateProjectModal} onCreate={onCreateProject} fetchingCreateProject={fetchingCreateProject}/>}
+            {createProjectModalVisible && <CreateProjectForm onCancel={hideCreateProjectModal} onOk={onCreateProject} fetchingCreateProject={fetchingCreateProject} editingProject={editingProject} onOkEdit={onEditProject}/>}
         </Spin>
     </div>)
 };

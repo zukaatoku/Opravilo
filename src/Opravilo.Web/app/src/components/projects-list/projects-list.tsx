@@ -7,6 +7,9 @@ import "./projects-list.scss"
 const { Title } = Typography
 
 export const ProjectsList = (props: IProjectsListProps): JSX.Element => {
+    
+    const {editProject} = props;
+    
     return <div className="projects-list">
         <Title level={4}>Projects list</Title>
         <List
@@ -15,7 +18,7 @@ export const ProjectsList = (props: IProjectsListProps): JSX.Element => {
         bordered
         renderItem={item => (
             <List.Item
-                actions={[<a>edit</a>, <a>view</a>]}
+                actions={[<a onClick={() => editProject(item.id)}>edit</a>, <a>view</a>]}
             >
                 <List.Item.Meta
                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}

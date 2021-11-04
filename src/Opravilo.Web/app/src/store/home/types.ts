@@ -3,7 +3,9 @@ export interface IHomeState {
     projects: IProjectModel[]
     
     createProjectsModalVisible: boolean
-    fetchingCreateProject: boolean
+    fetchingCreateOrEditProject: boolean
+    
+    editingProject?: IProjectModel
 }
 
 export interface IProjectModel {
@@ -13,6 +15,12 @@ export interface IProjectModel {
 }
 
 export interface ICreateProjectArgs {
+    name: string
+    description: string
+}
+
+export interface IEditProjectArgs {
+    id: number
     name: string
     description: string
 }

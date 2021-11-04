@@ -1,4 +1,4 @@
-import {ICreateProjectArgs} from "../../store/home/types";
+import {ICreateProjectArgs, IEditProjectArgs, IProjectModel} from "../../store/home/types";
 
 export interface IFormProperties {
     name: string
@@ -7,6 +7,9 @@ export interface IFormProperties {
 
 export interface ICreateProjectFormProps {
     onCancel: () => void
-    onCreate: (args: ICreateProjectArgs) => void
+    onOk: (args: ICreateProjectArgs) => void
+    onOkEdit: (args: IEditProjectArgs) => void
     fetchingCreateProject: boolean
+    
+    editingProject?: IProjectModel
 }

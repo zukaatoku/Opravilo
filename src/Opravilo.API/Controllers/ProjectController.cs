@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Extensions;
+using Opravilo.API.Models.Requests;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.Project;
 using Opravilo.Application.Models.Requests;
+using UpdateProjectRequest = Opravilo.API.Models.Requests.UpdateProjectRequest;
 
 namespace Opravilo.API.Controllers
 {
@@ -39,6 +41,17 @@ namespace Opravilo.API.Controllers
         public void DeleteProject(long id)
         {
             _projectService.RemoveProject(id);
+        }
+
+        [HttpPatch("{id:long}")]
+        public void UpdateProject(long id, [FromBody] UpdateProjectRequest request)
+        {
+            _projectService.UpdateProject(new Application.Models.Requests.UpdateProjectRequest()
+            {
+                ProjectId = id,
+                Name = request.Name,
+                Description = request.Description
+            });
         }
     }
 }

@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Form, Input, Modal} from "antd";
 import {ICreateProjectFormProps, IFormProperties} from "./types";
+import {IProjectModel} from "../../store/home/types";
 
 const {Item} = Form
 
@@ -11,17 +12,30 @@ const layout = {
 
 export const CreateProjectForm = (props: ICreateProjectFormProps): JSX.Element => {
     const [form] = Form.useForm();
-    const {onCancel, fetchingCreateProject, onCreate} = props
-
-    const onOk = async () => {
+    const {onCancel, fetchingCreateProject, onOk, editingProject, onOkEdit} = props
+    
+    useEffect(() => {
+        if (editingProject) {
+            form.setFieldsValue(editingProject)   
+        }
+    }, [form])
+    
+    const onModalOk = async () => {
         form.submit()
     }
     
     const onFinish = (values: IFormProperties) => {
-        onCreate(values)
+        if (editingProject) {
+            onOkEdit({...values, id: editingProject.id})
+        }
+        else {
+            onOk(values)   
+        }
     }
     
-    return <Modal visible={true} onCancel={onCancel} title="Create Project" onOk={onOk} confirmLoading={fetchingCreateProject}>
+    const title = editingProject ? "Edit Project" : "Create Project"
+    
+    return <Modal visible={true} onCancel={onCancel} title={title} onOk={onModalOk} confirmLoading={fetchingCreateProject}>
             <Form {...layout} form={form} onFinish={onFinish}>
                 <Item label="Name" name="name" rules={[{required: true}]}>
                     <Input />

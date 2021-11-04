@@ -42,5 +42,10 @@ namespace Opravilo.Application.Services
         {
             _projectRepository.RemoveProject(projectId);
         }
+
+        public void UpdateProject(UpdateProjectRequest request)
+        {
+            _projectRepository.UpdateProject(request.ProjectId, request.Name, request.Description);
+        }
     }
 }
