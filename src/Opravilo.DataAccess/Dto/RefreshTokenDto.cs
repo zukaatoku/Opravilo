@@ -2,9 +2,9 @@ using System;
 
 namespace Opravilo.DataAccess.Dto
 {
-    public class RefreshTokenDto
+    public record RefreshTokenDto
     {
-        public DateTime ExpirationDate { get; set; }
-        public string RefreshToken { get; set; }
+        public DateTime ExpirationDate { get; init; }
+        public string RefreshToken { get; init; }
     }
 }

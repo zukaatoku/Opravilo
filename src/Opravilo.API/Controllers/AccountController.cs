@@ -86,22 +86,32 @@ namespace Opravilo.API.Controllers
         [HttpPost("refresh")]
         public ActionResult<AuthenticationResponse> RefreshToken()
         {
-            var jwt = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
-            var refresh = HttpContext.Request.Cookies["X-REFRESH-TOKEN"];
-            
-            var result = _authManager.RefreshToken(jwt, refresh);
+            var jwtFromHeader = HttpContext.Request.Headers["Authorization"];
 
-            if (result.IsSuccess)
+            if (jwtFromHeader.Count > 0)
             {
-                AppendCookie(result);
+                var jwt = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
+                var refresh = HttpContext.Request.Cookies["X-REFRESH-TOKEN"];
+            
+                var result = _authManager.RefreshToken(jwt, refresh);
+
+                if (result.IsSuccess)
+                {
+                    AppendCookie(result);
+                }
+                else
+                {
+                    Logout();
+                    return Unauthorized();
+                }
+                
+                return Ok(result);
             }
             else
             {
                 Logout();
                 return Unauthorized();
             }
-            
-            return Ok(result);
         }
 
         [HttpPost("logout")]

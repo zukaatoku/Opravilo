@@ -1,31 +1,41 @@
-import React, {useState} from "react";
-import {Empty} from "antd";
-import {getClient} from "../../api/BaseClient";
-import {Button} from "antd";
+import React, {useEffect, useState} from "react";
+import {EmptyProjectsList} from "../../components/empty-projects-list";
+import {IHomePageProps} from "./types";
+import {Button, Modal, Space, Spin} from "antd";
+import {PlusOutlined, RedoOutlined} from "@ant-design/icons";
+import {ProjectsListContainer} from "../../containers/projects-list-container";
+import {CreateProjectForm} from "../../components/create-project-form";
 
-export const HomePage = (): JSX.Element => {
-    const [name, setName] = useState("");
-    
-    const onClick = () => {
-        setName("loading...");
-        const client = getClient();
-        try {
-            client.displayName()
-                .then((res) => {
-                    console.log(res);
-                    setName(res);
-                }).catch((err) => {
-                console.log(err);
-            });   
-        }
-        catch (e) {
-            console.log(e);
-        }
-    };
-    
-    return (<div>
-        <Button onClick={onClick}>Refresh</Button>
-        <span>{name}</span>
-        <Empty />
+import "./home-page.scss"
+
+export const HomePage = (props: IHomePageProps): JSX.Element => {
+    const {
+        fetchProjects,
+        fetchingProjects,
+        projectsEmpty,
+        showCreateProjectModal,
+        createProjectModalVisible,
+        hideCreateProjectModal,
+        onCreateProject,
+        fetchingCreateProject,
+        editingProject,
+        onEditProject
+    } = props;
+
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
+        
+    return (<div className="home-page">
+        <Spin spinning={fetchingProjects}>
+            <div className="buttons-panel">
+                <Space className="space">
+                    <Button type="primary" icon={<RedoOutlined/>} onClick={fetchProjects}>Refresh</Button>
+                    <Button type="primary" icon={<PlusOutlined/>} onClick={showCreateProjectModal}>Create</Button>
+                </Space>
+            </div>
+            {projectsEmpty ? <EmptyProjectsList/> : <ProjectsListContainer/>}
+            {createProjectModalVisible && <CreateProjectForm onCancel={hideCreateProjectModal} onOk={onCreateProject} fetchingCreateProject={fetchingCreateProject} editingProject={editingProject} onOkEdit={onEditProject}/>}
+        </Spin>
     </div>)
 };
