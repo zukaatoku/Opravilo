@@ -143,6 +143,19 @@
       "UpstreamPathTemplate": "/api/projects/{id}",
       "UpstreamHttpMethod": ["Patch"],
       "SwaggerKey": "main"
+    },
+    {
+      "DownstreamPathTemplate": "/api/projects/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/projects/{id}",
+      "UpstreamHttpMethod": ["Get"],
+      "SwaggerKey": "main"
     }
   ],
   "SwaggerEndpoints": [

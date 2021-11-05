@@ -5,6 +5,7 @@ namespace Opravilo.DataAccess.Repositories
 {
     public interface IProjectRepository
     {
+        ProjectDto GetProject(long projectId);
         List<ProjectDto> GetProjectsByUser(long userId);
         ProjectDto CreateProject(string name, string description, long userId);
         void RemoveProject(long projectId);

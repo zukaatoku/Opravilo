@@ -391,9 +391,67 @@ export class Client {
     }
 
     /**
+     * @param projectId (optional)
      * @return Success
      */
-    projects2(id: number , cancelToken?: CancelToken | undefined): Promise<void> {
+    projects2(projectId: number | undefined, id: string , cancelToken?: CancelToken | undefined): Promise<ProjectModel> {
+        let url_ = this.baseUrl + "/api/projects/{id}?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (projectId === null)
+            throw new Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processProjects2(_response);
+        });
+    }
+
+    protected processProjects2(response: AxiosResponse): Promise<ProjectModel> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = ProjectModel.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ProjectModel>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    projects3(id: number , cancelToken?: CancelToken | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/projects/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -415,11 +473,11 @@ export class Client {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.processProjects2(_response);
+            return this.processProjects3(_response);
         });
     }
 
-    protected processProjects2(response: AxiosResponse): Promise<void> {
+    protected processProjects3(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -443,7 +501,7 @@ export class Client {
      * @param body (optional)
      * @return Success
      */
-    projects3(id: number, body: UpdateProjectRequest | undefined , cancelToken?: CancelToken | undefined): Promise<void> {
+    projects4(id: number, body: UpdateProjectRequest | undefined , cancelToken?: CancelToken | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/projects/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -469,11 +527,11 @@ export class Client {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.processProjects3(_response);
+            return this.processProjects4(_response);
         });
     }
 
-    protected processProjects3(response: AxiosResponse): Promise<void> {
+    protected processProjects4(response: AxiosResponse): Promise<void> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {

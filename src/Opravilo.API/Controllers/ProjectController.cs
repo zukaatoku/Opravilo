@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Extensions;
-using Opravilo.API.Models.Requests;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.Project;
 using Opravilo.Application.Models.Requests;
@@ -27,6 +26,13 @@ namespace Opravilo.API.Controllers
         {
             var userId = this.GetUserId();
             return _projectService.GetProjects(userId);
+        }
+
+        [HttpGet("{id:long}")]
+        public ProjectModel GetProject(long projectId)
+        {
+            // todo: check rights
+            return _projectService.GetProject(projectId);
         }
 
         [HttpPost]

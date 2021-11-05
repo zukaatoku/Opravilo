@@ -38,7 +38,7 @@ export const editProjectThunk = createAsyncThunk(
             name: args.name,
         })
 
-        await client.projects3(args.id, request)
+        await client.projects4(args.id, request)
         dispatch(fetchProjects())
     }
 )

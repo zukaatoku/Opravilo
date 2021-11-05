@@ -16,6 +16,19 @@ namespace Opravilo.Application.Services
             _projectRepository = projectRepository;
         }
 
+        public ProjectModel GetProject(long projectId)
+        {
+            var project = _projectRepository.GetProject(projectId);
+            return project != null
+                ? new ProjectModel()
+                {
+                    Description = project.Description,
+                    Name = project.Name,
+                    Id = project.Id
+                }
+                : null;
+        }
+
         public List<ProjectModel> GetProjects(long userId)
         {
             var projects = _projectRepository.GetProjectsByUser(userId);

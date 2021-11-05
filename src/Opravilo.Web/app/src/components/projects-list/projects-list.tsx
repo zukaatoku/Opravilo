@@ -1,6 +1,7 @@
 import React from "react"
 import {IProjectsListProps} from "./types";
 import {Avatar, List, Typography} from "antd";
+import {Link} from "react-router-dom"
 
 import "./projects-list.scss"
 import {useHistory} from "react-router-dom";
@@ -20,7 +21,7 @@ export const ProjectsList = (props: IProjectsListProps): JSX.Element => {
             renderItem={item => (
                 <List.Item
                     actions={[<a onClick={() => editProject(item.id)}>edit</a>,
-                        <a onClick={() => history.push("/project/" + item.id)}>view</a>]}
+                        <Link to={"/project/"+item.id}>view</Link>]}
                 >
                     <List.Item.Meta
                         avatar={<Avatar src="https://joeschmoe.io/api/v1/random"/>}
