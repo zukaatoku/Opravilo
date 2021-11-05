@@ -28,7 +28,7 @@ namespace Opravilo.API.Controllers
             return _projectService.GetProjects(userId);
         }
 
-        [HttpGet("{id:long}")]
+        [HttpGet("{projectId:long}")]
         public ProjectModel GetProject(long projectId)
         {
             // todo: check rights

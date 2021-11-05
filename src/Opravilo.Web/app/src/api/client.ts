@@ -391,18 +391,13 @@ export class Client {
     }
 
     /**
-     * @param projectId (optional)
      * @return Success
      */
-    projects2(projectId: number | undefined, id: string , cancelToken?: CancelToken | undefined): Promise<ProjectModel> {
-        let url_ = this.baseUrl + "/api/projects/{id}?";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        if (projectId === null)
-            throw new Error("The parameter 'projectId' cannot be null.");
-        else if (projectId !== undefined)
-            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+    projects2(projectId: number , cancelToken?: CancelToken | undefined): Promise<ProjectModel> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <AxiosRequestConfig>{

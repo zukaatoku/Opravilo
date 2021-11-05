@@ -145,7 +145,7 @@
       "SwaggerKey": "main"
     },
     {
-      "DownstreamPathTemplate": "/api/projects/{id}",
+      "DownstreamPathTemplate": "/api/projects/{projectId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -153,7 +153,7 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/projects/{id}",
+      "UpstreamPathTemplate": "/api/projects/{projectId}",
       "UpstreamHttpMethod": ["Get"],
       "SwaggerKey": "main"
     }
