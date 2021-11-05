@@ -9,14 +9,16 @@ import {PrivateRoute} from "../components/private-route";
 import {VkLoginCallback} from "../pages/login";
 import {AnonymousRoute} from "../components/anonymous-route";
 import {HomePageContainer} from "../containers/home-page-container";
+import {ProjectBoardPage} from "../pages/project-board";
 
 export const App = (): JSX.Element => {
     return <Router>
         <Switch>
-            <PrivateRoute path={["/home"]}>
+            <PrivateRoute path={["/home", "/project"]}>
                 <UserLayout>
                     <Switch>
                         <Route exact path="/home" component={HomePageContainer}/>
+                        <Route exact path="/project/:id" component={ProjectBoardPage}/>
                     </Switch>
                 </UserLayout>
             </PrivateRoute>
