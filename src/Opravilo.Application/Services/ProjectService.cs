@@ -3,6 +3,7 @@ using System.Linq;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.Project;
 using Opravilo.Application.Models.Requests;
+using Opravilo.Application.Models.User;
 using Opravilo.DataAccess.Repositories;
 
 namespace Opravilo.Application.Services
@@ -18,15 +19,25 @@ namespace Opravilo.Application.Services
             _stateRepository = stateRepository;
         }
 
-        public ProjectModel GetProject(long projectId)
+        public FullProjectModel GetProject(long projectId)
         {
             var project = _projectRepository.GetProject(projectId);
             return project != null
-                ? new ProjectModel()
+                ? new FullProjectModel()
                 {
                     Description = project.Description,
                     Name = project.Name,
-                    Id = project.Id
+                    Id = project.Id,
+                    Creator = new UserModel()
+                    {
+                        Id = project.Creator.Id,
+                        DisplayName = project.Creator.DisplayName
+                    },
+                    States = project.States.Select(s => new StateModel()
+                    {
+                        Id = s.Id,
+                        Name = s.Name
+                    }).ToList()
                 }
                 : null;
         }

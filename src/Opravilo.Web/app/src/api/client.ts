@@ -393,7 +393,7 @@ export class Client {
     /**
      * @return Success
      */
-    projects2(projectId: number , cancelToken?: CancelToken | undefined): Promise<ProjectModel> {
+    projects2(projectId: number , cancelToken?: CancelToken | undefined): Promise<FullProjectModel> {
         let url_ = this.baseUrl + "/api/projects/{projectId}";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
@@ -420,7 +420,7 @@ export class Client {
         });
     }
 
-    protected processProjects2(response: AxiosResponse): Promise<ProjectModel> {
+    protected processProjects2(response: AxiosResponse): Promise<FullProjectModel> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -434,13 +434,13 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = ProjectModel.fromJS(resultData200);
+            result200 = FullProjectModel.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<ProjectModel>(<any>null);
+        return Promise.resolve<FullProjectModel>(<any>null);
     }
 
     /**
@@ -815,6 +815,146 @@ export class CreateProjectRequest implements ICreateProjectRequest {
 export interface ICreateProjectRequest {
     name?: string | undefined;
     description?: string | undefined;
+}
+
+export class UserModel implements IUserModel {
+    id?: number;
+    displayName?: string | undefined;
+
+    constructor(data?: IUserModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): UserModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IUserModel {
+    id?: number;
+    displayName?: string | undefined;
+}
+
+export class StateModel implements IStateModel {
+    id?: number;
+    name?: string | undefined;
+
+    constructor(data?: IStateModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): StateModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new StateModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IStateModel {
+    id?: number;
+    name?: string | undefined;
+}
+
+export class FullProjectModel implements IFullProjectModel {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    creator?: UserModel;
+    states?: StateModel[] | undefined;
+
+    constructor(data?: IFullProjectModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.creator = _data["creator"] ? UserModel.fromJS(_data["creator"]) : <any>undefined;
+            if (Array.isArray(_data["states"])) {
+                this.states = [] as any;
+                for (let item of _data["states"])
+                    this.states!.push(StateModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): FullProjectModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new FullProjectModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["creator"] = this.creator ? this.creator.toJSON() : <any>undefined;
+        if (Array.isArray(this.states)) {
+            data["states"] = [];
+            for (let item of this.states)
+                data["states"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IFullProjectModel {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    creator?: UserModel;
+    states?: StateModel[] | undefined;
 }
 
 export class UpdateProjectRequest implements IUpdateProjectRequest {
