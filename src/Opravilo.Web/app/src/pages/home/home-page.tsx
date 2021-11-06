@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {EmptyProjectsList} from "../../components/empty-projects-list";
 import {IHomePageProps} from "./types";
-import {Button, Modal, Space, Spin} from "antd";
+import {Button, Space, Spin} from "antd";
 import {PlusOutlined, RedoOutlined} from "@ant-design/icons";
 import {ProjectsListContainer} from "../../containers/projects-list-container";
 import {CreateProjectForm} from "../../components/create-project-form";

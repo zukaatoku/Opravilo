@@ -14,6 +14,14 @@ export const fetchProjects = createAsyncThunk(
     }
 )
 
+export const fetchProject = createAsyncThunk(
+    'fetchProject',
+    async (projectId: number) => {
+        await delay(1000)
+        return await client.projects2(projectId);
+    }
+)
+
 export const createProject = createAsyncThunk(
     'createProject',
     async (args: ICreateProjectArgs, {dispatch}) => {
@@ -38,7 +46,7 @@ export const editProjectThunk = createAsyncThunk(
             name: args.name,
         })
 
-        await client.projects3(args.id, request)
+        await client.projects4(args.id, request)
         dispatch(fetchProjects())
     }
 )

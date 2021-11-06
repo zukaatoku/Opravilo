@@ -16,6 +16,21 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             _context = context;
         }
 
+        public ProjectDto GetProject(long projectId)
+        {
+            var project = _context
+                .Projects
+                .Where(p => p.Id == projectId)
+                .Select(p => new ProjectDto()
+                {
+                    Description = p.Description,
+                    Id = p.Id,
+                    Name = p.Name
+                })
+                .FirstOrDefault();
+            return project;
+        }
+
         public List<ProjectDto> GetProjectsByUser(long userId)
         {
             var projects = _context

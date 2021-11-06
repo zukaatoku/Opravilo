@@ -6,6 +6,9 @@ export interface IHomeState {
     fetchingCreateOrEditProject: boolean
     
     editingProject?: IProjectModel
+    
+    fetchingCurrentProject: boolean
+    currentProject?: IProjectModel //todo: побогаче
 }
 
 export interface IProjectModel {
