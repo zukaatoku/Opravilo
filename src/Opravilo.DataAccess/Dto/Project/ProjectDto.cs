@@ -1,4 +1,6 @@
-namespace Opravilo.DataAccess.Dto
+using System.Collections.Generic;
+
+namespace Opravilo.DataAccess.Dto.Project
 {
     public record ProjectDto
     {

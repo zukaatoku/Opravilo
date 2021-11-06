@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Opravilo.DataAccess.Dto;
+using Opravilo.DataAccess.Dto.Project;
 using Opravilo.DataAccess.EntityFramework.Models;
 using Opravilo.DataAccess.Repositories;
 
@@ -16,16 +17,21 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             _context = context;
         }
 
-        public ProjectDto GetProject(long projectId)
+        public FullProjectDto GetProject(long projectId)
         {
             var project = _context
                 .Projects
                 .Where(p => p.Id == projectId)
-                .Select(p => new ProjectDto()
+                .Select(p => new FullProjectDto()
                 {
                     Description = p.Description,
                     Id = p.Id,
-                    Name = p.Name
+                    Name = p.Name,
+                    States = p.States.Select(s => new StateDto()
+                    {
+                        Id = s.Id,
+                        Name = s.Name
+                    }).ToList()
                 })
                 .FirstOrDefault();
             return project;
