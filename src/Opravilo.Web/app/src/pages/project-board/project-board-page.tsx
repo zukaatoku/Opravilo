@@ -8,7 +8,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
     const id = Number(props.match.params.id);
     
     useEffect(() => {
-        fetchProject(id); // todo: from route
+        fetchProject(id);
     }, [fetchProject])
     
     const toShow = currentProject 

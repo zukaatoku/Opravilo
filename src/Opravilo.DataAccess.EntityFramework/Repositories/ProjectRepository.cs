@@ -27,6 +27,11 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
                     Description = p.Description,
                     Id = p.Id,
                     Name = p.Name,
+                    Creator = new UserDto()
+                    { 
+                        Id = p.Creator.Id, 
+                        DisplayName = p.Creator.DisplayName,
+                    },
                     States = p.States.Select(s => new StateDto()
                     {
                         Id = s.Id,
