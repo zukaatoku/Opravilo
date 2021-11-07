@@ -85,5 +85,30 @@ namespace Opravilo.Application.Services
         {
             _projectRepository.UpdateProject(request.ProjectId, request.Name, request.Description);
         }
+
+        public StateModel CreateState(CreateStateRequest request)
+        {
+            var state = _stateRepository.CreateState(request.ProjectId, request.Name);
+            return new StateModel()
+            {
+                Id = state.Id,
+                Name = state.Name
+            };
+        }
+
+        public StateModel UpdateState(UpdateStateRequest request)
+        {
+            var state = _stateRepository.UpdateState(request.StateId, request.ProjectId, request.Name);
+            return new StateModel()
+            {
+                Id = state.Id,
+                Name = state.Name
+            };
+        }
+
+        public void RemoveState(long stateId)
+        {
+            _stateRepository.RemoveState(stateId);
+        }
     }
 }

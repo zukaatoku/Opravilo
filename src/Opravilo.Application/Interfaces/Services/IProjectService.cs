@@ -11,5 +11,8 @@ namespace Opravilo.Application.Interfaces.Services
         ProjectModel CreateProject(CreateProjectRequest request, long userId);
         void RemoveProject(long projectId);
         void UpdateProject(UpdateProjectRequest request);
+        StateModel CreateState(CreateStateRequest request);
+        StateModel UpdateState(UpdateStateRequest request);
+        void RemoveState(long stateId);
     }
 }
