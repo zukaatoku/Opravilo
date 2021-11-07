@@ -7,7 +7,7 @@ using Opravilo.Application.Models.Project;
 namespace Opravilo.API.Controllers
 {
     [Authorize]
-    [Route("api/projects/{projectId:long}/state")]
+    [Route("api/projects/{projectId:long}/states")]
     [ApiController]
     public class StateController : ControllerBase
     {
