@@ -4,6 +4,8 @@ import {Empty, Spin} from "antd";
 import {Link, withRouter} from "react-router-dom";
 import {ColumnStateView} from "../../components/column-state-view";
 
+import "./project-board-page.scss"
+
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
     const {fetchingProject, currentProject, fetchProject} = props;
     const id = Number(props.match.params.id);
@@ -22,5 +24,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         )
         : <Empty />
     
-    return <Spin spinning={fetchingProject}>{toShow}</Spin>
+    return <div className="project-board-page">
+        <Spin spinning={fetchingProject}>{toShow}</Spin>
+    </div>
 });
