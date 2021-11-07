@@ -2,6 +2,7 @@ import React, {useEffect} from "react"
 import {IProjectBoardPageProps} from "./types";
 import {Empty, Spin} from "antd";
 import {Link, withRouter} from "react-router-dom";
+import {ColumnStateView} from "../../components/column-state-view";
 
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
     const {fetchingProject, currentProject, fetchProject} = props;
@@ -16,6 +17,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
             <>
                 <Link to="/home">Back to Home</Link>
                 <h1>{currentProject.name}</h1>
+                <ColumnStateView states={currentProject.states}/>
             </>
         )
         : <Empty />

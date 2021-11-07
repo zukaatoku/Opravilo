@@ -1,4 +1,4 @@
-import {IProjectModel} from "../../store/home/types";
+import {IFullProjectModel} from "../../store/home/types";
 import {RouteComponentProps} from "react-router-dom";
 
 interface RouteParams {
@@ -8,5 +8,5 @@ interface RouteParams {
 export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams> {
     fetchingProject: boolean
     fetchProject: (id: number) => void
-    currentProject?: IProjectModel
+    currentProject?: IFullProjectModel
 }
