@@ -9,4 +9,6 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     fetchingProject: boolean
     fetchProject: (id: number) => void
     currentProject?: IFullProjectModel
+    
+    removeState: (stateId: number) => void
 }

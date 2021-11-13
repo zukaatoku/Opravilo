@@ -48,7 +48,7 @@ namespace Opravilo.API.Controllers
         }
 
         [HttpDelete("{stateId:long}")]
-        public void RemoveState(long stateId)
+        public void RemoveState(long projectId, long stateId)
         {
             _projectService.RemoveState(stateId);
         }

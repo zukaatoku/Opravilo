@@ -1,35 +1,38 @@
 import React from "react"
-import {IStateColumnProps} from "./types";
-import {Dropdown, Empty, Menu} from "antd";
+import {IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from "./types";
+import {Dropdown, Empty, Menu, Popconfirm} from "antd";
 import {EllipsisOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons";
 
 import "./state-column.scss"
 
-const menu = (
-    <Menu>
-        <Menu.Item key="1" icon={<EditOutlined />}>
+const menu = (props: IContextMenuProps) => {
+    return <Menu>
+        <Menu.Item key="1" icon={<EditOutlined/>}>
             Edit
         </Menu.Item>
-        <Menu.Item key="2" icon={<DeleteOutlined />} danger>
-            Remove
+        <Menu.Item key="2" icon={<DeleteOutlined/>} danger>
+            <Popconfirm title="Are you sure?" icon={<DeleteOutlined style={{color: "red"}}/>} okText="Yes"
+                        cancelText="No" onConfirm={() => props.onRemove(props.id)}>
+                Remove
+            </Popconfirm>
         </Menu.Item>
     </Menu>
-);
+}
 
-const ColumnHeader = (name: string): JSX.Element => {
+const ColumnHeader = (props: IColumnHeaderProps): JSX.Element => {
     return <header>
-            <h2>{name}</h2>
-            <Dropdown overlay={menu}>
+            <h2>{props.name}</h2>
+            <Dropdown overlay={menu({id: props.id, onRemove: props.onRemove})}>
                 <EllipsisOutlined className="dots" />
             </Dropdown>
         </header>
 }
 
 export const StateColumn = (props: IStateColumnProps): JSX.Element => {
-    const {name} = props
+    const {name, id, onRemove} = props
     
     return <div className="state-column">
-        {ColumnHeader(name)}
+        <ColumnHeader id={id} name={name} onRemove={onRemove} />
         <Empty />
     </div>
 }

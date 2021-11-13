@@ -7,7 +7,7 @@ import {ColumnStateView} from "../../components/column-state-view";
 import "./project-board-page.scss"
 
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
-    const {fetchingProject, currentProject, fetchProject} = props;
+    const {fetchingProject, currentProject, fetchProject, removeState} = props;
     const id = Number(props.match.params.id);
     
     useEffect(() => {
@@ -19,7 +19,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
             <>
                 <Link to="/home">Back to Home</Link>
                 <h1>{currentProject.name}</h1>
-                <ColumnStateView states={currentProject.states}/>
+                <ColumnStateView states={currentProject.states} onRemove={removeState}/>
             </>
         )
         : <Empty />

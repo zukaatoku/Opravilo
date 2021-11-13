@@ -547,6 +547,177 @@ export class Client {
     }
 
     /**
+     * @param body (optional)
+     * @return Success
+     */
+    states(projectId: number, body: CreateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateModel> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/states";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processStates(_response);
+        });
+    }
+
+    protected processStates(response: AxiosResponse): Promise<StateModel> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = StateModel.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<StateModel>(<any>null);
+    }
+
+    /**
+     * @param body (optional)
+     * @return Success
+     */
+    states2(projectId: number, stateId: number, body: UpdateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateModel> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/states/{stateId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (stateId === undefined || stateId === null)
+            throw new Error("The parameter 'stateId' must be defined.");
+        url_ = url_.replace("{stateId}", encodeURIComponent("" + stateId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PATCH",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processStates2(_response);
+        });
+    }
+
+    protected processStates2(response: AxiosResponse): Promise<StateModel> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = StateModel.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<StateModel>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    states3(projectId: number, stateId: number , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/states/{stateId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (stateId === undefined || stateId === null)
+            throw new Error("The parameter 'stateId' must be defined.");
+        url_ = url_.replace("{stateId}", encodeURIComponent("" + stateId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processStates3(_response);
+        });
+    }
+
+    protected processStates3(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     displayName(  cancelToken?: CancelToken | undefined): Promise<string> {
@@ -995,6 +1166,78 @@ export class UpdateProjectRequest implements IUpdateProjectRequest {
 export interface IUpdateProjectRequest {
     name?: string | undefined;
     description?: string | undefined;
+}
+
+export class CreateStateRequest implements ICreateStateRequest {
+    name?: string | undefined;
+
+    constructor(data?: ICreateStateRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): CreateStateRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateStateRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ICreateStateRequest {
+    name?: string | undefined;
+}
+
+export class UpdateStateRequest implements IUpdateStateRequest {
+    name?: string | undefined;
+
+    constructor(data?: IUpdateStateRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): UpdateStateRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateStateRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IUpdateStateRequest {
+    name?: string | undefined;
 }
 
 export class ApiException extends Error {

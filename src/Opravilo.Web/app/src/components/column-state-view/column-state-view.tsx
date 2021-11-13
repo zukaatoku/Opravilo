@@ -7,7 +7,7 @@ import "./column-state-view.scss"
 export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
     
     const columns = props.states.map((s) => {
-        return <StateColumn name={s.name} key={s.id}/>
+        return <StateColumn name={s.name} key={s.id} id={s.id} onRemove={props.onRemove}/>
     })
     
     return <div className="column-state-view">
