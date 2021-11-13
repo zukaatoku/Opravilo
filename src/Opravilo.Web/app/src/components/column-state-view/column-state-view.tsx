@@ -3,6 +3,8 @@ import {IColumnStateViewProps} from "./types";
 import {StateColumn} from "./state-column";
 
 import "./column-state-view.scss"
+import {AddStateColumn} from "./state-column/add-state-column";
+import {Space} from "antd";
 
 export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
     
@@ -11,6 +13,6 @@ export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
     })
     
     return <div className="column-state-view">
-        {columns}
+        <Space align="start">{columns}<AddStateColumn /></Space>
     </div>
 }
