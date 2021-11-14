@@ -13,13 +13,8 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     removeState: (stateId: number) => void
     
     createEditStateVisible: boolean
-    fetchingCreateEditState: boolean
     hideStateModal: () => void
     
-    onAddState: (name: string) => void
     onAddClick: () => void,
-    
-    editingState?: IStateModel
-    onOkEdit: (args: IEditStateArgs) => void
     onEditClick: (stateId: number) => void
 }

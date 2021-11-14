@@ -5,7 +5,7 @@ import {Link, withRouter} from "react-router-dom";
 import {ColumnStateView} from "../../components/column-state-view";
 
 import "./project-board-page.scss"
-import {CreateStateForm} from "../../components/create-state-form";
+import {CreateStateFormContainer} from "../../containers/modal/create-state-form-container";
 
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
     const {
@@ -14,12 +14,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         fetchProject,
         removeState,
         createEditStateVisible,
-        fetchingCreateEditState,
-        hideStateModal,
-        onAddState,
         onAddClick,
-        editingState,
-        onOkEdit,
         onEditClick
     } = props;
     const id = Number(props.match.params.id);
@@ -40,7 +35,6 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
 
     return <div className="project-board-page">
         <Spin spinning={fetchingProject}>{toShow}</Spin>
-        {createEditStateVisible &&
-        <CreateStateForm onCancel={hideStateModal} fetching={fetchingCreateEditState} onOk={onAddState} editingState={editingState} onOkEdit={onOkEdit}/>}
+        {createEditStateVisible && <CreateStateFormContainer />}
     </div>
 });
