@@ -26,7 +26,8 @@ namespace Opravilo.API.Middlewares
             sw.Stop();
 
             _logger.LogInformation(
-                "Request: {@Path} Elapsed time: {@Elapsed} Total memory: {@Memory} mb",
+                "Request: [{@Method}] {@Path} Elapsed time: {@Elapsed} Total memory: {@Memory} mb",
+                context.Request.Method,
                 context.Request.Path.ToString(),
                 sw.Elapsed.ToString(),
                 GC.GetTotalMemory(false) / 1024 / 1024);

@@ -4,7 +4,7 @@ import {IHomePageProps} from "./types";
 import {Button, Space, Spin} from "antd";
 import {PlusOutlined, RedoOutlined} from "@ant-design/icons";
 import {ProjectsListContainer} from "../../containers/projects-list-container";
-import {CreateProjectForm} from "../../components/create-project-form";
+import {CreateProjectFormContainer} from "../../containers/modal/create-project-form-container";
 
 import "./home-page.scss"
 
@@ -14,12 +14,7 @@ export const HomePage = (props: IHomePageProps): JSX.Element => {
         fetchingProjects,
         projectsEmpty,
         showCreateProjectModal,
-        createProjectModalVisible,
-        hideCreateProjectModal,
-        onCreateProject,
-        fetchingCreateProject,
-        editingProject,
-        onEditProject
+        createProjectModalVisible
     } = props;
 
     useEffect(() => {
@@ -35,7 +30,7 @@ export const HomePage = (props: IHomePageProps): JSX.Element => {
                 </Space>
             </div>
             {projectsEmpty ? <EmptyProjectsList/> : <ProjectsListContainer/>}
-            {createProjectModalVisible && <CreateProjectForm onCancel={hideCreateProjectModal} onOk={onCreateProject} fetchingCreateProject={fetchingCreateProject} editingProject={editingProject} onOkEdit={onEditProject}/>}
+            {createProjectModalVisible && <CreateProjectFormContainer />}
         </Spin>
     </div>)
 };

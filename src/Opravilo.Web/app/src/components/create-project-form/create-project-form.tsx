@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {Form, Input, Modal} from "antd";
 import {ICreateProjectFormProps, IFormProperties} from "./types";
-import {IProjectModel} from "../../store/home/types";
 
 const {Item} = Form
 

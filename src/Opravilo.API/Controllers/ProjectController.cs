@@ -29,7 +29,7 @@ namespace Opravilo.API.Controllers
         }
 
         [HttpGet("{projectId:long}")]
-        public ProjectModel GetProject(long projectId)
+        public FullProjectModel GetProject(long projectId)
         {
             // todo: check rights
             return _projectService.GetProject(projectId);

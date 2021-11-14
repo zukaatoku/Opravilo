@@ -7,11 +7,4 @@ export interface IHomePageProps {
     
     createProjectModalVisible: boolean
     showCreateProjectModal: () => void
-    hideCreateProjectModal: () => void
-    
-    onCreateProject: (args: ICreateProjectArgs) => void
-    fetchingCreateProject: boolean
-    
-    editingProject?: IProjectModel
-    onEditProject: (args: IEditProjectArgs) => void
 }

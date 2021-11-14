@@ -6,10 +6,13 @@ namespace Opravilo.Application.Interfaces.Services
 {
     public interface IProjectService
     {
-        ProjectModel GetProject(long projectId);
+        FullProjectModel GetProject(long projectId);
         List<ProjectModel> GetProjects(long userId);
         ProjectModel CreateProject(CreateProjectRequest request, long userId);
         void RemoveProject(long projectId);
         void UpdateProject(UpdateProjectRequest request);
+        StateModel CreateState(CreateStateRequest request);
+        StateModel UpdateState(UpdateStateRequest request);
+        void RemoveState(long stateId);
     }
 }

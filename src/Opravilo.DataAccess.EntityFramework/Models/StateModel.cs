@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Opravilo.DataAccess.EntityFramework.Models
 {
-    public class ProjectModel
+    public class StateModel
     {
         [Key]
         [Column("ID")]
@@ -14,21 +13,16 @@ namespace Opravilo.DataAccess.EntityFramework.Models
         [Column("NAME")]
         public string Name { get; set; }
         
-        [Column("DESCRIPTION")]
-        public string Description { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
+        
+        [ForeignKey(nameof(ProjectId))]
+        public virtual ProjectModel Project { get; set; }
         
         [Column("CREATED_DATE")]
         public DateTime CreatedDate { get; set; }
         
         [Column("CHANGED_DATE")]
         public DateTime ChangedDate { get; set; }
-        
-        [Column("CREATOR_ID")]
-        public long CreatorId { get; set; }
-        
-        [ForeignKey(nameof(CreatorId))]
-        public virtual UserModel Creator { get; set; }
-        
-        public virtual List<StateModel> States { get; set; }
     }
 }
