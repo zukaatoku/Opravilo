@@ -7,9 +7,14 @@ export interface ICreateStateFormProps {
     onOk: (name: string) => void
     onOkEdit: (args: IEditStateArgs) => void
     
-    editingState?: IStateModel
+    editingState?: ISelectedState
 }
 
 export interface IFormProperties {
     name: string
+}
+
+export interface ISelectedState {
+    id?: number
+    name?: string
 }

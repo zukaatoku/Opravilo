@@ -4,7 +4,8 @@ export interface IProjectState {
 
     createEditStateModalVisible: boolean
     fetchingCreateEditState: boolean
-    editingState?: IStateModel
+    
+    selectedStateId?: number
 }
 
 export interface IFullProjectModel {

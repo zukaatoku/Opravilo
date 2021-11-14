@@ -29,7 +29,7 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCurrentProject: false}
     })
     builder.addCase(hideStateModal, (state) => {
-        return {...state, createEditStateModalVisible: false, editingState: undefined}
+        return {...state, createEditStateModalVisible: false, selectedStateId: undefined}
     });
     builder.addCase(showStateModal, (state) => {
         return {...state, createEditStateModalVisible: true}
@@ -48,13 +48,12 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCreateEditState: true}
     })
     builder.addCase(editState.fulfilled, (state) => {
-        return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false, editingState: undefined}
+        return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false, selectedStateId: undefined}
     })
     builder.addCase(editState.rejected, (state) => {
-        return {...state, fetchingCreateEditState: false, editingState: undefined}
+        return {...state, fetchingCreateEditState: false, selectedStateId: undefined}
     })
     builder.addCase(showEditStateModal, (state, {payload}) => {
-        const selectedState = state.currentProject.states.filter(p => p.id == payload)[0];
-        return {...state, createEditStateModalVisible: true, editingState: selectedState}
+        return {...state, createEditStateModalVisible: true, selectedStateId: payload}
     });
 })

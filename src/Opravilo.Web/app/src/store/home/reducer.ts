@@ -24,7 +24,7 @@ export const homeReducer = createReducer(initialState, (builder) => {
         return {...state, createProjectsModalVisible: true}
     })
     builder.addCase(hideCreateProjectModal, (state) => {
-        return {...state, createProjectsModalVisible: false, editingProject: undefined}
+        return {...state, createProjectsModalVisible: false, selectedProjectId: undefined}
     })
     builder.addCase(createProject.pending, (state) => {
         return {...state, fetchingCreateOrEditProject: true}
@@ -36,16 +36,15 @@ export const homeReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCreateOrEditProject: false}
     })
     builder.addCase(editProject, (state, {payload}) => {
-       const selectedProject = state.projects.filter(p => p.id == payload)[0];
-       return {...state, createProjectsModalVisible: true, editingProject: selectedProject}
+       return {...state, createProjectsModalVisible: true, selectedProjectId: payload}
     });
     builder.addCase(editProjectThunk.pending, (state) => {
         return {...state, fetchingCreateOrEditProject: true}
     })
     builder.addCase(editProjectThunk.fulfilled, (state) => {
-        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false, editingProject: undefined}
+        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false, selectedProjectId: undefined}
     })
     builder.addCase(editProjectThunk.rejected, (state) => {
-        return {...state, fetchingCreateOrEditProject: false, editingProject: undefined}
+        return {...state, fetchingCreateOrEditProject: false, selectedProjectId: undefined}
     })
 })

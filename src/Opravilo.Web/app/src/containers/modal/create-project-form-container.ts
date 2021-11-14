@@ -4,10 +4,11 @@ import {connect} from "react-redux";
 import {ICreateProjectArgs, IEditProjectArgs} from "../../store/home/types";
 import {createProject, editProjectThunk} from "../../store/home/thunks";
 import {hideCreateProjectModal} from "../../store/home/actions";
+import {selectedProjectSelector} from "../../store/selectors";
 
 const mapStateToProps = (state: AppState) : Partial<ICreateProjectFormProps> => ({
     fetchingCreateProject: state.home.fetchingCreateOrEditProject,
-    editingProject: state.home.editingProject
+    editingProject: selectedProjectSelector(state)
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) : Partial<ICreateProjectFormProps> => ({

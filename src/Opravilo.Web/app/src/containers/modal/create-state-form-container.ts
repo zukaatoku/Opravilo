@@ -4,10 +4,11 @@ import {connect} from "react-redux";
 import {hideStateModal} from "../../store/project/actions";
 import {addState, editState} from "../../store/project/thunks";
 import {IEditStateArgs} from "../../store/project/types";
+import {selectedStateSelector} from "../../store/selectors";
 
 const mapStateToProps = (state: AppState) : Partial<ICreateStateFormProps> => ({
     fetching: state.project.fetchingCreateEditState,
-    editingState: state.project.editingState,
+    editingState: selectedStateSelector(state),
 })
 
 const mapDispatchToProps = (dispatch : AppDispatch) : Partial<ICreateStateFormProps> => ({

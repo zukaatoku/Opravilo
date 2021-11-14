@@ -3,7 +3,8 @@ export interface IHomeState {
     projects: IProjectModel[]
     createProjectsModalVisible: boolean
     fetchingCreateOrEditProject: boolean
-    editingProject?: IProjectModel
+    
+    selectedProjectId?: number
 }
 
 export interface IProjectModel {
