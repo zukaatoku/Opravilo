@@ -20,11 +20,7 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
     }
     
     const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011/vk-login-callback";
-    
-    const onClose = () => {
-      console.log("modal closed");  
-    };
-    
+        
     const onCode = (code: string) => {
         props.onVkLogin(code)
     }
@@ -51,7 +47,7 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width={780} height={500}>
+        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={() => null} width={780} height={500}>
             <div className="social-icons">
                 <VkLogo/>
             </div>
