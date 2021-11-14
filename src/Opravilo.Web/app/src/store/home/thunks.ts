@@ -1,6 +1,5 @@
 import {getClient} from "../../api/BaseClient";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {delay} from "../../utils/delay";
 import {ICreateProjectArgs, IEditProjectArgs, IEditStateArgs} from "./types";
 import {CreateProjectRequest, CreateStateRequest, UpdateProjectRequest, UpdateStateRequest} from "../../api/client";
 import {AppState} from "../store";
@@ -10,7 +9,6 @@ const client = getClient()
 export const fetchProjects = createAsyncThunk(
     'fetchProjects', 
     async () => {
-        // await delay(1000)
         return await client.projectsAll()
     }
 )
@@ -18,7 +16,6 @@ export const fetchProjects = createAsyncThunk(
 export const fetchProject = createAsyncThunk(
     'fetchProject',
     async (projectId: number) => {
-        // await delay(1000)
         return await client.projects2(projectId);
     }
 )
@@ -26,7 +23,6 @@ export const fetchProject = createAsyncThunk(
 export const createProject = createAsyncThunk(
     'createProject',
     async (args: ICreateProjectArgs, {dispatch}) => {
-        // await delay(1000)
         const request: CreateProjectRequest = new CreateProjectRequest({
             description: args.description,
             name: args.name
@@ -40,8 +36,6 @@ export const createProject = createAsyncThunk(
 export const editProjectThunk = createAsyncThunk(
     'editProject',
     async (args: IEditProjectArgs, {dispatch}) => {
-        // await delay(1000)
-        
         const request: UpdateProjectRequest = new UpdateProjectRequest({
             description: args.description,
             name: args.name,

@@ -4,13 +4,11 @@ import {Avatar, List, Typography} from "antd";
 import {Link} from "react-router-dom"
 
 import "./projects-list.scss"
-import {useHistory} from "react-router-dom";
 
 const { Title } = Typography
 
 export const ProjectsList = (props: IProjectsListProps): JSX.Element => {
     const {editProject} = props;
-    const history = useHistory();
 
     return <div className="projects-list">
         <Title level={4}>Projects list</Title>

@@ -14,7 +14,7 @@ export const UserDropdown = (props: IUserDropdownProps): JSX.Element => {
         if (!displayName) {
             fetchDisplayName()
         }  
-    })
+    }, [])
     
     const logout = async () => {
         props.onLogout();

@@ -1,17 +1,14 @@
 import {Alert, Button, Divider, Form, Input, Spin} from "antd";
-import React, {useState} from "react";
+import React from "react";
 import {VkLogo} from "../vk-logo";
-import {LoginRequest} from "../../api/client";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
-import {getClient} from "../../api/BaseClient";
 import {FormProperties, ILoginFormProps} from "./types";
 import "./login-form.scss"
 
 const Item = Form.Item;
 
 export const LoginForm = (props: ILoginFormProps): JSX.Element => {
-    const history = useHistory();
     const {errors} = props
     
     const onFinish = (values: FormProperties) => {
@@ -23,12 +20,8 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
     }
     
     const authUrl = "https://oauth.vk.com/authorize?client_id=7841557&redirect_uri=https://localhost:5011/vk-login-callback";
-    
-    const onClose = () => {
-      console.log("modal closed");  
-    };
-    
-    const onCode = (code: string, params: URLSearchParams) => {
+        
+    const onCode = (code: string) => {
         props.onVkLogin(code)
     }
     
@@ -54,7 +47,7 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
                 : <></>
         }
         <Divider>OR</Divider>
-        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={onClose} width={780} height={500}>
+        <OauthPopup url={authUrl} title="Vk auth" onCode={onCode} onClose={() => null} width={780} height={500}>
             <div className="social-icons">
                 <VkLogo/>
             </div>

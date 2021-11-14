@@ -70,7 +70,7 @@ export const homeReducer = createReducer(initialState, (builder) => {
     builder.addCase(removeState.pending, (state) => {
         return {...state, fetchingCurrentProject: true}
     })
-    builder.addCase(removeState.fulfilled, (state, {payload}) => {
+    builder.addCase(removeState.fulfilled, (state) => {
         return {...state, fetchingCurrentProject: false}
     })
     builder.addCase(removeState.rejected, (state) => {
