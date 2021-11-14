@@ -11,5 +11,11 @@ export interface ICreateProjectFormProps {
     onOkEdit: (args: IEditProjectArgs) => void
     fetchingCreateProject: boolean
     
-    editingProject?: IProjectModel
+    editingProject?: ISelectedProject
+}
+
+export interface ISelectedProject {
+    id?: number
+    name?: string
+    description?: string
 }

@@ -1,23 +1,13 @@
 import {IHomeState} from "./types";
 import {createReducer} from "@reduxjs/toolkit";
-import {addState, createProject, editProjectThunk, editState, fetchProject, fetchProjects, removeState} from "./thunks";
-import {
-    editProject,
-    hideCreateProjectModal,
-    hideStateModal,
-    showCreateProjectModal,
-    showEditStateModal,
-    showStateModal
-} from "./actions";
+import {createProject, editProjectThunk, fetchProjects} from "./thunks";
+import {editProject, hideCreateProjectModal, showCreateProjectModal,} from "./actions";
 
 const initialState: IHomeState = {
     fetchingProjects: false,
     projects: [],
     createProjectsModalVisible: false,
     fetchingCreateOrEditProject: false,
-    fetchingCurrentProject: false,
-    createEditStateModalVisible: false,
-    fetchingCreateEditState: false
 }
 
 export const homeReducer = createReducer(initialState, (builder) => {
@@ -34,7 +24,7 @@ export const homeReducer = createReducer(initialState, (builder) => {
         return {...state, createProjectsModalVisible: true}
     })
     builder.addCase(hideCreateProjectModal, (state) => {
-        return {...state, createProjectsModalVisible: false, editingProject: undefined}
+        return {...state, createProjectsModalVisible: false, selectedProjectId: undefined}
     })
     builder.addCase(createProject.pending, (state) => {
         return {...state, fetchingCreateOrEditProject: true}
@@ -46,63 +36,15 @@ export const homeReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCreateOrEditProject: false}
     })
     builder.addCase(editProject, (state, {payload}) => {
-       const selectedProject = state.projects.filter(p => p.id == payload)[0];
-       return {...state, createProjectsModalVisible: true, editingProject: selectedProject}
+       return {...state, createProjectsModalVisible: true, selectedProjectId: payload}
     });
     builder.addCase(editProjectThunk.pending, (state) => {
         return {...state, fetchingCreateOrEditProject: true}
     })
     builder.addCase(editProjectThunk.fulfilled, (state) => {
-        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false, editingProject: undefined}
+        return {...state, fetchingCreateOrEditProject: false, createProjectsModalVisible: false, selectedProjectId: undefined}
     })
     builder.addCase(editProjectThunk.rejected, (state) => {
-        return {...state, fetchingCreateOrEditProject: false, editingProject: undefined}
+        return {...state, fetchingCreateOrEditProject: false, selectedProjectId: undefined}
     })
-    builder.addCase(fetchProject.pending, (state) => {
-        return {...state, fetchingCurrentProject: true}
-    })
-    builder.addCase(fetchProject.fulfilled, (state, {payload}) => {
-        return {...state, fetchingCurrentProject: false, currentProject: payload}
-    })
-    builder.addCase(fetchProject.rejected, (state) => {
-        return {...state, fetchingCurrentProject: false}
-    })
-    builder.addCase(removeState.pending, (state) => {
-        return {...state, fetchingCurrentProject: true}
-    })
-    builder.addCase(removeState.fulfilled, (state) => {
-        return {...state, fetchingCurrentProject: false}
-    })
-    builder.addCase(removeState.rejected, (state) => {
-        return {...state, fetchingCurrentProject: false}
-    })
-    builder.addCase(hideStateModal, (state) => {
-       return {...state, createEditStateModalVisible: false, editingState: undefined} 
-    });
-    builder.addCase(showStateModal, (state) => {
-        return {...state, createEditStateModalVisible: true}
-    });
-
-    builder.addCase(addState.pending, (state) => {
-        return {...state, fetchingCreateEditState: true}
-    })
-    builder.addCase(addState.fulfilled, (state) => {
-        return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false}
-    })
-    builder.addCase(addState.rejected, (state) => {
-        return {...state, fetchingCreateEditState: false}
-    })
-    builder.addCase(editState.pending, (state) => {
-        return {...state, fetchingCreateEditState: true}
-    })
-    builder.addCase(editState.fulfilled, (state) => {
-        return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false, editingState: undefined}
-    })
-    builder.addCase(editState.rejected, (state) => {
-        return {...state, fetchingCreateEditState: false, editingState: undefined}
-    })
-    builder.addCase(showEditStateModal, (state, {payload}) => {
-        const selectedState = state.currentProject.states.filter(p => p.id == payload)[0];
-        return {...state, createEditStateModalVisible: true, editingState: selectedState}
-    });
 })

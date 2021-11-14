@@ -1,11 +1,13 @@
 import {AnyAction, combineReducers, configureStore} from "@reduxjs/toolkit"
+import {RootStateOrAny} from "react-redux";
 import { userReducer } from './user/reducer'
 import {homeReducer} from "./home/reducer";
-import {RootStateOrAny} from "react-redux";
+import {projectReducer} from "./project/reducer";
 
 const appReducer = combineReducers({
     user: userReducer,
-    home: homeReducer
+    home: homeReducer,
+    project: projectReducer
 })
 
 const rootReducer = (state: RootStateOrAny, action: AnyAction) => {
