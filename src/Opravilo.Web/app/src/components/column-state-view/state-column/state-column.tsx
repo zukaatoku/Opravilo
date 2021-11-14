@@ -7,7 +7,7 @@ import "./state-column.scss"
 
 const menu = (props: IContextMenuProps) => {
     return <Menu>
-        <Menu.Item key="1" icon={<EditOutlined/>}>
+        <Menu.Item key="1" icon={<EditOutlined/>} onClick={() => props.onEdit(props.id)}>
             Edit
         </Menu.Item>
         <Menu.Item key="2" icon={<DeleteOutlined/>} danger>
@@ -22,17 +22,17 @@ const menu = (props: IContextMenuProps) => {
 const ColumnHeader = (props: IColumnHeaderProps): JSX.Element => {
     return <header>
             <h2>{props.name}</h2>
-            <Dropdown overlay={menu({id: props.id, onRemove: props.onRemove})}>
+            <Dropdown overlay={menu({id: props.id, onRemove: props.onRemove, onEdit: props.onEdit})}>
                 <EllipsisOutlined className="dots" />
             </Dropdown>
         </header>
 }
 
 export const StateColumn = (props: IStateColumnProps): JSX.Element => {
-    const {name, id, onRemove} = props
+    const {name, id, onRemove, onEdit} = props
     
     return <div className="state-column">
-        <ColumnHeader id={id} name={name} onRemove={onRemove} />
+        <ColumnHeader id={id} name={name} onRemove={onRemove} onEdit={onEdit} />
         <Empty />
     </div>
 }

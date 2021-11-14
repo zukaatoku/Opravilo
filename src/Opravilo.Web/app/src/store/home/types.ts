@@ -9,6 +9,10 @@ export interface IHomeState {
     
     fetchingCurrentProject: boolean
     currentProject?: IFullProjectModel
+    
+    createEditStateModalVisible: boolean
+    fetchingCreateEditState: boolean
+    editingState?: IStateModel
 }
 
 export interface IProjectModel {
@@ -44,4 +48,9 @@ export interface IEditProjectArgs {
     id: number
     name: string
     description: string
+}
+
+export interface IEditStateArgs {
+    stateId: number
+    name: string
 }

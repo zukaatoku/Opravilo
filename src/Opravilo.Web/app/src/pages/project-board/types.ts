@@ -1,4 +1,4 @@
-import {IFullProjectModel} from "../../store/home/types";
+import {IEditStateArgs, IFullProjectModel, IStateModel} from "../../store/home/types";
 import {RouteComponentProps} from "react-router-dom";
 
 interface RouteParams {
@@ -11,4 +11,15 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     currentProject?: IFullProjectModel
     
     removeState: (stateId: number) => void
+    
+    createEditStateVisible: boolean
+    fetchingCreateEditState: boolean
+    hideStateModal: () => void
+    
+    onAddState: (name: string) => void
+    onAddClick: () => void,
+    
+    editingState?: IStateModel
+    onOkEdit: (args: IEditStateArgs) => void
+    onEditClick: (stateId: number) => void
 }
