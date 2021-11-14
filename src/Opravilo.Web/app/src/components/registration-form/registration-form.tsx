@@ -1,12 +1,11 @@
 import {Button, Form, Input, Alert, Spin} from "antd";
 import * as React from "react";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {IFormProperties, IRegistrationFormProps} from "./types";
 
 const Item = Form.Item;
 
 export const RegistrationForm = (props: IRegistrationFormProps): JSX.Element => {
-    const history = useHistory();
     const [form] = Form.useForm();
 
     if (props.loginSuccess) {

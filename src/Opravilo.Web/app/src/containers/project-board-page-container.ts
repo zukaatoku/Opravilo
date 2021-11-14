@@ -1,7 +1,7 @@
 import {IProjectBoardPageProps, ProjectBoardPage} from "../pages/project-board";
 import {AppDispatch, AppState} from "../store/store";
 import {connect} from "react-redux";
-import {addState, editState, fetchProject, removeState} from "../store/home/thunks";
+import {fetchProject, removeState} from "../store/home/thunks";
 import {hideStateModal, showEditStateModal, showStateModal} from "../store/home/actions";
 
 const mapStateToProps = (state: AppState) : Partial<IProjectBoardPageProps> => ({

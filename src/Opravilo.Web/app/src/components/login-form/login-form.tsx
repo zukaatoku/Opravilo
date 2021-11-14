@@ -1,17 +1,14 @@
 import {Alert, Button, Divider, Form, Input, Spin} from "antd";
-import React, {useState} from "react";
+import React from "react";
 import {VkLogo} from "../vk-logo";
-import {LoginRequest} from "../../api/client";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import OauthPopup from "react-oauth-popup";
-import {getClient} from "../../api/BaseClient";
 import {FormProperties, ILoginFormProps} from "./types";
 import "./login-form.scss"
 
 const Item = Form.Item;
 
 export const LoginForm = (props: ILoginFormProps): JSX.Element => {
-    const history = useHistory();
     const {errors} = props
     
     const onFinish = (values: FormProperties) => {
@@ -28,7 +25,7 @@ export const LoginForm = (props: ILoginFormProps): JSX.Element => {
       console.log("modal closed");  
     };
     
-    const onCode = (code: string, params: URLSearchParams) => {
+    const onCode = (code: string) => {
         props.onVkLogin(code)
     }
     
