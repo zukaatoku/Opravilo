@@ -1,4 +1,4 @@
-import {IEditStateArgs, IStateModel} from "../../store/home/types";
+import {IEditStateArgs, IStateModel} from "../../store/project/types";
 
 export interface ICreateStateFormProps {
     onCancel: () => void

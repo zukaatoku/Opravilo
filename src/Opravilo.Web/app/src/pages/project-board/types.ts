@@ -1,5 +1,5 @@
-import {IEditStateArgs, IFullProjectModel, IStateModel} from "../../store/home/types";
 import {RouteComponentProps} from "react-router-dom";
+import {IFullProjectModel} from "../../store/project/types";
 
 interface RouteParams {
     id: string

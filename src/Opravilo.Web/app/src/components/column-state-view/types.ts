@@ -1,4 +1,4 @@
-import {IStateModel} from "../../store/home/types";
+import {IStateModel} from "../../store/project/types";
 
 export interface IColumnStateViewProps {
     states: IStateModel[]
