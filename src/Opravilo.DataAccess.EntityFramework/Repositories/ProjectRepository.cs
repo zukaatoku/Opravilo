@@ -32,10 +32,16 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
                         Id = p.Creator.Id, 
                         DisplayName = p.Creator.DisplayName,
                     },
-                    States = p.States.Select(s => new StateDto()
+                    States = p.States.Select(s => new FullStateDto()
                     {
                         Id = s.Id,
-                        Name = s.Name
+                        Name = s.Name,
+                        Cards = s.Cards.Select(c => new CardDto()
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Description = c.Description
+                        }).ToList()
                     }).ToList()
                 })
                 .FirstOrDefault();

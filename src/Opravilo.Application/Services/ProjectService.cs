@@ -38,10 +38,16 @@ namespace Opravilo.Application.Services
                         Id = project.Creator.Id,
                         DisplayName = project.Creator.DisplayName
                     },
-                    States = project.States.Select(s => new StateModel()
+                    States = project.States.Select(s => new FullStateModel()
                     {
                         Id = s.Id,
-                        Name = s.Name
+                        Name = s.Name,
+                        Cards = s.Cards.Select(c => new CardModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Description = c.Description,
+                        }).ToList()
                     }).ToList()
                 }
                 : null;
