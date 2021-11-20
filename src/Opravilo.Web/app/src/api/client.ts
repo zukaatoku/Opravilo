@@ -283,7 +283,7 @@ export class Client {
      * @return Success
      */
     cards(stateId: number, projectId: number, body: CreateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardModel> {
-        let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{stateId}";
+        let url_ = this.baseUrl + "/api/projects/{projectId}/states/{stateId}/cards";
         if (stateId === undefined || stateId === null)
             throw new Error("The parameter 'stateId' must be defined.");
         url_ = url_.replace("{stateId}", encodeURIComponent("" + stateId));

@@ -197,9 +197,8 @@
       "SwaggerKey": "main"
     },
     
-    
     {
-      "DownstreamPathTemplate": "/api/projects/{projectId}/cards/{stateId}",
+      "DownstreamPathTemplate": "/api/projects/{projectId}/states/{stateId}/cards",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -207,7 +206,7 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/projects/{projectId}/cards/{stateId}",
+      "UpstreamPathTemplate": "/api/projects/{projectId}/states/{stateId}/cards",
       "UpstreamHttpMethod": ["Post"],
       "SwaggerKey": "main"
     },

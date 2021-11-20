@@ -7,7 +7,7 @@ using Opravilo.Application.Models.Project;
 namespace Opravilo.API.Controllers
 {
     [Authorize]
-    [Route("api/projects/{projectId:long}/cards")]
+    [Route("api/projects/{projectId:long}")]
     [ApiController]
     public class CardController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Opravilo.API.Controllers
             _projectService = projectService;
         }
 
-        [HttpPost("{stateId:long}")]
+        [HttpPost("states/{stateId:long}/cards")]
         public CardModel CreateCard(
             long stateId,
             long projectId,
@@ -34,7 +34,7 @@ namespace Opravilo.API.Controllers
             return card;
         }
         
-        [HttpPatch("{cardId:long}")]
+        [HttpPatch("cards/{cardId:long}")]
         public CardModel UpdateCard(
             long cardId,
             long projectId,
@@ -50,7 +50,7 @@ namespace Opravilo.API.Controllers
             return card;
         }
 
-        [HttpDelete("{cardId:long}")]
+        [HttpDelete("cards/{cardId:long}")]
         public void RemoveCard(long projectId, long cardId)
         {
             _projectService.RemoveCard(cardId);
