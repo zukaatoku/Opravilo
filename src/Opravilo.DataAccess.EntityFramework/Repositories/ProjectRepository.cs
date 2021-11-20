@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Opravilo.DataAccess.Dto;
 using Opravilo.DataAccess.Dto.Project;
 using Opravilo.DataAccess.EntityFramework.Models;
@@ -22,14 +23,17 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             var project = _context
                 .Projects
                 .Where(p => p.Id == projectId)
+                .Include(p => p.Creator)
+                .Include(p => p.States)
+                .ThenInclude(s => s.Cards)
                 .Select(p => new FullProjectDto()
                 {
                     Description = p.Description,
                     Id = p.Id,
                     Name = p.Name,
                     Creator = new UserDto()
-                    { 
-                        Id = p.Creator.Id, 
+                    {
+                        Id = p.Creator.Id,
                         DisplayName = p.Creator.DisplayName,
                     },
                     States = p.States.Select(s => new FullStateDto()
@@ -43,8 +47,7 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
                             Description = c.Description
                         }).ToList()
                     }).ToList()
-                })
-                .FirstOrDefault();
+                }).FirstOrDefault();
             return project;
         }
 

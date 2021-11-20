@@ -12,7 +12,7 @@ namespace Opravilo.Migrator.Migrations
                 .Table("Cards")
                 .WithColumn("ID").AsInt64().PrimaryKey().Identity()
                 .WithColumn("NAME").AsString().NotNullable()
-                .WithColumn("DESCRPITION").AsString().NotNullable()
+                .WithColumn("DESCRIPTION").AsString().NotNullable()
                 .WithColumn("STATE_ID").AsInt64().NotNullable().ForeignKey("States", "ID").OnDeleteOrUpdate(Rule.Cascade)
                 .WithColumn("CREATED_DATE").AsDateTime().NotNullable()
                 .WithColumn("CHANGED_DATE").AsDateTime().NotNullable();

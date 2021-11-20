@@ -279,6 +279,180 @@ export class Client {
     }
 
     /**
+     * @param body (optional)
+     * @return Success
+     */
+    cards(stateId: number, projectId: number, body: CreateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardModel> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{stateId}";
+        if (stateId === undefined || stateId === null)
+            throw new Error("The parameter 'stateId' must be defined.");
+        url_ = url_.replace("{stateId}", encodeURIComponent("" + stateId));
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processCards(_response);
+        });
+    }
+
+    protected processCards(response: AxiosResponse): Promise<CardModel> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = CardModel.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<CardModel>(<any>null);
+    }
+
+    /**
+     * @param body (optional)
+     * @return Success
+     */
+    cards2(cardId: number, projectId: number, body: UpdateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardModel> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{cardId}";
+        if (cardId === undefined || cardId === null)
+            throw new Error("The parameter 'cardId' must be defined.");
+        url_ = url_.replace("{cardId}", encodeURIComponent("" + cardId));
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PATCH",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processCards2(_response);
+        });
+    }
+
+    protected processCards2(response: AxiosResponse): Promise<CardModel> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = CardModel.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<CardModel>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    cards3(projectId: number, cardId: number , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{cardId}";
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (cardId === undefined || cardId === null)
+            throw new Error("The parameter 'cardId' must be defined.");
+        url_ = url_.replace("{cardId}", encodeURIComponent("" + cardId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processCards3(_response);
+        });
+    }
+
+    protected processCards3(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     projectsAll(  cancelToken?: CancelToken | undefined): Promise<ProjectModel[]> {
@@ -904,6 +1078,130 @@ export interface IRegistrationRequest {
     password?: string | undefined;
 }
 
+export class CreateCardRequest implements ICreateCardRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+
+    constructor(data?: ICreateCardRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): CreateCardRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateCardRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface ICreateCardRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+}
+
+export class CardModel implements ICardModel {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+
+    constructor(data?: ICardModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): CardModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new CardModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface ICardModel {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+}
+
+export class UpdateCardRequest implements IUpdateCardRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+
+    constructor(data?: IUpdateCardRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): UpdateCardRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateCardRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface IUpdateCardRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+}
+
 export class ProjectModel implements IProjectModel {
     id?: number;
     name?: string | undefined;
@@ -1028,11 +1326,12 @@ export interface IUserModel {
     displayName?: string | undefined;
 }
 
-export class StateModel implements IStateModel {
+export class FullStateModel implements IFullStateModel {
     id?: number;
     name?: string | undefined;
+    cards?: CardModel[] | undefined;
 
-    constructor(data?: IStateModel) {
+    constructor(data?: IFullStateModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1045,12 +1344,17 @@ export class StateModel implements IStateModel {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            if (Array.isArray(_data["cards"])) {
+                this.cards = [] as any;
+                for (let item of _data["cards"])
+                    this.cards!.push(CardModel.fromJS(item));
+            }
         }
     }
 
-    static fromJS(data: any): StateModel {
+    static fromJS(data: any): FullStateModel {
         data = typeof data === 'object' ? data : {};
-        let result = new StateModel();
+        let result = new FullStateModel();
         result.init(data);
         return result;
     }
@@ -1059,13 +1363,19 @@ export class StateModel implements IStateModel {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        if (Array.isArray(this.cards)) {
+            data["cards"] = [];
+            for (let item of this.cards)
+                data["cards"].push(item.toJSON());
+        }
         return data;
     }
 }
 
-export interface IStateModel {
+export interface IFullStateModel {
     id?: number;
     name?: string | undefined;
+    cards?: CardModel[] | undefined;
 }
 
 export class FullProjectModel implements IFullProjectModel {
@@ -1073,7 +1383,7 @@ export class FullProjectModel implements IFullProjectModel {
     name?: string | undefined;
     description?: string | undefined;
     creator?: UserModel;
-    states?: StateModel[] | undefined;
+    states?: FullStateModel[] | undefined;
 
     constructor(data?: IFullProjectModel) {
         if (data) {
@@ -1093,7 +1403,7 @@ export class FullProjectModel implements IFullProjectModel {
             if (Array.isArray(_data["states"])) {
                 this.states = [] as any;
                 for (let item of _data["states"])
-                    this.states!.push(StateModel.fromJS(item));
+                    this.states!.push(FullStateModel.fromJS(item));
             }
         }
     }
@@ -1125,7 +1435,7 @@ export interface IFullProjectModel {
     name?: string | undefined;
     description?: string | undefined;
     creator?: UserModel;
-    states?: StateModel[] | undefined;
+    states?: FullStateModel[] | undefined;
 }
 
 export class UpdateProjectRequest implements IUpdateProjectRequest {
@@ -1201,6 +1511,46 @@ export class CreateStateRequest implements ICreateStateRequest {
 }
 
 export interface ICreateStateRequest {
+    name?: string | undefined;
+}
+
+export class StateModel implements IStateModel {
+    id?: number;
+    name?: string | undefined;
+
+    constructor(data?: IStateModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): StateModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new StateModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IStateModel {
+    id?: number;
     name?: string | undefined;
 }
 
