@@ -14,5 +14,8 @@ namespace Opravilo.Application.Interfaces.Services
         StateModel CreateState(CreateStateRequest request);
         StateModel UpdateState(UpdateStateRequest request);
         void RemoveState(long stateId);
+        CardModel CreateCard(CreateCardRequest request);
+        CardModel UpdateCard(UpdateCardRequest request);
+        void RemoveCard(long cardId);
     }
 }
