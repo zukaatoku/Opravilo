@@ -6,4 +6,6 @@ export interface IColumnStateViewProps {
     onRemove: (id: number) => void
     onAddStateClick: () => void
     onEditStateClick: (stateId: number) => void
+
+    onViewCardClick: (cardId: number) => void
 }

@@ -1,7 +1,8 @@
 import React from "react"
 import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from "./types";
-import {Dropdown, Empty, Menu, Popconfirm, Space} from "antd";
-import {EllipsisOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons";
+import {Button, Dropdown, Menu, Popconfirm, Space} from "antd";
+import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined} from "@ant-design/icons";
+import {AddCardButton} from "./add-card-button";
 
 import "./state-column.scss"
 
@@ -29,31 +30,34 @@ const ColumnHeader = (props: IColumnHeaderProps): JSX.Element => {
 }
 
 const CardPreview = (props: ICardPreviewProps): JSX.Element => {
-    const {name} = props
+    const {id, name, onViewCardClick} = props
+    
     return <div className="card-preview">
             <h3>{name}</h3>
+            <Button icon={<InfoCircleOutlined />} type="text" onClick={() => onViewCardClick(id)}/>
         </div>
 }
 
 const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
-    const {cards} = props;
+    const {cards, onViewCardClick} = props;
     
-    if (!(cards && cards.length > 0)) {
-        return <Empty />
-    }    
-    
-    const toRender = cards.map((c, i) => {
-        return <CardPreview name={c.name} key={i}/>
+    const cardsList = cards.map((c, i) => {
+        return <CardPreview name={c.name} key={i} id={c.id} onViewCardClick={onViewCardClick}/>
     });
     
-    return <div className="column-body"><Space direction="vertical" style={{width: "100%"}}>{toRender}</Space></div>
+    return <div className="column-body">
+        <Space direction="vertical" style={{width: "100%"}}>
+            {cardsList}
+            <AddCardButton />
+        </Space>
+    </div>
 }
 
 export const StateColumn = (props: IStateColumnProps): JSX.Element => {
-    const {name, id, onRemove, onEdit, cards} = props
+    const {name, id, onRemove, onEdit, cards, onViewCardClick} = props
     
     return <div className="state-column">
         <ColumnHeader id={id} name={name} onRemove={onRemove} onEdit={onEdit} />
-        <ColumnBody cards={cards} />
+        <ColumnBody cards={cards} onViewCardClick={onViewCardClick}/>
     </div>
 }

@@ -1,12 +1,13 @@
 import {IProjectState} from "./types";
 import {createReducer} from "@reduxjs/toolkit";
 import {addState, editState, fetchProject, removeState} from "./thunks";
-import {hideStateModal, showEditStateModal, showStateModal} from "./actions";
+import {closeCardViewModal, hideStateModal, showCardViewModal, showEditStateModal, showStateModal} from "./actions";
 
 const initialState: IProjectState = {
     fetchingCurrentProject: false,
     createEditStateModalVisible: false,
-    fetchingCreateEditState: false
+    fetchingCreateEditState: false,
+    cardViewModalVisible: false
 }
 
 export const projectReducer = createReducer(initialState, (builder) => {
@@ -55,5 +56,11 @@ export const projectReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(showEditStateModal, (state, {payload}) => {
         return {...state, createEditStateModalVisible: true, selectedStateId: payload}
+    });
+    builder.addCase(showCardViewModal, (state, {payload}) => {
+        return {...state, selectedCardId: payload, cardViewModalVisible: true}
+    });
+    builder.addCase(closeCardViewModal, (state) => {
+        return {...state, selectedCardId: undefined, cardViewModalVisible: false}
     });
 })

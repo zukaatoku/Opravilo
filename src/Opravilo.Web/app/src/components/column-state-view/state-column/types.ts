@@ -8,6 +8,8 @@ export interface IStateColumnProps {
     
     onRemove: (id: number) => void
     onEdit: (id: number) => void
+
+    onViewCardClick: (cardId: number) => void
 }
 
 export interface IColumnHeaderProps {
@@ -19,10 +21,15 @@ export interface IColumnHeaderProps {
 
 export interface IColumnBodyProps {
     cards?: ICardModel[]
+
+    onViewCardClick: (cardId: number) => void
 }
 
 export interface ICardPreviewProps {
     name: string
+    id: number
+    
+    onViewCardClick: (cardId: number) => void
 }
 
 export interface IContextMenuProps {

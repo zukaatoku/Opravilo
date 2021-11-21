@@ -17,4 +17,6 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     
     onAddClick: () => void,
     onEditClick: (stateId: number) => void
+
+    onViewCardClick: (cardId: number) => void
 }

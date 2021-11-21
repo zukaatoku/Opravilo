@@ -6,6 +6,9 @@ export interface IProjectState {
     fetchingCreateEditState: boolean
     
     selectedStateId?: number
+    
+    cardViewModalVisible: boolean
+    selectedCardId?: number
 }
 
 export interface IFullProjectModel {
