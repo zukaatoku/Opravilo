@@ -1,0 +1,31 @@
+.card-view {
+  header {
+    background-color: lightgreen;
+  }
+  
+  .body-wrapper {
+    display: flex;
+    
+    .description-etc {
+      width: 100%;
+      background-color: pink;
+    }
+    
+    .buttons-panel {
+      background-color: lightblue;
+      width: 250px;
+      
+      .wrapper {
+                
+        .header {
+          color: #5e6c84;
+          //margin-left: 16px;
+        }
+
+        .button {
+          text-align: left;
+        } 
+      }
+    }
+  }
+}
