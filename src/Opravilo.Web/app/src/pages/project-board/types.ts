@@ -19,4 +19,6 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     onEditClick: (stateId: number) => void
 
     onViewCardClick: (cardId: number) => void
+    cardViewModalVisible: boolean
+    onCloseCardViewModal: () => void
 }

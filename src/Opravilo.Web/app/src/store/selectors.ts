@@ -1,9 +1,10 @@
 import {createSelector} from "@reduxjs/toolkit";
 import {AppState} from "./store";
-import {IStateModel} from "./project/types";
+import {IFullStateModel, IStateModel} from "./project/types";
 import {ISelectedState} from "../components/create-state-form/types";
 import {IProjectModel} from "./home/types";
 import {ISelectedProject} from "../components/create-project-form/types";
+import {ICardModel} from "../components/card-view/types";
 
 export const selectedStateSelector = createSelector(
     [(state: AppState) => state.project.currentProject.states, (state: AppState) => state.project.selectedStateId],
@@ -16,5 +17,13 @@ export const selectedProjectSelector = createSelector(
     [(state: AppState) => state.home.projects, (state: AppState) => state.home.selectedProjectId],
     (projects: IProjectModel[], selectedProjectId): ISelectedProject => {
         return projects.filter((p) => p.id == selectedProjectId)[0]
+    }
+)
+
+export const selectedCardSelector = createSelector(
+    [(state: AppState) => state.project.currentProject, (state: AppState) => state.project.selectedCardId],
+    (project, selectedCardId) : ICardModel => {
+        const state = project.states.filter((s: IFullStateModel) => s.cards.filter(c => c.id == selectedCardId) != undefined)[0]
+        return state.cards.filter((c: ICardModel) => c.id == selectedCardId)[0];
     }
 )

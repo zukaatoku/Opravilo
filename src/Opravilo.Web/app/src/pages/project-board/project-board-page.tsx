@@ -6,6 +6,7 @@ import {ColumnStateView} from "../../components/column-state-view";
 
 import "./project-board-page.scss"
 import {CreateStateFormContainer} from "../../containers/modal/create-state-form-container";
+import {CardViewModal} from "../../components/card-view-modal";
 
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
     const {
@@ -16,7 +17,9 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         createEditStateVisible,
         onAddClick,
         onEditClick,
-        onViewCardClick
+        onViewCardClick,
+        cardViewModalVisible,
+        onCloseCardViewModal
     } = props;
     const id = Number(props.match.params.id);
 
@@ -37,5 +40,6 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
     return <div className="project-board-page">
         <Spin spinning={fetchingProject}>{toShow}</Spin>
         {createEditStateVisible && <CreateStateFormContainer />}
+        {cardViewModalVisible && <CardViewModal onClose={onCloseCardViewModal} />}
     </div>
 });

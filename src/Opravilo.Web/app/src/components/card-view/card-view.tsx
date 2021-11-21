@@ -1,5 +1,7 @@
 import React from "react"
+import {ICardViewProps} from "./types";
 
-export const CardView = (): JSX.Element => {
-    return <h1>CardView</h1>
+export const CardView = (props: ICardViewProps): JSX.Element => {
+    const {card} = props
+    return <h1>{card.name}</h1>
 }
