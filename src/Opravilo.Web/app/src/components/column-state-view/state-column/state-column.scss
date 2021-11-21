@@ -1,6 +1,6 @@
 .state-column {
   //display: inline-block;
-  min-width: 350px;
+  width: 350px;
   
   background-color: lightgray;
   border-radius: 3px;
@@ -22,6 +22,17 @@
       font-size: 16px;
       color: gray;
       cursor: pointer;
+    }
+  }
+  
+  .column-body {
+    .card-preview {
+      background-color: white;
+      border-radius: 3px;
+      padding: 5px;
+      display: inline-block;
+      width: 100%;
+      white-space: normal;
     }
   }
 }

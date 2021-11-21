@@ -9,7 +9,7 @@ import {Space} from "antd";
 export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
     
     const columns = props.states.map((s) => {
-        return <StateColumn name={s.name} key={s.id} id={s.id} onRemove={props.onRemove} onEdit={props.onEditStateClick}/>
+        return <StateColumn name={s.name} key={s.id} id={s.id} onRemove={props.onRemove} onEdit={props.onEditStateClick} cards={s.cards}/>
     })
     
     return <div className="column-state-view">

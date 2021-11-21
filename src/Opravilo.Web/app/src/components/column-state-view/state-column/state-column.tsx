@@ -1,6 +1,6 @@
 import React from "react"
-import {IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from "./types";
-import {Dropdown, Empty, Menu, Popconfirm} from "antd";
+import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from "./types";
+import {Dropdown, Empty, Menu, Popconfirm, Space} from "antd";
 import {EllipsisOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons";
 
 import "./state-column.scss"
@@ -28,11 +28,32 @@ const ColumnHeader = (props: IColumnHeaderProps): JSX.Element => {
         </header>
 }
 
+const CardPreview = (props: ICardPreviewProps): JSX.Element => {
+    const {name} = props
+    return <div className="card-preview">
+            <h3>{name}</h3>
+        </div>
+}
+
+const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
+    const {cards} = props;
+    
+    if (!(cards && cards.length > 0)) {
+        return <Empty />
+    }    
+    
+    const toRender = cards.map((c, i) => {
+        return <CardPreview name={c.name} key={i}/>
+    });
+    
+    return <div className="column-body"><Space direction="vertical" style={{width: "100%"}}>{toRender}</Space></div>
+}
+
 export const StateColumn = (props: IStateColumnProps): JSX.Element => {
-    const {name, id, onRemove, onEdit} = props
+    const {name, id, onRemove, onEdit, cards} = props
     
     return <div className="state-column">
         <ColumnHeader id={id} name={name} onRemove={onRemove} onEdit={onEdit} />
-        <Empty />
+        <ColumnBody cards={cards} />
     </div>
 }
