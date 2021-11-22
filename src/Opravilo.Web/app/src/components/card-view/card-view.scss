@@ -1,24 +1,31 @@
 .card-view {
   header {
-    background-color: lightgreen;
+    //background-color: lightgreen;
   }
+  
+  min-height: 600px;
   
   .body-wrapper {
     display: flex;
     
     .description-etc {
       width: 100%;
-      background-color: pink;
+      //background-color: pink;
+      
+      .header {
+        color: #5e6c84;
+      }
     }
     
     .buttons-panel {
-      background-color: lightblue;
+      //background-color: lightblue;
       width: 250px;
       
       .wrapper {
                 
         .header {
           color: #5e6c84;
+          //margin-bottom: 0;
           //margin-left: 16px;
         }
 
