@@ -1,8 +1,7 @@
-import React from "react";
-import { Col, Row } from "antd";
-import {Card} from "antd";
-import { Link } from "react-router-dom";
-import { LoginFormContainer } from "../../containers";
+import React from 'react'
+import { Col, Row, Card } from 'antd'
+import { Link } from 'react-router-dom'
+import { LoginFormContainer } from '../../containers'
 
 const layout = {
     lg: {
@@ -19,7 +18,7 @@ const layout = {
     xs: {
         span: 24
     }
-};
+}
 
 export const LoginPage = (): JSX.Element => (
     <Row>
@@ -29,4 +28,4 @@ export const LoginPage = (): JSX.Element => (
             </Card>
         </Col>
     </Row>
-);
+)

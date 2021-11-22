@@ -1,4 +1,4 @@
-import {ICreateProjectArgs, IEditProjectArgs, IProjectModel} from "../../store/home/types";
+import {ICreateProjectArgs, IEditProjectArgs} from '../../store/home/types'
 
 export interface IFormProperties {
     name: string

@@ -1,7 +1,7 @@
-import {getClient} from "../../api/BaseClient";
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ICreateProjectArgs, IEditProjectArgs} from "./types";
-import {CreateProjectRequest, UpdateProjectRequest} from "../../api/client";
+import {getClient} from '../../api/BaseClient'
+import {createAsyncThunk} from '@reduxjs/toolkit'
+import {ICreateProjectArgs, IEditProjectArgs} from './types'
+import {CreateProjectRequest, UpdateProjectRequest} from '../../api/client'
 
 const client = getClient()
 

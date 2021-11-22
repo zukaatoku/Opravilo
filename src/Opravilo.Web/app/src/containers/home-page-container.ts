@@ -1,8 +1,8 @@
-import {AppDispatch, AppState} from "../store/store";
-import {HomePage, IHomePageProps} from "../pages/home";
-import {connect} from "react-redux";
-import {fetchProjects} from "../store/home/thunks";
-import {showCreateProjectModal} from "../store/home/actions";
+import {AppDispatch, AppState} from '../store/store'
+import {HomePage, IHomePageProps} from '../pages/home'
+import {connect} from 'react-redux'
+import {fetchProjects} from '../store/home/thunks'
+import {showCreateProjectModal} from '../store/home/actions'
 
 const mapStateToProps = (state: AppState) : Partial<IHomePageProps> => ({
     fetchingProjects: state.home.fetchingProjects,

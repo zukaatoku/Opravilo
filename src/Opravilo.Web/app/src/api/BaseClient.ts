@@ -1,38 +1,36 @@
-import axios from "axios";
-import {Client} from "./client";
+import axios from 'axios'
+import {Client} from './client'
 
 async function tryRefreshToken(): Promise<boolean> {
-    console.log("refreshing token...");
-    const axiosClient = axios.create({withCredentials: true});
-    const client = new Client(undefined, axiosClient);
+    const axiosClient = axios.create({withCredentials: true})
+    const client = new Client(undefined, axiosClient)
     try {
-        const res = await client.refresh();
-        return res.isSuccess;
+        const res = await client.refresh()
+        return res.isSuccess
     } catch(e) {
-        console.log(e);
-        return false;
+        console.log(e)
+        return false
     }
 }
 
 export function getClient(): Client {
-    // todo: inherit "BaseClient" from generated client
-    // todo: npm packet axios-auth-refresh
-    const client = axios.create({withCredentials: true});
+    // todo: check npm packet axios-auth-refresh
+    const client = axios.create({withCredentials: true})
     
     client.interceptors.response.use((success) => {
-        return success;
+        return success
     }, async (err) => {
-            const original = err.config;
+            const original = err.config
             if (err.response.status === 401 && !err.config.__isRetryRequest) {
-                const success = await tryRefreshToken();
+                const success = await tryRefreshToken()
 
                 if (!success) {
-                    window.location.href = "/";
+                    window.location.href = '/'
                 }
                 else {
-                    return axios.request(original);
+                    return axios.request(original)
                 }
             }
-    });
-    return new Client(undefined, client);
+    })
+    return new Client(undefined, client)
 }

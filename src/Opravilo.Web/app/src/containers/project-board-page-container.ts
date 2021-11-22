@@ -1,14 +1,14 @@
-import {IProjectBoardPageProps, ProjectBoardPage} from "../pages/project-board";
-import {AppDispatch, AppState} from "../store/store";
-import {connect} from "react-redux";
-import {fetchProject, removeState} from "../store/project/thunks";
+import {IProjectBoardPageProps, ProjectBoardPage} from '../pages/project-board'
+import {AppDispatch, AppState} from '../store/store'
+import {connect} from 'react-redux'
+import {fetchProject, removeState} from '../store/project/thunks'
 import {
     closeCardViewModal,
     hideStateModal,
     showCardViewModal,
     showEditStateModal,
     showStateModal
-} from "../store/project/actions";
+} from '../store/project/actions'
 
 const mapStateToProps = (state: AppState) : Partial<IProjectBoardPageProps> => ({
     fetchingProject: state.project.fetchingCurrentProject,

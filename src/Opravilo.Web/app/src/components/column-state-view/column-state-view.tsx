@@ -1,10 +1,10 @@
-import React from "react"
-import {IColumnStateViewProps} from "./types";
-import {StateColumn} from "./state-column";
+import React from 'react'
+import {IColumnStateViewProps} from './types'
+import {StateColumn} from './state-column'
+import {AddStateButton} from './state-column/add-state-button'
+import {Space} from 'antd'
 
-import "./column-state-view.scss"
-import {AddStateButton} from "./state-column/add-state-button";
-import {Space} from "antd";
+import './column-state-view.scss'
 
 export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
 

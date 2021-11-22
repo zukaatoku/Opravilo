@@ -1,8 +1,9 @@
-import React from "react"
-import "./state-column.scss"
-import {PlusOutlined} from "@ant-design/icons";
-import {Button} from "antd";
-import {IAddStateColumnProps} from "./types";
+import React from 'react'
+import {PlusOutlined} from '@ant-design/icons'
+import {Button} from 'antd'
+import {IAddStateColumnProps} from './types'
+
+import './state-column.scss'
 
 export const AddStateButton = (props: IAddStateColumnProps): JSX.Element => {
     const {onClick} = props

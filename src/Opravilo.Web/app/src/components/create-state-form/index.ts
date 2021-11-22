@@ -1,2 +1,2 @@
-export {CreateStateForm} from "./create-state-form"
-export type {ICreateStateFormProps} from "./types"
+export {CreateStateForm} from './create-state-form'
+export type {ICreateStateFormProps} from './types'

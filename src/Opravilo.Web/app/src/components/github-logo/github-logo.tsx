@@ -1,6 +1,7 @@
-import React from "react";
-import {GithubLogoProps} from "./types";
-import "./github-logo.scss";
+import React from 'react'
+import {GithubLogoProps} from './types'
+
+import './github-logo.scss'
 
 export const GithubLogo = (props: GithubLogoProps): JSX.Element => (
     <a href={props.url} target="_blank" title={props.prompt}>
@@ -10,4 +11,4 @@ export const GithubLogo = (props: GithubLogoProps): JSX.Element => (
             </g>
         </svg>
     </a>
-);
+)

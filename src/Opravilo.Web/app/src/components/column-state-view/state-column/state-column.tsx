@@ -1,10 +1,10 @@
-import React from "react"
-import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from "./types";
-import {Button, Dropdown, Menu, Popconfirm, Space} from "antd";
-import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined} from "@ant-design/icons";
-import {AddCardButton} from "./add-card-button";
+import React from 'react'
+import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from './types'
+import {Button, Dropdown, Menu, Popconfirm, Space} from 'antd'
+import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined} from '@ant-design/icons'
+import {AddCardButton} from './add-card-button'
 
-import "./state-column.scss"
+import './state-column.scss'
 
 const menu = (props: IContextMenuProps) => {
     return <Menu>
@@ -12,7 +12,7 @@ const menu = (props: IContextMenuProps) => {
             Edit
         </Menu.Item>
         <Menu.Item key="2" icon={<DeleteOutlined/>} danger>
-            <Popconfirm title="Are you sure?" icon={<DeleteOutlined style={{color: "red"}}/>} okText="Yes"
+            <Popconfirm title="Are you sure?" icon={<DeleteOutlined style={{color: 'red'}}/>} okText="Yes"
                         cancelText="No" onConfirm={() => props.onRemove(props.id)}>
                 Remove
             </Popconfirm>
@@ -39,14 +39,14 @@ const CardPreview = (props: ICardPreviewProps): JSX.Element => {
 }
 
 const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
-    const {cards, onViewCardClick} = props;
+    const {cards, onViewCardClick} = props
     
     const cardsList = cards.map((c, i) => {
         return <CardPreview name={c.name} key={i} id={c.id} onViewCardClick={onViewCardClick}/>
-    });
+    })
     
     return <div className="column-body">
-        <Space direction="vertical" style={{width: "100%"}}>
+        <Space direction="vertical" style={{width: '100%'}}>
             {cardsList}
             <AddCardButton />
         </Space>

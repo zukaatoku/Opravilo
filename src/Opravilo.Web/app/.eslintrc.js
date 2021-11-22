@@ -8,4 +8,15 @@ module.exports = {
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
     ],
+    rules: {
+        "semi": "off",
+        "@typescript-eslint/semi": [
+            "error",
+            "never"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ]
+    }
 };

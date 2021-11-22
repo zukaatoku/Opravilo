@@ -1,4 +1,4 @@
-import {IFullStateModel} from "../../store/project/types";
+import {IFullStateModel} from '../../store/project/types'
 
 export interface IColumnStateViewProps {
     states: IFullStateModel[]

@@ -1,6 +1,6 @@
 export interface IFormProperties {
-    username: string,
-    displayName: string,
+    username: string
+    displayName: string
     password: string
 }
 

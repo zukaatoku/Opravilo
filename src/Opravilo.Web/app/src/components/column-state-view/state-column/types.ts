@@ -1,4 +1,4 @@
-import {ICardModel} from "../../../store/project/types";
+import {ICardModel} from '../../../store/project/types'
 
 export interface IStateColumnProps {
     id: number

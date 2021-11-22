@@ -1,8 +1,8 @@
-import {AnyAction, combineReducers, configureStore} from "@reduxjs/toolkit"
-import {RootStateOrAny} from "react-redux";
+import {AnyAction, combineReducers, configureStore} from '@reduxjs/toolkit'
+import {RootStateOrAny} from 'react-redux'
 import { userReducer } from './user/reducer'
-import {homeReducer} from "./home/reducer";
-import {projectReducer} from "./project/reducer";
+import {homeReducer} from './home/reducer'
+import {projectReducer} from './project/reducer'
 
 const appReducer = combineReducers({
     user: userReducer,
@@ -12,10 +12,10 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: RootStateOrAny, action: AnyAction) => {
     // todo: dirty
-    if (action.type === "onLogout/fulfilled") {
+    if (action.type === 'onLogout/fulfilled') {
         return appReducer(undefined, action)
     }
-    return appReducer(state, action);
+    return appReducer(state, action)
 }
 
 export const store = configureStore({
