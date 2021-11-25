@@ -1,8 +1,8 @@
 import {getClient} from '../../api/BaseClient'
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {AppState} from '../store'
-import {CreateStateRequest, UpdateStateRequest} from '../../api/client'
-import {IEditStateArgs} from './types'
+import {CreateStateRequest, UpdateCardRequest, UpdateStateRequest} from '../../api/client'
+import {ICardModel, IEditStateArgs} from './types'
 
 const client = getClient()
 
@@ -48,8 +48,23 @@ export const editState = createAsyncThunk(
         const request: UpdateStateRequest = new UpdateStateRequest({
             name: args.name
         })
-
+        
         await client.states2(projectId, args.stateId, request)
         dispatch(fetchProject(projectId))
+    }
+)
+
+export const editCard = createAsyncThunk(
+    'editCard',
+    async (args: ICardModel, {getState}) => {
+        const appState = getState() as AppState
+        const projectId = appState.project.currentProject.id
+        
+        const request: UpdateCardRequest = new UpdateCardRequest({
+            name: args.name,
+            description: args.description
+        })
+        
+        return await client.cards2(args.id, projectId, request)
     }
 )

@@ -1,13 +1,20 @@
 import {IProjectState} from './types'
 import {createReducer} from '@reduxjs/toolkit'
-import {addState, editState, fetchProject, removeState} from './thunks'
-import {closeCardViewModal, hideStateModal, showCardViewModal, showEditStateModal, showStateModal} from './actions'
+import {addState, editCard, editState, fetchProject, removeState} from './thunks'
+import {
+    closeCardViewModal,
+    hideStateModal,
+    showCardViewModal,
+    showEditStateModal,
+    showStateModal,
+} from './actions'
 
 const initialState: IProjectState = {
     fetchingCurrentProject: false,
     createEditStateModalVisible: false,
     fetchingCreateEditState: false,
-    cardViewModalVisible: false
+    cardViewModalVisible: false,
+    fetchingCard: false
 }
 
 export const projectReducer = createReducer(initialState, (builder) => {
@@ -61,5 +68,29 @@ export const projectReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(closeCardViewModal, (state) => {
         return {...state, selectedCardId: undefined, cardViewModalVisible: false}
+    })
+    builder.addCase(editCard.pending, (state) => {
+        return {...state, fetchingCard: true}
+    })
+    builder.addCase(editCard.fulfilled, (state, {payload}) => {
+        /* eslint-disable */
+        // @ts-ignore
+        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
+        const id = payload.id
+        let  {states} = state.currentProject
+
+        states = [...states]
+
+        const stateColumnIndex = states.findIndex(s => s.cards.some(c => c.id == id))
+        const stateColumn = states[stateColumnIndex]
+        const stateCards = [...stateColumn.cards]
+        const index = stateCards.findIndex(s => s.id == id)
+        stateCards.splice(index, 1, payload)
+        states.splice(stateColumnIndex, 1,{...stateColumn, cards: stateCards})
+
+        return {...state, currentProject: {...state.currentProject, states: [...states]}, fetchingCard: false}
+    })
+    builder.addCase(editCard.rejected, (state) => {
+        return {...state, fetchingCard: false }
     })
 })

@@ -9,6 +9,8 @@ export interface IProjectState {
     
     cardViewModalVisible: boolean
     selectedCardId?: number
+    
+    fetchingCard: boolean
 }
 
 export interface IFullProjectModel {
