@@ -1,21 +1,30 @@
 import React from 'react'
 import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from './types'
-import {Button, Dropdown, Menu, Popconfirm, Space} from 'antd'
+import {Button, Dropdown, Menu, Modal, Space} from 'antd'
 import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined} from '@ant-design/icons'
 import {AddCardButton} from './add-card-button'
 
 import './state-column.scss'
 
 const menu = (props: IContextMenuProps) => {
+    
+    const onRemoveClick = () => {
+        Modal.confirm({
+            title: 'Remove state',
+            content: 'Are you sure you want to remove this state?',
+            icon: <DeleteOutlined />,
+            onOk: () => {
+                props.onRemove(props.id)
+            }
+        })
+    }
+    
     return <Menu>
         <Menu.Item key="1" icon={<EditOutlined/>} onClick={() => props.onEdit(props.id)}>
             Edit
         </Menu.Item>
-        <Menu.Item key="2" icon={<DeleteOutlined/>} danger>
-            <Popconfirm title="Are you sure?" icon={<DeleteOutlined style={{color: 'red'}}/>} okText="Yes"
-                        cancelText="No" onConfirm={() => props.onRemove(props.id)}>
-                Remove
-            </Popconfirm>
+        <Menu.Item key="2" icon={<DeleteOutlined/>} danger onClick={onRemoveClick}>
+            Remove
         </Menu.Item>
     </Menu>
 }
