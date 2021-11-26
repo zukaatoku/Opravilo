@@ -8,4 +8,5 @@ export interface IColumnStateViewProps {
     onEditStateClick: (stateId: number) => void
 
     onViewCardClick: (cardId: number) => void
+    onAddCardClick: (stateId: number) => void
 }

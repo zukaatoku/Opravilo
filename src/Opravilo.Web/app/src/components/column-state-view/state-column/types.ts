@@ -10,6 +10,7 @@ export interface IStateColumnProps {
     onEdit: (id: number) => void
 
     onViewCardClick: (cardId: number) => void
+    onAddCardClick: (stateId: number) => void
 }
 
 export interface IColumnHeaderProps {
@@ -23,6 +24,8 @@ export interface IColumnBodyProps {
     cards?: ICardModel[]
 
     onViewCardClick: (cardId: number) => void
+    onAddCardClick: (stateId: number) => void
+    stateId: number
 }
 
 export interface ICardPreviewProps {
@@ -39,5 +42,9 @@ export interface IContextMenuProps {
 }
 
 export interface IAddStateColumnProps {
+    onClick: () => void
+}
+
+export interface IAddCardButtonProps {
     onClick: () => void
 }

@@ -1,7 +1,7 @@
 import {getClient} from '../../api/BaseClient'
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {AppState} from '../store'
-import {CreateStateRequest, UpdateCardRequest, UpdateStateRequest} from '../../api/client'
+import {CreateCardRequest, CreateStateRequest, UpdateCardRequest, UpdateStateRequest} from '../../api/client'
 import {ICardModel, IEditStateArgs} from './types'
 
 const client = getClient()
@@ -66,5 +66,21 @@ export const editCard = createAsyncThunk(
         })
         
         return await client.cards2(args.id, projectId, request)
+    }
+)
+
+export const createCard = createAsyncThunk(
+    'createCard',
+    async (args: ICardModel, {getState}) => {
+        const appState = getState() as AppState
+        const projectId = appState.project.currentProject.id
+        const stateId = appState.project.selectedStateId
+
+        const request: CreateCardRequest = new CreateCardRequest({
+            name: args.name,
+            description: args.description
+        })
+
+        return await client.cards(stateId, projectId, request)
     }
 )

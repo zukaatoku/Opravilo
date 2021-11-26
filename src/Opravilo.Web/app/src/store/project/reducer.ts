@@ -1,7 +1,8 @@
 import {IProjectState} from './types'
 import {createReducer} from '@reduxjs/toolkit'
-import {addState, editCard, editState, fetchProject, removeState} from './thunks'
+import {addState, createCard, editCard, editState, fetchProject, removeState} from './thunks'
 import {
+    addCardClick,
     closeCardViewModal,
     hideStateModal,
     showCardViewModal,
@@ -55,6 +56,7 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCreateEditState: true}
     })
     builder.addCase(editState.fulfilled, (state) => {
+        // todo: руками заменить отредактированный стейт
         return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false, selectedStateId: undefined}
     })
     builder.addCase(editState.rejected, (state) => {
@@ -92,5 +94,32 @@ export const projectReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(editCard.rejected, (state) => {
         return {...state, fetchingCard: false }
+    })
+    builder.addCase(addCardClick, (state, {payload}) => {
+        return {...state, selectedCardId: undefined, cardViewModalVisible: true, selectedStateId: payload}
+    })
+    builder.addCase(createCard.pending, (state) => {
+        return {...state, fetchingCard: true}
+    })
+    builder.addCase(createCard.fulfilled, (state, {payload}) => {
+        /* eslint-disable */
+        // @ts-ignore
+        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
+        const id = payload.id
+        let  {states} = state.currentProject
+
+        states = [...states]
+
+        const stateColumnIndex = states.findIndex(s => s.id == state.selectedStateId)
+        const stateColumn = states[stateColumnIndex]
+        const stateCards = [...stateColumn.cards]
+        const index = stateCards.findIndex(s => s.id == id)
+        stateCards.push(payload)
+        states.splice(stateColumnIndex, 1,{...stateColumn, cards: stateCards})
+
+        return {...state, currentProject: {...state.currentProject, states: [...states]}, fetchingCard: false, cardViewModalVisible: false, selectedStateId: undefined}
+    })
+    builder.addCase(createCard.rejected, (state) => {
+        return {...state, fetchingCard: false, cardViewModalVisible: false, selectedStateId: undefined }
     })
 })

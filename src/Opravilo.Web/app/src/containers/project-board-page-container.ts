@@ -3,6 +3,7 @@ import {AppDispatch, AppState} from '../store/store'
 import {connect} from 'react-redux'
 import {fetchProject, removeState} from '../store/project/thunks'
 import {
+    addCardClick,
     closeCardViewModal,
     hideStateModal,
     showCardViewModal,
@@ -24,7 +25,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) : Partial<IProjectBoardPagePr
     onAddClick: () => dispatch(showStateModal()),
     onEditClick: (stateId) => dispatch(showEditStateModal(stateId)),
     onViewCardClick: (cardId) => dispatch(showCardViewModal(cardId)),
-    onCloseCardViewModal: () => dispatch(closeCardViewModal())
+    onCloseCardViewModal: () => dispatch(closeCardViewModal()),
+    onAddCardClick: (stateId) => dispatch(addCardClick(stateId))
 })
 
 export const ProjectBoardPageContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectBoardPage)

@@ -39,7 +39,7 @@ const CardPreview = (props: ICardPreviewProps): JSX.Element => {
 }
 
 const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
-    const {cards, onViewCardClick} = props
+    const {cards, onViewCardClick, onAddCardClick, stateId} = props
     
     const cardsList = cards.map((c, i) => {
         return <CardPreview name={c.name} key={i} id={c.id} onViewCardClick={onViewCardClick}/>
@@ -48,16 +48,16 @@ const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
     return <div className="column-body">
         <Space direction="vertical" style={{width: '100%'}}>
             {cardsList}
-            <AddCardButton />
+            <AddCardButton onClick={() => onAddCardClick(stateId)}/>
         </Space>
     </div>
 }
 
 export const StateColumn = (props: IStateColumnProps): JSX.Element => {
-    const {name, id, onRemove, onEdit, cards, onViewCardClick} = props
+    const {name, id, onRemove, onEdit, cards, onViewCardClick, onAddCardClick} = props
     
     return <div className="state-column">
         <ColumnHeader id={id} name={name} onRemove={onRemove} onEdit={onEdit} />
-        <ColumnBody cards={cards} onViewCardClick={onViewCardClick}/>
+        <ColumnBody cards={cards} onViewCardClick={onViewCardClick} onAddCardClick={onAddCardClick} stateId={id}/>
     </div>
 }

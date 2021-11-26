@@ -24,7 +24,7 @@ export const UserDropdown = (props: IUserDropdownProps): JSX.Element => {
         <Spin spinning={fetchingDisplayName}>
             <Menu mode="horizontal" theme="dark">
                 <SubMenu title={displayName} icon={<UserOutlined/>} key="0">
-                    <Menu.Item onClick={logout} danger>Logout</Menu.Item>
+                    <Menu.Item onClick={logout} danger key="1">Logout</Menu.Item>
                 </SubMenu>
             </Menu>
         </Spin>)

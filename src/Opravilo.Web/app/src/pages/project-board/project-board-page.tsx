@@ -19,7 +19,8 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         onEditClick,
         onViewCardClick,
         cardViewModalVisible,
-        onCloseCardViewModal
+        onCloseCardViewModal,
+        onAddCardClick
     } = props
     const id = Number(props.match.params.id)
 
@@ -32,7 +33,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
             <>
                 <Link to="/home">Back to Home</Link>
                 <h1>{currentProject.name}</h1>
-                <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick}/>
+                <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick} onAddCardClick={onAddCardClick}/>
             </>
         )
         : <Empty/>

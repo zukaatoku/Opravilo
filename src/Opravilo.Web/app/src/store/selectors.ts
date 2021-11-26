@@ -23,7 +23,7 @@ export const selectedProjectSelector = createSelector(
 export const selectedCardSelector = createSelector(
     [(state: AppState) => state.project.currentProject, (state: AppState) => state.project.selectedCardId],
     (project, selectedCardId) : ICardModel => {
-        const state = project.states.filter((s: IFullStateModel) => s.cards.filter(c => c.id == selectedCardId) != undefined)[0]
-        return state.cards.filter((c: ICardModel) => c.id == selectedCardId)[0]
+        const state = project.states.filter((s: IFullStateModel) => s.cards.some(c => c.id == selectedCardId))[0]
+        return state != undefined ? state.cards.filter((c: ICardModel) => c.id == selectedCardId)[0] : undefined
     }
 )

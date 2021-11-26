@@ -25,10 +25,16 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
     }
     
     const onFinish = (values: ICardModel) => {
-        onSaveClick({...values, id: card.id })
-            .then(() => {
-                onCancelClick()  
-            })
+        const newCard = card != undefined ? {...values, id: card.id} : {...values}
+        
+        if (card) {
+            onSaveClick(newCard)
+                .then(() => {
+                    onCancelClick()
+                })   
+        } else {
+            onSaveClick(newCard)
+        }
     }
     
     return <div className="card-view">
@@ -51,7 +57,7 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
                     <Space direction="vertical" style={{width: '100%'}} className="wrapper" size={0}>
                         <h4 className="header">Actions</h4>
                         <Button icon={<CheckOutlined />} type="text" block className="button" onClick={onSaveButtonClick} loading={fetchingCard}>Save</Button>
-                        <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick}>Cancel</Button>
+                        { card && <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick}>Cancel</Button>}
                         <Button icon={<DeleteOutlined />} type="text" block danger className="button">Remove</Button>
                     </Space>
                 </div>
@@ -90,7 +96,12 @@ const ReadMode = (props: IReadModeProps): JSX.Element => {
 
 export const CardView = (props: ICardViewProps): JSX.Element => {
     const {card, fetchingCard, onSaveClick} = props
-    const [editMode, setEditMode] = useState(false)
+    
+    const initialState = card == undefined
+    
+    console.log(initialState)
+    
+    const [editMode, setEditMode] = useState(initialState)
     
     // todo: поискать правило про style прям в компоненте
     // todo: transpileOnly в этом компоненте починило какую-то супер блядскую ошибку с выбиванием вебпак вотча
