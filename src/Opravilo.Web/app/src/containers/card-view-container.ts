@@ -10,8 +10,8 @@ const mapStateToProps = (state: AppState) : Partial<ICardViewProps> => ({
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) : Partial<ICardViewProps> => ({
-    // todo: split to 'add' and 'save'
-    onSaveClick: (args) => args.id != undefined ?  dispatch(editCard(args)) : dispatch(createCard(args)),
+    onSaveClick: (args) => dispatch(editCard(args)),
+    onAddClick: (args) =>  dispatch(createCard(args)),
     onRemoveClick: (cardId) => dispatch(removeCard(cardId))
 })
 

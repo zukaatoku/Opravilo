@@ -55,9 +55,16 @@ export const projectReducer = createReducer(initialState, (builder) => {
     builder.addCase(editState.pending, (state) => {
         return {...state, fetchingCreateEditState: true}
     })
-    builder.addCase(editState.fulfilled, (state) => {
-        // todo: руками заменить отредактированный стейт
-        return {...state, fetchingCreateEditState: false, createEditStateModalVisible: false, selectedStateId: undefined}
+    builder.addCase(editState.fulfilled, (state, {payload}) => {
+        const {states} = state.currentProject
+        const newStates = states.map((s) => {
+            if (s.id == payload.id) {
+                return {...s, name: payload.name}
+            }
+            return s
+        })
+                
+        return {...state, currentProject: {...state.currentProject, states: newStates},  fetchingCreateEditState: false, createEditStateModalVisible: false, selectedStateId: undefined}
     })
     builder.addCase(editState.rejected, (state) => {
         return {...state, fetchingCreateEditState: false, selectedStateId: undefined}

@@ -11,7 +11,7 @@ interface IEditModeProps extends ICardViewProps {
 
 const EditMode = (props: IEditModeProps): JSX.Element => {
     const [form] = Form.useForm()
-    const {card, onCancelClick, fetchingCard, onSaveClick} = props
+    const {card, onCancelClick, fetchingCard, onSaveClick, onAddClick} = props
     
     const {Item} = Form
     const {TextArea} = Input
@@ -33,7 +33,7 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
                     onCancelClick()
                 })   
         } else {
-            onSaveClick(newCard)
+            onAddClick(newCard)
         }
     }
     
@@ -58,7 +58,7 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
                         <h4 className="header">Actions</h4>
                         <Button icon={<CheckOutlined />} type="text" block className="button" onClick={onSaveButtonClick} loading={fetchingCard}>Save</Button>
                         { card && <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick}>Cancel</Button>}
-                        <Button icon={<DeleteOutlined />} type="text" block danger className="button">Remove</Button>
+                        { card && <Button icon={<DeleteOutlined />} type="text" block danger className="button">Remove</Button> }
                     </Space>
                 </div>
             </div>
@@ -107,7 +107,7 @@ const ReadMode = (props: IReadModeProps): JSX.Element => {
 }
 
 export const CardView = (props: ICardViewProps): JSX.Element => {
-    const {card, fetchingCard, onSaveClick, onRemoveClick} = props
+    const {card, fetchingCard, onSaveClick, onRemoveClick, onAddClick} = props
     
     const initialState = card == undefined
     
@@ -118,6 +118,6 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
     // todo: https://www.npmjs.com/package/react-textarea-autosize
     
     return editMode 
-        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemoveClick={onRemoveClick}/> 
+        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemoveClick={onRemoveClick} onAddClick={onAddClick}/> 
         : <ReadMode card={card} onEditClick={() => setEditMode(true)} onRemoveClick={onRemoveClick}/>
 }

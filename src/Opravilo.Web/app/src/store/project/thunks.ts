@@ -41,7 +41,7 @@ export const addState = createAsyncThunk(
 
 export const editState = createAsyncThunk(
     'editState',
-    async (args: IEditStateArgs, {dispatch, getState}) => {
+    async (args: IEditStateArgs, {getState}) => {
         const appState = getState() as AppState
         const projectId = appState.project.currentProject.id
 
@@ -49,8 +49,7 @@ export const editState = createAsyncThunk(
             name: args.name
         })
         
-        await client.states2(projectId, args.stateId, request)
-        dispatch(fetchProject(projectId))
+        return await client.states2(projectId, args.stateId, request)
     }
 )
 
