@@ -1,6 +1,6 @@
 import {IProjectState} from './types'
 import {createReducer} from '@reduxjs/toolkit'
-import {addState, createCard, editCard, editState, fetchProject, removeState} from './thunks'
+import {addState, createCard, editCard, editState, fetchProject, removeCard, removeState} from './thunks'
 import {
     addCardClick,
     closeCardViewModal,
@@ -121,5 +121,28 @@ export const projectReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(createCard.rejected, (state) => {
         return {...state, fetchingCard: false, cardViewModalVisible: false, selectedStateId: undefined }
+    })
+    builder.addCase(removeCard.pending, (state) => {
+        return {...state, fetchingCard: true}
+    })
+    builder.addCase(removeCard.fulfilled, (state, {payload}) => {
+        /* eslint-disable */
+        // @ts-ignore
+        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
+        let  {states} = state.currentProject
+
+        states = [...states]
+
+        const stateColumnIndex = states.findIndex(s => s.cards.some(c => c.id == payload))
+        const stateColumn = states[stateColumnIndex]
+        const stateCards = [...stateColumn.cards]
+        const index = stateCards.findIndex(s => s.id == payload)
+        stateCards.splice(index, 1)
+        states.splice(stateColumnIndex, 1,{...stateColumn, cards: stateCards})
+
+        return {...state, currentProject: {...state.currentProject, states: [...states]}, fetchingCard: false, cardViewModalVisible: false}
+    })
+    builder.addCase(removeCard.rejected, (state) => {
+        return {...state, fetchingCard: false, cardViewModalVisible: false }
     })
 })

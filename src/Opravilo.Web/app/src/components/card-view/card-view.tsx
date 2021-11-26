@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {ICardModel, ICardViewProps} from './types'
-import {Button, Form, Input, Space} from 'antd'
+import {Button, Form, Input, Modal, Space} from 'antd'
 import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons'
 
 import './card-view.scss'
@@ -71,7 +71,19 @@ interface IReadModeProps extends ICardViewProps {
 }
 
 const ReadMode = (props: IReadModeProps): JSX.Element => {
-    const {card, onEditClick} = props
+    const {card, onEditClick, onRemoveClick} = props
+    
+    const onRemove = () => {
+        Modal.confirm({
+            title: 'Remove card',
+            content: 'Are you sure you want to remove this card?',
+            icon: <DeleteOutlined />,
+            onOk: () => {
+                onRemoveClick(card.id)
+            }
+        })
+    }
+    
     return <div className="card-view">
         <header>
             <h2 style={{width: '95%'}}>{card.name}</h2>
@@ -87,7 +99,7 @@ const ReadMode = (props: IReadModeProps): JSX.Element => {
                 <Space direction="vertical" style={{width: '100%'}} className="wrapper" size={0}>
                     <h4 className="header">Actions</h4>
                     <Button icon={<EditOutlined />} type="text" block className="button" onClick={onEditClick}>Edit</Button>
-                    <Button icon={<DeleteOutlined />} type="text" block danger className="button">Remove</Button>
+                    <Button icon={<DeleteOutlined />} type="text" block danger className="button" onClick={onRemove}>Remove</Button>
                 </Space>
             </div>
         </div>
@@ -95,11 +107,9 @@ const ReadMode = (props: IReadModeProps): JSX.Element => {
 }
 
 export const CardView = (props: ICardViewProps): JSX.Element => {
-    const {card, fetchingCard, onSaveClick} = props
+    const {card, fetchingCard, onSaveClick, onRemoveClick} = props
     
     const initialState = card == undefined
-    
-    console.log(initialState)
     
     const [editMode, setEditMode] = useState(initialState)
     
@@ -108,6 +118,6 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
     // todo: https://www.npmjs.com/package/react-textarea-autosize
     
     return editMode 
-        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick}/> 
-        : <ReadMode card={card} onEditClick={() => setEditMode(true)}/>
+        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemoveClick={onRemoveClick}/> 
+        : <ReadMode card={card} onEditClick={() => setEditMode(true)} onRemoveClick={onRemoveClick}/>
 }

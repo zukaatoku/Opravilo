@@ -84,3 +84,15 @@ export const createCard = createAsyncThunk(
         return await client.cards(stateId, projectId, request)
     }
 )
+
+export const removeCard = createAsyncThunk(
+    'removeCard',
+    async (cardId: number, {getState}) => {
+        // todo: test delay
+        const appState = getState() as AppState
+        const projectId = appState.project.currentProject.id
+        
+        await client.cards3(projectId, cardId)
+        return cardId
+    }
+)

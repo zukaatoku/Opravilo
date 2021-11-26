@@ -4,6 +4,7 @@ export interface ICardViewProps {
     fetchingCard?: boolean
     // todo: !!! разобраться с any
     onSaveClick?: (changedCard: ICardModel) => Promise<any>
+    onRemoveClick: (cardId: number) => void
 }
 
 export interface ICardModel {
