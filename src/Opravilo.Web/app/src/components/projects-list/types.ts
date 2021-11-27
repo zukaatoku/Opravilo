@@ -4,4 +4,5 @@ export interface IProjectsListProps {
     projects: IProjectModel[]
     
     editProject: (id: number) => void
+    removeProject: (id: number) => void
 }

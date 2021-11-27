@@ -2,6 +2,7 @@ import {getClient} from '../../api/BaseClient'
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ICreateProjectArgs, IEditProjectArgs} from './types'
 import {CreateProjectRequest, UpdateProjectRequest} from '../../api/client'
+import {projectRemoved} from './actions'
 
 const client = getClient()
 
@@ -35,5 +36,13 @@ export const editProjectThunk = createAsyncThunk(
 
         await client.projects4(args.id, request)
         dispatch(fetchProjects())
+    }
+)
+
+export const removeProject = createAsyncThunk(
+    'removeProject',
+    async (projectId: number, {dispatch}) => {
+        await client.projects3(projectId)
+        dispatch(projectRemoved(projectId))
     }
 )

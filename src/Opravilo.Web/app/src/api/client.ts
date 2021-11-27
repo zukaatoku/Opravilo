@@ -1203,9 +1203,9 @@ export interface IUpdateCardRequest {
 }
 
 export class ProjectResponse implements IProjectResponse {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
+    id!: number;
+    name!: string;
+    description!: string;
 
     constructor(data?: IProjectResponse) {
         if (data) {
@@ -1241,9 +1241,9 @@ export class ProjectResponse implements IProjectResponse {
 }
 
 export interface IProjectResponse {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
+    id: number;
+    name: string;
+    description: string;
 }
 
 export class CreateProjectRequest implements ICreateProjectRequest {
