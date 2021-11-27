@@ -55,7 +55,7 @@ const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
     })
     
     return <div className="column-body">
-        <Space direction="vertical" style={{width: '100%'}}>
+        <Space direction="vertical">
             {cardsList}
             <AddCardButton onClick={() => onAddCardClick(stateId)}/>
         </Space>

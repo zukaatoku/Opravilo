@@ -35,20 +35,20 @@ export const EditMode = (props: IEditModeProps): JSX.Element => {
         <Form form={form} onFinish={onFinish}>
             <header>
                 <Item name="name">
-                    <TextArea style={{width: '95%', fontSize: '1.5em', fontWeight: 500, padding: 0, marginBottom: '0.4em'}}  placeholder="Project Title"/>
+                    <TextArea  placeholder="Project Title"/>
                 </Item>
             </header>
             <div className="body-wrapper">
                 <div className="description-etc">
-                    <Space direction="vertical" style={{width: '100%'}}>
+                    <Space direction="vertical">
                         <span><h4 className="header">Description</h4></span>
                         <Item name="description">
-                            <TextArea style={{width: '100%', height: '300px', padding: 0}} />
+                            <TextArea />
                         </Item>
                     </Space>
                 </div>
                 <div className="buttons-panel">
-                    <Space direction="vertical" style={{width: '100%'}} className="wrapper" size={0}>
+                    <Space direction="vertical" className="wrapper" size={0}>
                         <h4 className="header">Actions</h4>
                         <Button icon={<CheckOutlined />} type="text" block className="button" onClick={onSaveButtonClick} loading={fetchingCard}>Save</Button>
                         { card && <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick} loading={fetchingCard}>Cancel</Button>}

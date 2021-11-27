@@ -23,6 +23,7 @@
     "css-loader": "^5.2.7",
     "eslint": "^7.32.0",
     "eslint-loader": "^4.0.2",
+    "eslint-plugin-no-inline-styles": "^1.0.5",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "inline-source-map": "^0.6.2",

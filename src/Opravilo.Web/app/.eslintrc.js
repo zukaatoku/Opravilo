@@ -3,6 +3,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: [
         '@typescript-eslint',
+        "eslint-plugin-no-inline-styles",
     ],
     extends: [
         'eslint:recommended',
@@ -17,6 +18,7 @@ module.exports = {
         "quotes": [
             "error",
             "single"
-        ]
+        ],
+        "no-inline-styles/no-inline-styles": 2
     }
 };
