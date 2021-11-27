@@ -1,7 +1,8 @@
 import React from 'react'
 import {Button, Empty} from 'antd'
+import {IEmptyProjectsListProps} from './types'
 
-export const EmptyProjectsList = (): JSX.Element => {
+export const EmptyProjectsList = ({onCreateNewClick}: IEmptyProjectsListProps): JSX.Element => {
     return <Empty
         description={
             <span>
@@ -9,6 +10,6 @@ export const EmptyProjectsList = (): JSX.Element => {
       </span>
         }
     >
-        <Button type="primary">Create Now</Button>
+        <Button type="primary" onClick={onCreateNewClick}>Create Now</Button>
     </Empty>
 }

@@ -29,7 +29,7 @@ export const HomePage = (props: IHomePageProps): JSX.Element => {
                     <Button type="primary" icon={<PlusOutlined/>} onClick={showCreateProjectModal}>Create</Button>
                 </Space>
             </div>
-            {projectsEmpty ? <EmptyProjectsList/> : <ProjectsListContainer/>}
+            {projectsEmpty ? <EmptyProjectsList onCreateNewClick={showCreateProjectModal}/> : <ProjectsListContainer/>}
             {createProjectModalVisible && <CreateProjectFormContainer />}
         </Spin>
     </div>)
