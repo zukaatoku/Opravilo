@@ -2,8 +2,7 @@ export interface ICardViewProps {
     card: ICardModel
     
     fetchingCard: boolean
-    // todo: !!! разобраться с any
-    onSaveClick: (changedCard: ICardModel) => Promise<any>
+    onSaveClick: (changedCard: ICardModel) => Promise<unknown>
     onAddClick: (newCard: ICardModel) => void
     onRemoveClick: (cardId: number) => void
 }
@@ -26,6 +25,6 @@ export interface IEditModeProps {
     fetchingCard: boolean
     onCancelClick: () => void
     onRemove: () => void
-    onSaveClick: (changedCard: ICardModel) => Promise<any>
+    onSaveClick: (changedCard: ICardModel) => Promise<unknown>
     onAddClick: (newCard: ICardModel) => void
 }
