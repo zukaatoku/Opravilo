@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Extensions;
+using Opravilo.API.Models.Responses.Project;
 using Opravilo.Application.Interfaces.Services;
-using Opravilo.Application.Models.Project;
 using Opravilo.Application.Models.Requests;
 using UpdateProjectRequest = Opravilo.API.Models.Requests.UpdateProjectRequest;
 
@@ -15,32 +17,34 @@ namespace Opravilo.API.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public List<ProjectModel> GetProjects()
+        public List<ProjectResponse> GetProjects()
         {
             var userId = this.GetUserId();
-            return _projectService.GetProjects(userId);
+            return _projectService.GetProjects(userId).Select(_mapper.Map<ProjectResponse>).ToList();
         }
 
         [HttpGet("{projectId:long}")]
-        public FullProjectModel GetProject(long projectId)
+        public FullProjectResponse GetProject(long projectId)
         {
             // todo: check rights
-            return _projectService.GetProject(projectId);
+            return _mapper.Map<FullProjectResponse>(_projectService.GetProject(projectId));
         }
 
         [HttpPost]
-        public ProjectModel CreateProject(
+        public ProjectResponse CreateProject(
             [FromBody] CreateProjectRequest request)
         {
             var userId = this.GetUserId();
-            return _projectService.CreateProject(request, userId);
+            return _mapper.Map<ProjectResponse>(_projectService.CreateProject(request, userId));
         }
         
         [HttpDelete("{id:long}")]
@@ -52,6 +56,7 @@ namespace Opravilo.API.Controllers
         [HttpPatch("{id:long}")]
         public void UpdateProject(long id, [FromBody] UpdateProjectRequest request)
         {
+            // todo: return
             _projectService.UpdateProject(new Application.Models.Requests.UpdateProjectRequest()
             {
                 ProjectId = id,

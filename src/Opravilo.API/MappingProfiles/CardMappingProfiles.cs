@@ -1,6 +1,6 @@
 using AutoMapper;
 using Opravilo.API.Models.Responses.Card;
-using Opravilo.DataAccess.EntityFramework.Models;
+using Opravilo.Application.Models.Project;
 
 namespace Opravilo.API.MappingProfiles
 {

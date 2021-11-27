@@ -9,6 +9,7 @@ namespace Opravilo.API.MappingProfiles
         public StateMappingProfiles()
         {
             CreateMap<StateModel, StateResponse>();
+            CreateMap<FullStateModel, FullStateResponse>();
         }
     }
 }
