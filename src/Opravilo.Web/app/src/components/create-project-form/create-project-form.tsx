@@ -1,16 +1,16 @@
-import React, {useEffect} from "react";
-import {Form, Input, Modal} from "antd";
-import {ICreateProjectFormProps, IFormProperties} from "./types";
+import React, {useEffect} from 'react'
+import {Form, Input, Modal} from 'antd'
+import {ICreateProjectFormProps, IFormProperties} from './types'
 
 const {Item} = Form
 
 const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 19 },
-};
+}
 
 export const CreateProjectForm = (props: ICreateProjectFormProps): JSX.Element => {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
     const {onCancel, fetchingCreateProject, onOk, editingProject, onOkEdit} = props
     
     useEffect(() => {
@@ -32,7 +32,7 @@ export const CreateProjectForm = (props: ICreateProjectFormProps): JSX.Element =
         }
     }
     
-    const title = editingProject ? "Edit Project" : "Create Project"
+    const title = editingProject ? 'Edit Project' : 'Create Project'
     
     return <Modal visible={true} onCancel={onCancel} title={title} onOk={onModalOk} confirmLoading={fetchingCreateProject}>
             <Form {...layout} form={form} onFinish={onFinish}>

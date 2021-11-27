@@ -10,6 +10,6 @@ namespace Opravilo.Application.Models.Project
         public string Description { get; set; }
         
         public UserModel Creator { get; set; }
-        public List<StateModel> States { get; set; }
+        public List<FullStateModel> States { get; set; }
     }
 }

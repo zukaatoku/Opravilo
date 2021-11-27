@@ -1,6 +1,6 @@
 .state-column {
   //display: inline-block;
-  min-width: 350px;
+  width: 350px;
   
   background-color: lightgray;
   border-radius: 3px;
@@ -24,10 +24,25 @@
       cursor: pointer;
     }
   }
-}
+  
+  .column-body {
+    .ant-space {
+      width: 100%;
+    }
+    
+    .card-preview {
+      background-color: white;
+      border-radius: 3px;
+      padding: 5px;
+      display: inline-block;
+      width: 100%;
+      white-space: normal;
+    }
+  }
 
-.add-state-button {
-  width: 350px;
-  color: gray;
-  border-color: gray;
+  .add-card-button {
+    width: 100%;
+    color: gray;
+    border-color: gray;
+  }
 }

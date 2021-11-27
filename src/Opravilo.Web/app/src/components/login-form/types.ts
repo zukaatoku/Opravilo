@@ -1,5 +1,5 @@
 export interface FormProperties {
-    username: string,
+    username: string
     password: string
 }
 

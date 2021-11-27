@@ -14,5 +14,6 @@ namespace Opravilo.DataAccess.EntityFramework
         public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
         public DbSet<ProjectModel> Projects { get; set; }
         public DbSet<StateModel> States { get; set; }
+        public DbSet<CardModel> Cards { get; set; }
     }
 }

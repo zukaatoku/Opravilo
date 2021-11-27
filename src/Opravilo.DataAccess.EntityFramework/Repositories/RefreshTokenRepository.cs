@@ -55,7 +55,8 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public void CleanRefreshTokens(long userId)
         {
-            _context.RemoveRange(_context.RefreshTokens.Where(r => r.UserId == userId));
+            var tokens = _context.RefreshTokens.Where(r => r.UserId == userId).ToList();
+            _context.RemoveRange(tokens);
             _context.SaveChanges();
         }
     }

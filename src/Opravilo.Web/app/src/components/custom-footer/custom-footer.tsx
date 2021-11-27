@@ -1,9 +1,9 @@
-import React from "react";
-import {Layout} from "antd";
-import {GithubLogo} from "../github-logo";
-import "./custom-footer.scss";
+import React from 'react'
+import {Layout} from 'antd'
+import {GithubLogo} from '../github-logo'
+import './custom-footer.scss'
 
-const { Footer } = Layout;
+const { Footer } = Layout
 
 export const CustomFooter = (): JSX.Element => (
     <Footer className="custom-footer">
@@ -11,4 +11,4 @@ export const CustomFooter = (): JSX.Element => (
             <GithubLogo prompt="Project repository" url="https://github.com/ejenin/Opravilo" />
         </div>
     </Footer>
-);
+)

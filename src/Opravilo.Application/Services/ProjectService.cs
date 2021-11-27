@@ -12,11 +12,16 @@ namespace Opravilo.Application.Services
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IStateRepository _stateRepository;
+        private readonly ICardRepository _cardRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IStateRepository stateRepository)
+        public ProjectService(
+            IProjectRepository projectRepository, 
+            IStateRepository stateRepository, 
+            ICardRepository cardRepository)
         {
             _projectRepository = projectRepository;
             _stateRepository = stateRepository;
+            _cardRepository = cardRepository;
         }
 
         public FullProjectModel GetProject(long projectId)
@@ -33,10 +38,16 @@ namespace Opravilo.Application.Services
                         Id = project.Creator.Id,
                         DisplayName = project.Creator.DisplayName
                     },
-                    States = project.States.Select(s => new StateModel()
+                    States = project.States.Select(s => new FullStateModel()
                     {
                         Id = s.Id,
-                        Name = s.Name
+                        Name = s.Name,
+                        Cards = s.Cards.Select(c => new CardModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Description = c.Description,
+                        }).ToList()
                     }).ToList()
                 }
                 : null;
@@ -109,6 +120,33 @@ namespace Opravilo.Application.Services
         public void RemoveState(long stateId)
         {
             _stateRepository.RemoveState(stateId);
+        }
+
+        public CardModel CreateCard(CreateCardRequest request)
+        {
+            var card = _cardRepository.CreateCard(request.StateId, request.Name, request.Description);
+            return new CardModel()
+            {
+                Id = card.Id,
+                Name = card.Name,
+                Description = card.Description,
+            };
+        }
+
+        public CardModel UpdateCard(UpdateCardRequest request)
+        {
+            var card = _cardRepository.UpdateCard(request.CardId, request.Name, request.Description);
+            return new CardModel()
+            {
+                Id = card.Id,
+                Name = card.Name,
+                Description = card.Description,
+            };
+        }
+
+        public void RemoveCard(long cardId)
+        {
+            _cardRepository.RemoveCard(cardId);
         }
     }
 }

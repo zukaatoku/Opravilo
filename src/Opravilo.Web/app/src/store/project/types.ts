@@ -6,24 +6,42 @@ export interface IProjectState {
     fetchingCreateEditState: boolean
     
     selectedStateId?: number
+    
+    cardViewModalVisible: boolean
+    selectedCardId?: number
+    
+    fetchingCard: boolean
 }
 
 export interface IFullProjectModel {
-    id?: number
-    name?: string
-    description?: string
-    states?: IStateModel[]
-    creator?: IUserModel
+    id: number
+    name: string
+    description: string
+    creator: IUserModel
+    states?: IFullStateModel[]
 }
 
 export interface IUserModel {
-    id?: number
-    displayName?: string
+    id: number
+    displayName: string
 }
 
 export interface IStateModel {
-    id?: number
-    name?: string
+    id: number
+    name: string
+}
+
+export interface IFullStateModel {
+    id: number
+    name: string
+    
+    cards?: ICardModel[]
+}
+
+export interface ICardModel {
+    id: number
+    name: string
+    description: string
 }
 
 export interface IEditStateArgs {

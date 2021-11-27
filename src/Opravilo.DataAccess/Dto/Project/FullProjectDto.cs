@@ -8,6 +8,6 @@ namespace Opravilo.DataAccess.Dto.Project
         public string Name { get; init; }
         public string Description { get; init; }
         public UserDto Creator { get; init; }
-        public List<StateDto> States { get; init; }
+        public List<FullStateDto> States { get; init; }
     }
 }

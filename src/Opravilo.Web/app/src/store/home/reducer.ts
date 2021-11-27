@@ -1,7 +1,7 @@
-import {IHomeState} from "./types";
-import {createReducer} from "@reduxjs/toolkit";
-import {createProject, editProjectThunk, fetchProjects} from "./thunks";
-import {editProject, hideCreateProjectModal, showCreateProjectModal,} from "./actions";
+import {IHomeState} from './types'
+import {createReducer} from '@reduxjs/toolkit'
+import {createProject, editProjectThunk, fetchProjects} from './thunks'
+import {editProject, hideCreateProjectModal, showCreateProjectModal,} from './actions'
 
 const initialState: IHomeState = {
     fetchingProjects: false,
@@ -37,7 +37,7 @@ export const homeReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(editProject, (state, {payload}) => {
        return {...state, createProjectsModalVisible: true, selectedProjectId: payload}
-    });
+    })
     builder.addCase(editProjectThunk.pending, (state) => {
         return {...state, fetchingCreateOrEditProject: true}
     })

@@ -1,11 +1,12 @@
-import React, {useEffect} from "react"
-import {IProjectBoardPageProps} from "./types";
-import {Empty, Spin} from "antd";
-import {Link, withRouter} from "react-router-dom";
-import {ColumnStateView} from "../../components/column-state-view";
+import React, {useEffect} from 'react'
+import {IProjectBoardPageProps} from './types'
+import {Empty, Spin} from 'antd'
+import {Link, withRouter} from 'react-router-dom'
+import {ColumnStateView} from '../../components/column-state-view'
+import {CreateStateFormContainer} from '../../containers/modal/create-state-form-container'
+import {CardViewModal} from '../../components/card-view-modal'
 
-import "./project-board-page.scss"
-import {CreateStateFormContainer} from "../../containers/modal/create-state-form-container";
+import './project-board-page.scss'
 
 export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.Element => {
     const {
@@ -15,12 +16,16 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         removeState,
         createEditStateVisible,
         onAddClick,
-        onEditClick
-    } = props;
-    const id = Number(props.match.params.id);
+        onEditClick,
+        onViewCardClick,
+        cardViewModalVisible,
+        onCloseCardViewModal,
+        onAddCardClick
+    } = props
+    const id = Number(props.match.params.id)
 
     useEffect(() => {
-        fetchProject(id);
+        fetchProject(id)
     }, [fetchProject])
 
     const toShow = currentProject
@@ -28,7 +33,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
             <>
                 <Link to="/home">Back to Home</Link>
                 <h1>{currentProject.name}</h1>
-                <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick}/>
+                <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick} onAddCardClick={onAddCardClick}/>
             </>
         )
         : <Empty/>
@@ -36,5 +41,6 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
     return <div className="project-board-page">
         <Spin spinning={fetchingProject}>{toShow}</Spin>
         {createEditStateVisible && <CreateStateFormContainer />}
+        {cardViewModalVisible && <CardViewModal onClose={onCloseCardViewModal} />}
     </div>
-});
+})

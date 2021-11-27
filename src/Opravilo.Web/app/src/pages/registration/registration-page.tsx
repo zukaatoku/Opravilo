@@ -1,7 +1,7 @@
-import React from "react";
-import {Card, Col, Row} from "antd";
-import { Link } from "react-router-dom";
-import { RegistrationFormContainer } from "../../containers";
+import React from 'react'
+import {Card, Col, Row} from 'antd'
+import { Link } from 'react-router-dom'
+import { RegistrationFormContainer } from '../../containers'
 
 const layout = {
     lg: {
@@ -18,7 +18,7 @@ const layout = {
     xs: {
         span: 24
     }
-};
+}
 
 export const RegistrationPage = (): JSX.Element => (
     <Row>
@@ -28,4 +28,4 @@ export const RegistrationPage = (): JSX.Element => (
             </Card>
         </Col>
     </Row>
-);
+)

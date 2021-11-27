@@ -1,12 +1,13 @@
-import {Layout} from "antd";
-import Logo from "../../assets/logo.svg";
-import React from "react";
-import {CustomFooter} from "../../components/custom-footer";
-import "./user-layout.scss"
-import { UserDropdownContainer } from "../../containers";
-import {ILayoutProps} from "../types";
+import {Layout} from 'antd'
+import Logo from '../../assets/logo.svg'
+import React from 'react'
+import {CustomFooter} from '../../components/custom-footer'
+import { UserDropdownContainer } from '../../containers'
+import {ILayoutProps} from '../types'
 
-const { Header, Content } = Layout;
+import './user-layout.scss'
+
+const { Header, Content } = Layout
 
 export const UserLayout = (props: ILayoutProps): JSX.Element => {
     // todo: avatar
