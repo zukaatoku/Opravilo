@@ -1,25 +1,29 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Models.Requests;
+using Opravilo.API.Models.Responses.State;
 using Opravilo.Application.Interfaces.Services;
 using Opravilo.Application.Models.Project;
 
 namespace Opravilo.API.Controllers
 {
     [Authorize]
-    [Route("api/projects/{projectId:long}/states")]
     [ApiController]
+    [Route("api/projects/{projectId:long}/states")]
     public class StateController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IMapper _mapper;
 
-        public StateController(IProjectService projectService)
+        public StateController(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public StateModel CreateState(
+        public StateResponse CreateState(
             long projectId, 
             [FromBody] CreateStateRequest request)
         {
@@ -29,11 +33,11 @@ namespace Opravilo.API.Controllers
                 ProjectId = projectId
             });
 
-            return state;
+            return _mapper.Map<StateResponse>(state);
         }
 
         [HttpPatch("{stateId:long}")]
-        public StateModel UpdateState(
+        public StateResponse UpdateState(
             long projectId,
             long stateId,
             [FromBody] UpdateStateRequest request)
@@ -44,7 +48,7 @@ namespace Opravilo.API.Controllers
                 Name = request.Name,
                 ProjectId = projectId
             });
-            return state;
+            return _mapper.Map<StateResponse>(state);
         }
 
         [HttpDelete("{stateId:long}")]

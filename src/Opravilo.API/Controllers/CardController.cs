@@ -1,25 +1,28 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Opravilo.API.Models.Requests;
+using Opravilo.API.Models.Responses.Card;
 using Opravilo.Application.Interfaces.Services;
-using Opravilo.Application.Models.Project;
 
 namespace Opravilo.API.Controllers
 {
     [Authorize]
-    [Route("api/projects/{projectId:long}")]
     [ApiController]
+    [Route("api/projects/{projectId:long}")]
     public class CardController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IMapper _mapper;
 
-        public CardController(IProjectService projectService)
+        public CardController(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
+            _mapper = mapper;
         }
 
         [HttpPost("states/{stateId:long}/cards")]
-        public CardModel CreateCard(
+        public CardResponse CreateCard(
             long stateId,
             long projectId,
             [FromBody] CreateCardRequest request)
@@ -31,11 +34,11 @@ namespace Opravilo.API.Controllers
                 Description = request.Description,
                 Name = request.Name
             });
-            return card;
+            return _mapper.Map<CardResponse>(card);
         }
         
         [HttpPatch("cards/{cardId:long}")]
-        public CardModel UpdateCard(
+        public CardResponse UpdateCard(
             long cardId,
             long projectId,
             [FromBody] UpdateCardRequest request)
@@ -47,7 +50,7 @@ namespace Opravilo.API.Controllers
                 Description = request.Description,
                 Name = request.Name
             });
-            return card;
+            return _mapper.Map<CardResponse>(card);
         }
 
         [HttpDelete("cards/{cardId:long}")]
