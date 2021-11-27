@@ -282,7 +282,7 @@ export class Client {
      * @param body (optional)
      * @return Success
      */
-    cards(stateId: number, projectId: number, body: CreateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardModel> {
+    cards(stateId: number, projectId: number, body: CreateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardResponse> {
         let url_ = this.baseUrl + "/api/projects/{projectId}/states/{stateId}/cards";
         if (stateId === undefined || stateId === null)
             throw new Error("The parameter 'stateId' must be defined.");
@@ -316,7 +316,7 @@ export class Client {
         });
     }
 
-    protected processCards(response: AxiosResponse): Promise<CardModel> {
+    protected processCards(response: AxiosResponse): Promise<CardResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -330,20 +330,20 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = CardModel.fromJS(resultData200);
+            result200 = CardResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<CardModel>(<any>null);
+        return Promise.resolve<CardResponse>(<any>null);
     }
 
     /**
      * @param body (optional)
      * @return Success
      */
-    cards2(cardId: number, projectId: number, body: UpdateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardModel> {
+    cards2(cardId: number, projectId: number, body: UpdateCardRequest | undefined , cancelToken?: CancelToken | undefined): Promise<CardResponse> {
         let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{cardId}";
         if (cardId === undefined || cardId === null)
             throw new Error("The parameter 'cardId' must be defined.");
@@ -377,7 +377,7 @@ export class Client {
         });
     }
 
-    protected processCards2(response: AxiosResponse): Promise<CardModel> {
+    protected processCards2(response: AxiosResponse): Promise<CardResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -391,13 +391,13 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = CardModel.fromJS(resultData200);
+            result200 = CardResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<CardModel>(<any>null);
+        return Promise.resolve<CardResponse>(<any>null);
     }
 
     /**
@@ -455,7 +455,7 @@ export class Client {
     /**
      * @return Success
      */
-    projectsAll(  cancelToken?: CancelToken | undefined): Promise<ProjectModel[]> {
+    projectsAll(  cancelToken?: CancelToken | undefined): Promise<ProjectResponse[]> {
         let url_ = this.baseUrl + "/api/projects";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -479,7 +479,7 @@ export class Client {
         });
     }
 
-    protected processProjectsAll(response: AxiosResponse): Promise<ProjectModel[]> {
+    protected processProjectsAll(response: AxiosResponse): Promise<ProjectResponse[]> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -496,7 +496,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(ProjectModel.fromJS(item));
+                    result200!.push(ProjectResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -506,14 +506,14 @@ export class Client {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<ProjectModel[]>(<any>null);
+        return Promise.resolve<ProjectResponse[]>(<any>null);
     }
 
     /**
      * @param body (optional)
      * @return Success
      */
-    projects(body: CreateProjectRequest | undefined , cancelToken?: CancelToken | undefined): Promise<ProjectModel> {
+    projects(body: CreateProjectRequest | undefined , cancelToken?: CancelToken | undefined): Promise<ProjectResponse> {
         let url_ = this.baseUrl + "/api/projects";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -541,7 +541,7 @@ export class Client {
         });
     }
 
-    protected processProjects(response: AxiosResponse): Promise<ProjectModel> {
+    protected processProjects(response: AxiosResponse): Promise<ProjectResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -555,19 +555,19 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = ProjectModel.fromJS(resultData200);
+            result200 = ProjectResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<ProjectModel>(<any>null);
+        return Promise.resolve<ProjectResponse>(<any>null);
     }
 
     /**
      * @return Success
      */
-    projects2(projectId: number , cancelToken?: CancelToken | undefined): Promise<FullProjectModel> {
+    projects2(projectId: number , cancelToken?: CancelToken | undefined): Promise<FullProjectResponse> {
         let url_ = this.baseUrl + "/api/projects/{projectId}";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
@@ -594,7 +594,7 @@ export class Client {
         });
     }
 
-    protected processProjects2(response: AxiosResponse): Promise<FullProjectModel> {
+    protected processProjects2(response: AxiosResponse): Promise<FullProjectResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -608,13 +608,13 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = FullProjectModel.fromJS(resultData200);
+            result200 = FullProjectResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<FullProjectModel>(<any>null);
+        return Promise.resolve<FullProjectResponse>(<any>null);
     }
 
     /**
@@ -724,7 +724,7 @@ export class Client {
      * @param body (optional)
      * @return Success
      */
-    states(projectId: number, body: CreateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateModel> {
+    states(projectId: number, body: CreateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateResponse> {
         let url_ = this.baseUrl + "/api/projects/{projectId}/states";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
@@ -755,7 +755,7 @@ export class Client {
         });
     }
 
-    protected processStates(response: AxiosResponse): Promise<StateModel> {
+    protected processStates(response: AxiosResponse): Promise<StateResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -769,20 +769,20 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = StateModel.fromJS(resultData200);
+            result200 = StateResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<StateModel>(<any>null);
+        return Promise.resolve<StateResponse>(<any>null);
     }
 
     /**
      * @param body (optional)
      * @return Success
      */
-    states2(projectId: number, stateId: number, body: UpdateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateModel> {
+    states2(projectId: number, stateId: number, body: UpdateStateRequest | undefined , cancelToken?: CancelToken | undefined): Promise<StateResponse> {
         let url_ = this.baseUrl + "/api/projects/{projectId}/states/{stateId}";
         if (projectId === undefined || projectId === null)
             throw new Error("The parameter 'projectId' must be defined.");
@@ -816,7 +816,7 @@ export class Client {
         });
     }
 
-    protected processStates2(response: AxiosResponse): Promise<StateModel> {
+    protected processStates2(response: AxiosResponse): Promise<StateResponse> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -830,13 +830,13 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = StateModel.fromJS(resultData200);
+            result200 = StateResponse.fromJS(resultData200);
             return result200;
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<StateModel>(<any>null);
+        return Promise.resolve<StateResponse>(<any>null);
     }
 
     /**
@@ -1118,12 +1118,12 @@ export interface ICreateCardRequest {
     description?: string | undefined;
 }
 
-export class CardModel implements ICardModel {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
+export class CardResponse implements ICardResponse {
+    id!: number;
+    name!: string;
+    description!: string;
 
-    constructor(data?: ICardModel) {
+    constructor(data?: ICardResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1140,9 +1140,9 @@ export class CardModel implements ICardModel {
         }
     }
 
-    static fromJS(data: any): CardModel {
+    static fromJS(data: any): CardResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new CardModel();
+        let result = new CardResponse();
         result.init(data);
         return result;
     }
@@ -1156,10 +1156,10 @@ export class CardModel implements ICardModel {
     }
 }
 
-export interface ICardModel {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
+export interface ICardResponse {
+    id: number;
+    name: string;
+    description: string;
 }
 
 export class UpdateCardRequest implements IUpdateCardRequest {
@@ -1202,12 +1202,12 @@ export interface IUpdateCardRequest {
     description?: string | undefined;
 }
 
-export class ProjectModel implements IProjectModel {
+export class ProjectResponse implements IProjectResponse {
     id?: number;
     name?: string | undefined;
     description?: string | undefined;
 
-    constructor(data?: IProjectModel) {
+    constructor(data?: IProjectResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1224,9 +1224,9 @@ export class ProjectModel implements IProjectModel {
         }
     }
 
-    static fromJS(data: any): ProjectModel {
+    static fromJS(data: any): ProjectResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new ProjectModel();
+        let result = new ProjectResponse();
         result.init(data);
         return result;
     }
@@ -1240,7 +1240,7 @@ export class ProjectModel implements IProjectModel {
     }
 }
 
-export interface IProjectModel {
+export interface IProjectResponse {
     id?: number;
     name?: string | undefined;
     description?: string | undefined;
@@ -1286,11 +1286,11 @@ export interface ICreateProjectRequest {
     description?: string | undefined;
 }
 
-export class UserModel implements IUserModel {
-    id?: number;
-    displayName?: string | undefined;
+export class UserResponse implements IUserResponse {
+    id!: number;
+    displayName!: string;
 
-    constructor(data?: IUserModel) {
+    constructor(data?: IUserResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1306,9 +1306,9 @@ export class UserModel implements IUserModel {
         }
     }
 
-    static fromJS(data: any): UserModel {
+    static fromJS(data: any): UserResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new UserModel();
+        let result = new UserResponse();
         result.init(data);
         return result;
     }
@@ -1321,17 +1321,17 @@ export class UserModel implements IUserModel {
     }
 }
 
-export interface IUserModel {
-    id?: number;
-    displayName?: string | undefined;
+export interface IUserResponse {
+    id: number;
+    displayName: string;
 }
 
-export class FullStateModel implements IFullStateModel {
-    id?: number;
-    name?: string | undefined;
-    cards?: CardModel[] | undefined;
+export class FullStateResponse implements IFullStateResponse {
+    id!: number;
+    name!: string;
+    cards?: CardResponse[] | undefined;
 
-    constructor(data?: IFullStateModel) {
+    constructor(data?: IFullStateResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1347,14 +1347,14 @@ export class FullStateModel implements IFullStateModel {
             if (Array.isArray(_data["cards"])) {
                 this.cards = [] as any;
                 for (let item of _data["cards"])
-                    this.cards!.push(CardModel.fromJS(item));
+                    this.cards!.push(CardResponse.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): FullStateModel {
+    static fromJS(data: any): FullStateResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new FullStateModel();
+        let result = new FullStateResponse();
         result.init(data);
         return result;
     }
@@ -1372,25 +1372,28 @@ export class FullStateModel implements IFullStateModel {
     }
 }
 
-export interface IFullStateModel {
-    id?: number;
-    name?: string | undefined;
-    cards?: CardModel[] | undefined;
+export interface IFullStateResponse {
+    id: number;
+    name: string;
+    cards?: CardResponse[] | undefined;
 }
 
-export class FullProjectModel implements IFullProjectModel {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
-    creator?: UserModel;
-    states?: FullStateModel[] | undefined;
+export class FullProjectResponse implements IFullProjectResponse {
+    id!: number;
+    name!: string;
+    description!: string;
+    creator!: UserResponse;
+    states?: FullStateResponse[] | undefined;
 
-    constructor(data?: IFullProjectModel) {
+    constructor(data?: IFullProjectResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.creator = new UserResponse();
         }
     }
 
@@ -1399,18 +1402,18 @@ export class FullProjectModel implements IFullProjectModel {
             this.id = _data["id"];
             this.name = _data["name"];
             this.description = _data["description"];
-            this.creator = _data["creator"] ? UserModel.fromJS(_data["creator"]) : <any>undefined;
+            this.creator = _data["creator"] ? UserResponse.fromJS(_data["creator"]) : new UserResponse();
             if (Array.isArray(_data["states"])) {
                 this.states = [] as any;
                 for (let item of _data["states"])
-                    this.states!.push(FullStateModel.fromJS(item));
+                    this.states!.push(FullStateResponse.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): FullProjectModel {
+    static fromJS(data: any): FullProjectResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new FullProjectModel();
+        let result = new FullProjectResponse();
         result.init(data);
         return result;
     }
@@ -1430,12 +1433,12 @@ export class FullProjectModel implements IFullProjectModel {
     }
 }
 
-export interface IFullProjectModel {
-    id?: number;
-    name?: string | undefined;
-    description?: string | undefined;
-    creator?: UserModel;
-    states?: FullStateModel[] | undefined;
+export interface IFullProjectResponse {
+    id: number;
+    name: string;
+    description: string;
+    creator: UserResponse;
+    states?: FullStateResponse[] | undefined;
 }
 
 export class UpdateProjectRequest implements IUpdateProjectRequest {
@@ -1514,11 +1517,11 @@ export interface ICreateStateRequest {
     name?: string | undefined;
 }
 
-export class StateModel implements IStateModel {
-    id?: number;
-    name?: string | undefined;
+export class StateResponse implements IStateResponse {
+    id!: number;
+    name!: string;
 
-    constructor(data?: IStateModel) {
+    constructor(data?: IStateResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1534,9 +1537,9 @@ export class StateModel implements IStateModel {
         }
     }
 
-    static fromJS(data: any): StateModel {
+    static fromJS(data: any): StateResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new StateModel();
+        let result = new StateResponse();
         result.init(data);
         return result;
     }
@@ -1549,9 +1552,9 @@ export class StateModel implements IStateModel {
     }
 }
 
-export interface IStateModel {
-    id?: number;
-    name?: string | undefined;
+export interface IStateResponse {
+    id: number;
+    name: string;
 }
 
 export class UpdateStateRequest implements IUpdateStateRequest {

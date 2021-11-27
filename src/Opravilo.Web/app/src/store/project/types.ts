@@ -14,34 +14,34 @@ export interface IProjectState {
 }
 
 export interface IFullProjectModel {
-    id?: number
-    name?: string
-    description?: string
+    id: number
+    name: string
+    description: string
+    creator: IUserModel
     states?: IFullStateModel[]
-    creator?: IUserModel
 }
 
 export interface IUserModel {
-    id?: number
-    displayName?: string
+    id: number
+    displayName: string
 }
 
 export interface IStateModel {
-    id?: number
-    name?: string
+    id: number
+    name: string
 }
 
 export interface IFullStateModel {
-    id?: number
-    name?: string
+    id: number
+    name: string
     
     cards?: ICardModel[]
 }
 
 export interface ICardModel {
-    id?: number
-    name?: string
-    description?: string
+    id: number
+    name: string
+    description: string
 }
 
 export interface IEditStateArgs {

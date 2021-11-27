@@ -82,9 +82,6 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCard: true}
     })
     builder.addCase(editCard.fulfilled, (state, {payload}) => {
-        /* eslint-disable */
-        // @ts-ignore
-        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
         const id = payload.id
         let  {states} = state.currentProject
 
@@ -109,18 +106,11 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCard: true}
     })
     builder.addCase(createCard.fulfilled, (state, {payload}) => {
-        /* eslint-disable */
-        // @ts-ignore
-        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
-        const id = payload.id
         let  {states} = state.currentProject
-
         states = [...states]
-
         const stateColumnIndex = states.findIndex(s => s.id == state.selectedStateId)
         const stateColumn = states[stateColumnIndex]
         const stateCards = [...stateColumn.cards]
-        const index = stateCards.findIndex(s => s.id == id)
         stateCards.push(payload)
         states.splice(stateColumnIndex, 1,{...stateColumn, cards: stateCards})
 
@@ -133,9 +123,6 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCard: true}
     })
     builder.addCase(removeCard.fulfilled, (state, {payload}) => {
-        /* eslint-disable */
-        // @ts-ignore
-        // todo: !!! РАЗОБРАТЬСЯ С ОБЯЗАТЕЛЬНОСТЬЮ ТИПОВ СРОЧНО!
         let  {states} = state.currentProject
 
         states = [...states]
