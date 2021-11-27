@@ -87,7 +87,6 @@ export const createCard = createAsyncThunk(
 export const removeCard = createAsyncThunk(
     'removeCard',
     async (cardId: number, {getState}) => {
-        // todo: test delay
         const appState = getState() as AppState
         const projectId = appState.project.currentProject.id
         

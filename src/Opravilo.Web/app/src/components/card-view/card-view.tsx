@@ -25,7 +25,6 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
         })
     }
     
-    // todo: поискать правило про style прям в компоненте
     // todo: transpileOnly в этом компоненте починило какую-то супер блядскую ошибку с выбиванием вебпак вотча
     // todo: https://www.npmjs.com/package/react-textarea-autosize
     
