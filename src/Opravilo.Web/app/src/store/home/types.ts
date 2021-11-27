@@ -8,9 +8,9 @@ export interface IHomeState {
 }
 
 export interface IProjectModel {
-    id?: number
-    name?: string
-    description?: string
+    id: number
+    name: string
+    description: string
 }
 
 export interface ICreateProjectArgs {
