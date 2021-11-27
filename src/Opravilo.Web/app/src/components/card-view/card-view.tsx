@@ -7,11 +7,12 @@ import './card-view.scss'
 
 interface IEditModeProps extends ICardViewProps {
     onCancelClick: () => void
+    onRemove: () => void
 }
 
 const EditMode = (props: IEditModeProps): JSX.Element => {
     const [form] = Form.useForm()
-    const {card, onCancelClick, fetchingCard, onSaveClick, onAddClick} = props
+    const {card, onCancelClick, fetchingCard, onSaveClick, onAddClick, onRemove} = props
     
     const {Item} = Form
     const {TextArea} = Input
@@ -57,8 +58,8 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
                     <Space direction="vertical" style={{width: '100%'}} className="wrapper" size={0}>
                         <h4 className="header">Actions</h4>
                         <Button icon={<CheckOutlined />} type="text" block className="button" onClick={onSaveButtonClick} loading={fetchingCard}>Save</Button>
-                        { card && <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick}>Cancel</Button>}
-                        { card && <Button icon={<DeleteOutlined />} type="text" block danger className="button">Remove</Button> }
+                        { card && <Button icon={<CloseOutlined />} type="text" block className="button" onClick={onCancelClick} loading={fetchingCard}>Cancel</Button>}
+                        { card && <Button icon={<DeleteOutlined />} type="text" block danger className="button" onClick={onRemove} loading={fetchingCard}>Remove</Button> }
                     </Space>
                 </div>
             </div>
@@ -68,21 +69,11 @@ const EditMode = (props: IEditModeProps): JSX.Element => {
 
 interface IReadModeProps extends ICardViewProps {
     onEditClick: () => void
+    onRemove: () => void
 }
 
 const ReadMode = (props: IReadModeProps): JSX.Element => {
-    const {card, onEditClick, onRemoveClick} = props
-    
-    const onRemove = () => {
-        Modal.confirm({
-            title: 'Remove card',
-            content: 'Are you sure you want to remove this card?',
-            icon: <DeleteOutlined />,
-            onOk: () => {
-                onRemoveClick(card.id)
-            }
-        })
-    }
+    const {card, onEditClick, onRemove, fetchingCard} = props
     
     return <div className="card-view">
         <header>
@@ -98,8 +89,8 @@ const ReadMode = (props: IReadModeProps): JSX.Element => {
             <div className="buttons-panel">
                 <Space direction="vertical" style={{width: '100%'}} className="wrapper" size={0}>
                     <h4 className="header">Actions</h4>
-                    <Button icon={<EditOutlined />} type="text" block className="button" onClick={onEditClick}>Edit</Button>
-                    <Button icon={<DeleteOutlined />} type="text" block danger className="button" onClick={onRemove}>Remove</Button>
+                    <Button icon={<EditOutlined />} type="text" block className="button" onClick={onEditClick} loading={fetchingCard}>Edit</Button>
+                    <Button icon={<DeleteOutlined />} type="text" block danger className="button" onClick={onRemove} loading={fetchingCard}>Remove</Button>
                 </Space>
             </div>
         </div>
@@ -112,12 +103,23 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
     const initialState = card == undefined
     
     const [editMode, setEditMode] = useState(initialState)
+
+    const onRemove = () => {
+        Modal.confirm({
+            title: 'Remove card',
+            content: 'Are you sure you want to remove this card?',
+            icon: <DeleteOutlined />,
+            onOk: () => {
+                onRemoveClick(card.id)
+            }
+        })
+    }
     
     // todo: поискать правило про style прям в компоненте
     // todo: transpileOnly в этом компоненте починило какую-то супер блядскую ошибку с выбиванием вебпак вотча
     // todo: https://www.npmjs.com/package/react-textarea-autosize
     
     return editMode 
-        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemoveClick={onRemoveClick} onAddClick={onAddClick}/> 
-        : <ReadMode card={card} onEditClick={() => setEditMode(true)} onRemoveClick={onRemoveClick}/>
+        ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemove={onRemove} onAddClick={onAddClick}/> 
+        : <ReadMode card={card} onEditClick={() => setEditMode(true)} onRemoveClick={onRemoveClick} fetchingCard={fetchingCard} onRemove={onRemove}/>
 }
