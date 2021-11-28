@@ -6,27 +6,27 @@ namespace Opravilo.API.Auth.External.Implementation
 {
     public class ExternalAuthProvider : IExternalAuthProvider
     {
-        private readonly IExternalAuth _vkontakte;
+        private readonly IVkExternalAuth _vkontakte;
         
-        public ExternalAuthProvider(VkontakteExternalAuth vkontakte)
+        public ExternalAuthProvider(IVkExternalAuth vkontakte)
         {
             _vkontakte = vkontakte;
         }
         
-        public Task<AuthResponseModel> Validate(string code, ExternalProviderType provider)
+        public async Task<AuthResponseModel> Validate(string code, ExternalProviderType provider)
         {
             return provider switch
             {
-                ExternalProviderType.Vkontakte => _vkontakte.Validate(code),
+                ExternalProviderType.Vkontakte => await _vkontakte.Validate(code),
                 _ => throw new NotImplementedException(nameof(provider))
             };
         }
 
-        public Task<UserClaims> GetUserInfo(string userId, string accessToken, ExternalProviderType provider)
+        public async Task<UserClaims> GetUserInfo(string userId, string accessToken, ExternalProviderType provider)
         {
             return provider switch
             {
-                ExternalProviderType.Vkontakte => _vkontakte.GetUserInfo(userId, accessToken),
+                ExternalProviderType.Vkontakte => await _vkontakte.GetUserInfo(userId, accessToken),
                 _ => throw new NotImplementedException(nameof(provider))
             };
         }

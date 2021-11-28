@@ -45,7 +45,7 @@ namespace Opravilo.API.Extensions
                 });
 
             services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);
-            services.AddTransient<VkontakteExternalAuth>();
+            services.AddTransient<IVkExternalAuth, VkontakteExternalAuth>();
             services.AddTransient<IExternalAuthProvider, ExternalAuthProvider>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IPasswordHasher, PasswordHasher>();

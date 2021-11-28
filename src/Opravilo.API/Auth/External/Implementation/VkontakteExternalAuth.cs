@@ -7,7 +7,7 @@ using Opravilo.API.Options;
 
 namespace Opravilo.API.Auth.External.Implementation
 {
-    public class VkontakteExternalAuth : IExternalAuth
+    public class VkontakteExternalAuth : IVkExternalAuth
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly VkAuthOptions _options;
