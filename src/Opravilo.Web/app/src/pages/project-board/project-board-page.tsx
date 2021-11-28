@@ -31,7 +31,7 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
     const toShow = currentProject
         ? (
             <>
-                <Link to="/home">Back to Home</Link>
+                <Link to="/home">Back</Link>
                 <h1>{currentProject.name}</h1>
                 <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick} onAddCardClick={onAddCardClick}/>
             </>

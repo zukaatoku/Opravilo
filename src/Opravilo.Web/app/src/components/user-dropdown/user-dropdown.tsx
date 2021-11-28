@@ -1,10 +1,9 @@
 import {IUserDropdownProps} from './types'
-import {UserOutlined} from '@ant-design/icons'
-import {Menu, Spin} from 'antd'
+import {Avatar, Dropdown, Menu, Space, Spin} from 'antd'
 import React, {useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 
-const { SubMenu } = Menu
+import './user-dropdown.scss'
 
 export const UserDropdown = (props: IUserDropdownProps): JSX.Element => {
     const history = useHistory()
@@ -20,12 +19,22 @@ export const UserDropdown = (props: IUserDropdownProps): JSX.Element => {
         props.onLogout()
         history.push('/')
     }
+    
+    const menu = <Menu>
+            <Menu.Item onClick={logout} danger key="1">Logout</Menu.Item>
+    </Menu>
+    
+    const letter = displayName ? displayName[0] : undefined
+    
     return (
         <Spin spinning={fetchingDisplayName}>
-            <Menu mode="horizontal" theme="dark">
-                <SubMenu title={displayName} icon={<UserOutlined/>} key="0">
-                    <Menu.Item onClick={logout} danger key="1">Logout</Menu.Item>
-                </SubMenu>
-            </Menu>
+            <div className="user-dropdown">
+                <Dropdown overlay={menu}>
+                    <Space align="center">
+                        <Avatar>{letter}</Avatar>
+                        <span>{displayName}</span>
+                    </Space>
+                </Dropdown>
+            </div>
         </Spin>)
 }

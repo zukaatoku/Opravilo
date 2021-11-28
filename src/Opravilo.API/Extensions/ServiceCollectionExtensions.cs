@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Opravilo.API.Auth;
 using Opravilo.API.Auth.External;
+using Opravilo.API.Auth.External.Implementation;
 using Opravilo.API.BackgroundServices;
 using Opravilo.API.Options;
 using Opravilo.Application.Interfaces.Services;
@@ -44,7 +45,8 @@ namespace Opravilo.API.Extensions
                 });
 
             services.AddSingleton<ITokenValidationParametersCreator>(tokenParametersCreator);
-            services.AddTransient<IExternalAuth, VkontakteExternalAuth>();
+            services.AddTransient<IVkExternalAuth, VkontakteExternalAuth>();
+            services.AddTransient<IExternalAuthProvider, ExternalAuthProvider>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();

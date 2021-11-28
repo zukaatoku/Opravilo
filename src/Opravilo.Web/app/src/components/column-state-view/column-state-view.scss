@@ -2,9 +2,11 @@
   display: block;
   white-space: nowrap;
 
-  .add-state-button {
-    width: 350px;
-    color: gray;
-    border-color: gray;
+  .ant-space-item {
+    .add-state-button {
+      width: 350px;
+      color: gray;
+      border-color: gray;
+    } 
   }
 }

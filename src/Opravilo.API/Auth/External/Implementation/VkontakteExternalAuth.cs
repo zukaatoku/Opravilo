@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 using Opravilo.API.Auth.External.Models;
 using Opravilo.API.Options;
 
-namespace Opravilo.API.Auth.External
+namespace Opravilo.API.Auth.External.Implementation
 {
-    public class VkontakteExternalAuth : IExternalAuth
+    public class VkontakteExternalAuth : IVkExternalAuth
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly VkAuthOptions _options;

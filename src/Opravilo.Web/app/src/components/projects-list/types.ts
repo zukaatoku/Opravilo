@@ -5,4 +5,5 @@ export interface IProjectsListProps {
     
     editProject: (id: number) => void
     removeProject: (id: number) => void
+    onCreateNewProjectClick: () => void
 }
