@@ -19,22 +19,22 @@ namespace Opravilo.API.Controllers
     {
         private readonly IUserManager _authManager;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IExternalAuth _externalAuth;
+        private readonly IExternalAuthProvider _externalAuthProvider;
         private readonly JwtAuthOptions _authOptions;
         
-        public AccountController(IUserManager authManager, IPasswordHasher passwordHasher, IExternalAuth externalAuth, JwtAuthOptions authOptions)
+        public AccountController(IUserManager authManager, IPasswordHasher passwordHasher, JwtAuthOptions authOptions, IExternalAuthProvider externalAuthProvider)
         {
             _authManager = authManager;
             _passwordHasher = passwordHasher;
-            _externalAuth = externalAuth;
             _authOptions = authOptions;
+            _externalAuthProvider = externalAuthProvider;
         }
 
         [AllowAnonymous]
         [HttpGet("loginVK")]
         public async Task<AuthenticationResponse> LoginVk(string code)
         {
-            var externalInfo = await _externalAuth.Validate(code);
+            var externalInfo = await _externalAuthProvider.Validate(code, ExternalProviderType.Vkontakte);
             var userExists = _authManager.UserExists(externalInfo.user_id);
 
             if (userExists)
@@ -44,7 +44,7 @@ namespace Opravilo.API.Controllers
                 return ToResponse(authResult);
             }
             
-            var credentials = await _externalAuth.GetUserInfo(externalInfo.user_id, externalInfo.access_token);
+            var credentials = await _externalAuthProvider.GetUserInfo(externalInfo.user_id, externalInfo.access_token, ExternalProviderType.Vkontakte);
             var result = _authManager.CreateAndAuthenticate(credentials.id.ToString(), credentials.first_name, credentials.last_name);
             
             AppendCookie(result);
