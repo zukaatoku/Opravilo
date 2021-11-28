@@ -943,8 +943,8 @@ export class Client {
 }
 
 export class AuthenticationResponse implements IAuthenticationResponse {
-    token?: string | undefined;
-    isSuccess?: boolean;
+    token!: string;
+    isSuccess!: boolean;
     errors?: string[] | undefined;
 
     constructor(data?: IAuthenticationResponse) {
@@ -989,8 +989,8 @@ export class AuthenticationResponse implements IAuthenticationResponse {
 }
 
 export interface IAuthenticationResponse {
-    token?: string | undefined;
-    isSuccess?: boolean;
+    token: string;
+    isSuccess: boolean;
     errors?: string[] | undefined;
 }
 

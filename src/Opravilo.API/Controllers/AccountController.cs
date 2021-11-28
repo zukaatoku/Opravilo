@@ -7,7 +7,7 @@ using Opravilo.API.Auth;
 using Opravilo.API.Auth.External;
 using Opravilo.API.Models.Auth;
 using Opravilo.API.Models.Requests;
-using Opravilo.API.Models.Responses;
+using Opravilo.API.Models.Responses.Account;
 using Opravilo.API.Options;
 
 namespace Opravilo.API.Controllers
