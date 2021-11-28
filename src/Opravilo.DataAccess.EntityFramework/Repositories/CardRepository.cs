@@ -58,6 +58,18 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             };
         }
 
+        public void ChangeState(long cardId, long newStateId)
+        {
+            var now = DateTime.Now;
+            var card = _context.Cards.First(c => c.Id == cardId);
+
+            card.StateId = newStateId;
+            card.ChangedDate = now;
+
+            _context.Update(card);
+            _context.SaveChanges();
+        }
+
         public void RemoveCard(long cardId)
         {
             var card = _context.Cards.First(c => c.Id == cardId);

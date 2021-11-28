@@ -17,5 +17,6 @@ namespace Opravilo.Application.Interfaces.Services
         CardModel CreateCard(CreateCardRequest request);
         CardModel UpdateCard(UpdateCardRequest request);
         void RemoveCard(long cardId);
+        void ChangeCardState(long cardId, long newStateId);
     }
 }

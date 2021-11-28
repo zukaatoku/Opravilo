@@ -53,6 +53,12 @@ namespace Opravilo.API.Controllers
             return _mapper.Map<CardResponse>(card);
         }
 
+        [HttpPatch("cards/{cardId:long}/state/{stateId:long}")]
+        public void ChangeState(long cardId, long stateId)
+        {
+            _projectService.ChangeCardState(cardId, stateId);
+        }
+
         [HttpDelete("cards/{cardId:long}")]
         public void RemoveCard(long projectId, long cardId)
         {
