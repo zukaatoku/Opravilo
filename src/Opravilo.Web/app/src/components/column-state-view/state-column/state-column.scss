@@ -40,9 +40,11 @@
     }
   }
 
-  .add-card-button {
-    width: 100%;
-    color: gray;
-    border-color: gray;
+  .ant-space-item {
+    .add-card-button {
+      width: 100%;
+      color: gray;
+      border-color: gray;
+    } 
   }
 }
