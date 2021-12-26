@@ -24,10 +24,9 @@ export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
 
             // check old state
             const isInNewState = props.states.filter(s => s.id == newStateId)[0].cards.some(c => c.id == cardId)
-            const currentStateId = props.states.filter(s => s.cards.some(c => c.id == cardId))[0].id
             
             if (!isInNewState) {
-                props.onChangeState(cardId, newStateId, currentStateId)   
+                props.onChangeState(cardId, newStateId)   
             } else {
                 console.log('already is in new state!')
             }
