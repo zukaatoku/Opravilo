@@ -154,8 +154,6 @@ export const projectReducer = createReducer(initialState, (builder) => {
         let {states} = state.currentProject
         states = [...states]
         
-        // todo: как-то облагородить поиск карты по стейтам
-        
         const stateColumnIndex = states.findIndex(s => s.cards.some(c => c.id == payload.cardId))
         const stateColumn = states[stateColumnIndex]
         const stateCards = [...stateColumn.cards]

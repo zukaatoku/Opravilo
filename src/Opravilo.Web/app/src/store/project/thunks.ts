@@ -104,13 +104,12 @@ export const changeState = createAsyncThunk(
         
         const currentStateId = appState.project.currentProject.states.filter((s: IFullStateModel) => s.cards.some(c => c.id == args.cardId))[0].id
         
-        await dispatch(moveCardToState({cardId: args.cardId, newStateId: args.newStateId})) 
+        await dispatch(moveCardToState(args)) 
         
         try {
             // todo: better backend action url/name
             await client.state(args.cardId, args.newStateId, projectId)   
         } catch {
-            // todo: check negative case
             await dispatch(moveCardToState({cardId: args.cardId, newStateId: currentStateId}))
         }
     }
