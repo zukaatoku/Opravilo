@@ -10,5 +10,5 @@ export interface IColumnStateViewProps {
     onViewCardClick: (cardId: number) => void
     onAddCardClick: (stateId: number) => void
     
-    onChangeState: (cardId: number, newStateId: number, oldStateId: number) => void
+    onChangeState: (cardId: number, newStateId: number) => void
 }

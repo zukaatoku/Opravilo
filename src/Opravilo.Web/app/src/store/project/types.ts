@@ -58,5 +58,4 @@ export interface IMoveCardArgs {
 export interface IChangeCardStateArgs {
     cardId: number
     newStateId: number
-    oldStateId: number
 }

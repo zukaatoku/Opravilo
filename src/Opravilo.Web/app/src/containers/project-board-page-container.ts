@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) : Partial<IProjectBoardPagePr
     onViewCardClick: (cardId) => dispatch(showCardViewModal(cardId)),
     onCloseCardViewModal: () => dispatch(closeCardViewModal()),
     onAddCardClick: (stateId) => dispatch(addCardClick(stateId)),
-    onChangeState: (cardId, newStateId, oldStateId) => dispatch(changeState({cardId, newStateId, oldStateId}))
+    onChangeState: (cardId, newStateId) => dispatch(changeState({cardId, newStateId}))
 })
 
 export const ProjectBoardPageContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectBoardPage)

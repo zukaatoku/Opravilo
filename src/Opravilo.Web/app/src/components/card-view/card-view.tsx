@@ -8,7 +8,7 @@ import {EditMode} from './card-view-edit'
 import './card-view.scss'
 
 export const CardView = (props: ICardViewProps): JSX.Element => {
-    const {card, fetchingCard, onSaveClick, onRemoveClick, onAddClick} = props
+    const {card, fetchingCard, onSaveClick, onRemoveClick, onAddClick, states, onChangeState, selectedCardStateId} = props
     
     const initialState = card == undefined
     
@@ -27,8 +27,9 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
     
     // todo: transpileOnly в этом компоненте починило какую-то супер блядскую ошибку с выбиванием вебпак вотча
     // todo: https://www.npmjs.com/package/react-textarea-autosize
+    // todo: добавить приписочку под title типа "in Unknown", "in Planned", etc
     
     return editMode 
         ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemove={onRemove} onAddClick={onAddClick}/> 
-        : <ReadMode card={card} onEditClick={() => setEditMode(true)} fetchingCard={fetchingCard} onRemove={onRemove}/>
+        : <ReadMode card={card} onEditClick={() => setEditMode(true)} fetchingCard={fetchingCard} onRemove={onRemove} states={states} onChangeState={onChangeState} selectedCardStateId={selectedCardStateId}/>
 }

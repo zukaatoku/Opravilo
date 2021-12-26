@@ -2,7 +2,7 @@ import {getClient} from '../../api/BaseClient'
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {AppState} from '../store'
 import {CreateCardRequest, CreateStateRequest, UpdateCardRequest, UpdateStateRequest} from '../../api/client'
-import {ICardModel, IChangeCardStateArgs, IEditStateArgs} from './types'
+import {ICardModel, IChangeCardStateArgs, IEditStateArgs, IFullStateModel} from './types'
 import {moveCardToState} from './actions'
 
 const client = getClient()
@@ -102,6 +102,8 @@ export const changeState = createAsyncThunk(
         const appState = getState() as AppState
         const projectId = appState.project.currentProject.id
         
+        const currentStateId = appState.project.currentProject.states.filter((s: IFullStateModel) => s.cards.some(c => c.id == args.cardId))[0].id
+        
         await dispatch(moveCardToState({cardId: args.cardId, newStateId: args.newStateId})) 
         
         try {
@@ -109,7 +111,7 @@ export const changeState = createAsyncThunk(
             await client.state(args.cardId, args.newStateId, projectId)   
         } catch {
             // todo: check negative case
-            await dispatch(moveCardToState({cardId: args.cardId, newStateId: args.oldStateId}))
+            await dispatch(moveCardToState({cardId: args.cardId, newStateId: currentStateId}))
         }
     }
 )

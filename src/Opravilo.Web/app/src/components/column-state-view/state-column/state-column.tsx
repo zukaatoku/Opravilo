@@ -66,7 +66,7 @@ const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
         return <CardPreview name={c.name} key={i} id={c.id} onViewCardClick={onViewCardClick}/>
     })
     
-    const {isOver, setNodeRef} = useDroppable({
+    const {setNodeRef} = useDroppable({
         id: 'droppable-' + stateId
     })
     

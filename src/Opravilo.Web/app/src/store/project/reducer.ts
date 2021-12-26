@@ -140,22 +140,22 @@ export const projectReducer = createReducer(initialState, (builder) => {
     builder.addCase(removeCard.rejected, (state) => {
         return {...state, fetchingCard: false, cardViewModalVisible: false }
     })
-    builder.addCase(changeState.pending, (state, {payload}) => {
-        // на время пендинга - перемещаем карту в новый стейт, фетчим сайлент
+    builder.addCase(changeState.pending, (state) => {
         return {...state, fetchingChangeState: true}
     })
-    builder.addCase(changeState.fulfilled, (state, {payload}) => {
-        // фулфиллд - фетч сайлент фолс
+    builder.addCase(changeState.fulfilled, (state) => {
         return {...state, fetchingChangeState: false}
     })
     builder.addCase(changeState.rejected, (state) => {
-        // реджектед - перемещаем карточку обратно где она была
         return {...state, fetchingChangeState: false}
     })
     builder.addCase(moveCardToState, (state, {payload}) => {
         // 1) ищем карту
         let {states} = state.currentProject
         states = [...states]
+        
+        // todo: как-то облагородить поиск карты по стейтам
+        
         const stateColumnIndex = states.findIndex(s => s.cards.some(c => c.id == payload.cardId))
         const stateColumn = states[stateColumnIndex]
         const stateCards = [...stateColumn.cards]
