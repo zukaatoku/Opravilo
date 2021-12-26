@@ -2,7 +2,8 @@ import {getClient} from '../../api/BaseClient'
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {AppState} from '../store'
 import {CreateCardRequest, CreateStateRequest, UpdateCardRequest, UpdateStateRequest} from '../../api/client'
-import {ICardModel, IEditStateArgs} from './types'
+import {ICardModel, IChangeCardStateArgs, IEditStateArgs} from './types'
+import {moveCardToState} from './actions'
 
 const client = getClient()
 
@@ -92,5 +93,23 @@ export const removeCard = createAsyncThunk(
         
         await client.cards3(projectId, cardId)
         return cardId
+    }
+)
+
+export const changeState = createAsyncThunk(
+    'changeState',
+    async (args: IChangeCardStateArgs, {dispatch, getState}) => {
+        const appState = getState() as AppState
+        const projectId = appState.project.currentProject.id
+        
+        await dispatch(moveCardToState({cardId: args.cardId, newStateId: args.newStateId})) 
+        
+        try {
+            // todo: better backend action url/name
+            await client.state(args.cardId, args.newStateId, projectId)   
+        } catch {
+            // todo: check negative case
+            await dispatch(moveCardToState({cardId: args.cardId, newStateId: args.oldStateId}))
+        }
     }
 )

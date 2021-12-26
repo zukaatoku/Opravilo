@@ -37,6 +37,25 @@
       display: inline-block;
       width: 100%;
       white-space: normal;
+      
+      .grabbable {
+        cursor: grab;
+        float: right;
+        visibility: hidden;
+        opacity: 0;
+      }
+      
+      .grabbable:active {
+        cursor: grabbing;
+      }
+    }
+    
+    .card-preview:hover {
+      .grabbable {
+        transition: opacity 0.2s;
+        visibility: visible;
+        opacity: 1;
+      }
     }
   }
 

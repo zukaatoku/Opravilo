@@ -455,6 +455,61 @@ export class Client {
     /**
      * @return Success
      */
+    state(cardId: number, stateId: number, projectId: string , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/cards/{cardId}/state/{stateId}";
+        if (cardId === undefined || cardId === null)
+            throw new Error("The parameter 'cardId' must be defined.");
+        url_ = url_.replace("{cardId}", encodeURIComponent("" + cardId));
+        if (stateId === undefined || stateId === null)
+            throw new Error("The parameter 'stateId' must be defined.");
+        url_ = url_.replace("{stateId}", encodeURIComponent("" + stateId));
+        if (projectId === undefined || projectId === null)
+            throw new Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "PATCH",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processState(_response);
+        });
+    }
+
+    protected processState(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
     projectsAll(  cancelToken?: CancelToken | undefined): Promise<ProjectResponse[]> {
         let url_ = this.baseUrl + "/api/projects";
         url_ = url_.replace(/[?&]$/, "");

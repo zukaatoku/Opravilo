@@ -11,6 +11,7 @@ export interface IProjectState {
     selectedCardId?: number
     
     fetchingCard: boolean
+    fetchingChangeState: boolean
 }
 
 export interface IFullProjectModel {
@@ -47,4 +48,15 @@ export interface ICardModel {
 export interface IEditStateArgs {
     stateId: number
     name: string
+}
+
+export interface IMoveCardArgs {
+    cardId: number
+    newStateId: number
+}
+
+export interface IChangeCardStateArgs {
+    cardId: number
+    newStateId: number
+    oldStateId: number
 }

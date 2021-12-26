@@ -20,20 +20,26 @@ export const ProjectBoardPage = withRouter((props: IProjectBoardPageProps): JSX.
         onViewCardClick,
         cardViewModalVisible,
         onCloseCardViewModal,
-        onAddCardClick
+        onAddCardClick,
+        onChangeState,
+        fetchingChangeState
     } = props
     const id = Number(props.match.params.id)
 
     useEffect(() => {
         fetchProject(id)
     }, [fetchProject])
+    
+    // todo ColumnStateView to container
 
     const toShow = currentProject
         ? (
             <>
                 <Link to="/home">Back</Link>
-                <h1>{currentProject.name}</h1>
-                <ColumnStateView states={currentProject.states} onRemove={removeState} onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick} onAddCardClick={onAddCardClick}/>
+                <Spin spinning={fetchingChangeState}><h1>{currentProject.name}</h1></Spin>
+                <ColumnStateView states={currentProject.states} onRemove={removeState} 
+                                 onAddStateClick={onAddClick} onEditStateClick={onEditClick} onViewCardClick={onViewCardClick} 
+                                 onAddCardClick={onAddCardClick} onChangeState={onChangeState}/>
             </>
         )
         : <Empty/>

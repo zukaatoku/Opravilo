@@ -1,10 +1,10 @@
 import {IProjectState} from './types'
 import {createReducer} from '@reduxjs/toolkit'
-import {addState, createCard, editCard, editState, fetchProject, removeCard, removeState} from './thunks'
+import {addState, changeState, createCard, editCard, editState, fetchProject, removeCard, removeState} from './thunks'
 import {
     addCardClick,
     closeCardViewModal,
-    hideStateModal,
+    hideStateModal, moveCardToState,
     showCardViewModal,
     showEditStateModal,
     showStateModal,
@@ -15,7 +15,8 @@ const initialState: IProjectState = {
     createEditStateModalVisible: false,
     fetchingCreateEditState: false,
     cardViewModalVisible: false,
-    fetchingCard: false
+    fetchingCard: false,
+    fetchingChangeState: false
 }
 
 export const projectReducer = createReducer(initialState, (builder) => {
@@ -123,7 +124,7 @@ export const projectReducer = createReducer(initialState, (builder) => {
         return {...state, fetchingCard: true}
     })
     builder.addCase(removeCard.fulfilled, (state, {payload}) => {
-        let  {states} = state.currentProject
+        let {states} = state.currentProject
 
         states = [...states]
 
@@ -138,5 +139,39 @@ export const projectReducer = createReducer(initialState, (builder) => {
     })
     builder.addCase(removeCard.rejected, (state) => {
         return {...state, fetchingCard: false, cardViewModalVisible: false }
+    })
+    builder.addCase(changeState.pending, (state, {payload}) => {
+        // на время пендинга - перемещаем карту в новый стейт, фетчим сайлент
+        return {...state, fetchingChangeState: true}
+    })
+    builder.addCase(changeState.fulfilled, (state, {payload}) => {
+        // фулфиллд - фетч сайлент фолс
+        return {...state, fetchingChangeState: false}
+    })
+    builder.addCase(changeState.rejected, (state) => {
+        // реджектед - перемещаем карточку обратно где она была
+        return {...state, fetchingChangeState: false}
+    })
+    builder.addCase(moveCardToState, (state, {payload}) => {
+        // 1) ищем карту
+        let {states} = state.currentProject
+        states = [...states]
+        const stateColumnIndex = states.findIndex(s => s.cards.some(c => c.id == payload.cardId))
+        const stateColumn = states[stateColumnIndex]
+        const stateCards = [...stateColumn.cards]
+        const index = stateCards.findIndex(s => s.id == payload.cardId)
+        const card = stateCards[index]
+        
+        // 2) удаляем из текущего стейта
+        stateCards.splice(index, 1)
+        states.splice(stateColumnIndex, 1, {...stateColumn, cards: stateCards})
+        
+        // 3) добавляем в новый стейт
+        const newStateColumnIndex = states.findIndex(s => s.id == payload.newStateId)
+        const newStateColumn = states[newStateColumnIndex]
+        const newStateCards = [...newStateColumn.cards]
+        newStateCards.push(card)
+        states.splice(newStateColumnIndex, 1, {...newStateColumn, cards: newStateCards})
+        return {...state, currentProject: {...state.currentProject, states: [...states]}}
     })
 })
