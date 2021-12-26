@@ -37,6 +37,8 @@
       display: inline-block;
       width: 100%;
       white-space: normal;
+      position: relative;
+      z-index: 10;
       
       .grabbable {
         cursor: grab;
@@ -64,6 +66,6 @@
       width: 100%;
       color: gray;
       border-color: gray;
-    } 
+    }
   }
 }

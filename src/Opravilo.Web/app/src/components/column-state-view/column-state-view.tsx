@@ -16,9 +16,6 @@ export const ColumnStateView = (props: IColumnStateViewProps): JSX.Element => {
     
     const onDragEnd = (event: DragOverEvent) => {
         if (event && event.over) {
-            console.log('dragging ' + event.active.id + ' into ' + event.over.id )
-            
-            // todo: dirty
             const cardId = parseInt(event.active.id.split('-')[1])
             const newStateId = parseInt(event.over.id.split('-')[1])
 
