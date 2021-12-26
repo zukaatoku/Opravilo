@@ -1,10 +1,18 @@
 import React from 'react'
-import {Button, Space} from 'antd'
-import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
+import {Button, Dropdown, Menu, Space} from 'antd'
+import {DeleteOutlined, EditOutlined, SendOutlined} from '@ant-design/icons'
 import {IReadModeProps} from './types'
 
 export const ReadMode = (props: IReadModeProps): JSX.Element => {
-    const {card, onEditClick, onRemove, fetchingCard} = props
+    const {card, onEditClick, onRemove, fetchingCard, states, onChangeState, selectedCardStateId} = props
+    
+    const menu = (
+        <Menu>
+            {states.map((s, i) => {
+                return <Menu.Item key={i} disabled={s.id == selectedCardStateId} onClick={() => onChangeState({cardId: card.id, newStateId: s.id})}>{s.name}</Menu.Item>
+            })}
+        </Menu>
+    )
 
     return <div className="card-view">
         <header>
@@ -20,6 +28,9 @@ export const ReadMode = (props: IReadModeProps): JSX.Element => {
             <div className="buttons-panel">
                 <Space direction="vertical" className="wrapper" size={0}>
                     <h4 className="header">Actions</h4>
+                    <Dropdown overlay={menu}>
+                        <Button icon={<SendOutlined />} type="text" block className="button">Move to</Button>
+                    </Dropdown>
                     <Button icon={<EditOutlined />} type="text" block className="button" onClick={onEditClick} loading={fetchingCard}>Edit</Button>
                     <Button icon={<DeleteOutlined />} type="text" block danger className="button" onClick={onRemove} loading={fetchingCard}>Remove</Button>
                 </Space>

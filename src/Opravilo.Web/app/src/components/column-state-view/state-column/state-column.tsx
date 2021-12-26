@@ -1,8 +1,9 @@
 import React from 'react'
 import {ICardPreviewProps, IColumnBodyProps, IColumnHeaderProps, IContextMenuProps, IStateColumnProps} from './types'
 import {Button, Dropdown, Menu, Modal, Space} from 'antd'
-import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined} from '@ant-design/icons'
+import {EllipsisOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined, HolderOutlined} from '@ant-design/icons'
 import {AddCardButton} from './add-card-button'
+import {useDroppable, useDraggable} from '@dnd-kit/core'
 
 import './state-column.scss'
 
@@ -40,10 +41,21 @@ const ColumnHeader = (props: IColumnHeaderProps): JSX.Element => {
 
 const CardPreview = (props: ICardPreviewProps): JSX.Element => {
     const {id, name, onViewCardClick} = props
+
+    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+        id: 'draggable-' + id,
+    })
+
+    const style = transform ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 5px)`,
+    } : undefined
     
-    return <div className="card-preview">
+    return <div className="card-preview" ref={setNodeRef} style={style}>
             <h3>{name}</h3>
-            <Button icon={<InfoCircleOutlined />} type="text" onClick={() => onViewCardClick(id)}/>
+            <div className="buttons">
+                <Button icon={<InfoCircleOutlined />} type="text" onClick={() => onViewCardClick(id)}/>
+                <Button icon={<HolderOutlined />} {...listeners} {...attributes} className="grabbable" type="text"/>
+            </div>
         </div>
 }
 
@@ -54,7 +66,11 @@ const ColumnBody = (props: IColumnBodyProps): JSX.Element => {
         return <CardPreview name={c.name} key={i} id={c.id} onViewCardClick={onViewCardClick}/>
     })
     
-    return <div className="column-body">
+    const {setNodeRef} = useDroppable({
+        id: 'droppable-' + stateId
+    })
+    
+    return <div className="column-body" ref={setNodeRef}>
         <Space direction="vertical">
             {cardsList}
             <AddCardButton onClick={() => onAddCardClick(stateId)}/>

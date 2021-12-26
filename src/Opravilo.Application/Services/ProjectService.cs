@@ -148,5 +148,10 @@ namespace Opravilo.Application.Services
         {
             _cardRepository.RemoveCard(cardId);
         }
+
+        public void ChangeCardState(long cardId, long newStateId)
+        {
+            _cardRepository.ChangeState(cardId, newStateId);
+        }
     }
 }

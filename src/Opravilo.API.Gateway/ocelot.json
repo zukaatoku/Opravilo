@@ -235,6 +235,19 @@
       "UpstreamPathTemplate": "/api/projects/{projectId}/cards/{cardId}",
       "UpstreamHttpMethod": ["Delete"],
       "SwaggerKey": "main"
+    },
+    {
+      "DownstreamPathTemplate": "/api/projects/{projectId}/cards/{cardId}/state/{stateId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/projects/{projectId}/cards/{cardId}/state/{stateId}",
+      "UpstreamHttpMethod": ["Patch"],
+      "SwaggerKey": "main"
     }
   ],
   "SwaggerEndpoints": [

@@ -1,7 +1,7 @@
 import {IProjectBoardPageProps, ProjectBoardPage} from '../pages/project-board'
 import {AppDispatch, AppState} from '../store/store'
 import {connect} from 'react-redux'
-import {fetchProject, removeState} from '../store/project/thunks'
+import {changeState, fetchProject, removeState} from '../store/project/thunks'
 import {
     addCardClick,
     closeCardViewModal,
@@ -15,7 +15,8 @@ const mapStateToProps = (state: AppState) : Partial<IProjectBoardPageProps> => (
     fetchingProject: state.project.fetchingCurrentProject,
     currentProject: state.project.currentProject,
     createEditStateVisible: state.project.createEditStateModalVisible,
-    cardViewModalVisible: state.project.cardViewModalVisible
+    cardViewModalVisible: state.project.cardViewModalVisible,
+    fetchingChangeState: state.project.fetchingChangeState
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) : Partial<IProjectBoardPageProps> => ({
@@ -26,7 +27,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) : Partial<IProjectBoardPagePr
     onEditClick: (stateId) => dispatch(showEditStateModal(stateId)),
     onViewCardClick: (cardId) => dispatch(showCardViewModal(cardId)),
     onCloseCardViewModal: () => dispatch(closeCardViewModal()),
-    onAddCardClick: (stateId) => dispatch(addCardClick(stateId))
+    onAddCardClick: (stateId) => dispatch(addCardClick(stateId)),
+    onChangeState: (cardId, newStateId) => dispatch(changeState({cardId, newStateId}))
 })
 
 export const ProjectBoardPageContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectBoardPage)
