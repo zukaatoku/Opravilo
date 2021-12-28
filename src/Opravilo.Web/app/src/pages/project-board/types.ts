@@ -10,20 +10,10 @@ export interface IProjectBoardPageProps extends RouteComponentProps<RouteParams>
     fetchProject: (id: number) => void
     currentProject?: IFullProjectModel
     
-    removeState: (stateId: number) => void
-    
     createEditStateVisible: boolean
-    hideStateModal: () => void
     
-    onAddClick: () => void
-    onEditClick: (stateId: number) => void
-
-    onViewCardClick: (cardId: number) => void
     cardViewModalVisible: boolean
     onCloseCardViewModal: () => void
-    
-    onAddCardClick: (stateId: number) => void
-    onChangeState: (cardId: number, newStateId: number) => void
     
     fetchingChangeState: boolean
 }
