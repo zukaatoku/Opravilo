@@ -36,7 +36,7 @@ namespace Opravilo.API
                 .ConfigureAppConfiguration((hostContext, builder) =>
                 {
                     if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
+                    { 
                         builder.AddUserSecrets<Program>();
                     }
                 })

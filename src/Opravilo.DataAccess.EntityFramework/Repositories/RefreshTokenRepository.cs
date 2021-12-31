@@ -18,13 +18,13 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
 
         public void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var tokenModel = new RefreshTokenModel()
             {
                 UserId = userId,
                 RefreshToken = refreshToken,
-                ExpirationDate = expirationTime,
+                ExpirationDate = DateTime.SpecifyKind(expirationTime, DateTimeKind.Utc),
                 ChangedDate = now,
                 CreatedDate = now
             };
