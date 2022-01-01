@@ -43,12 +43,12 @@ module.exports = {
                 use: [ 'style-loader', 'css-loader']
             },
             {
-                test: /\.(png|jp(e*)g|svg|gif)$/,
+                test: /\.(png|jp(e*)g|svg|gif|ttf)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            name: 'images/[hash]-[name].[ext]',
+                            name: 'assets/[hash]-[name].[ext]',
                         }
                     }
                 ]
