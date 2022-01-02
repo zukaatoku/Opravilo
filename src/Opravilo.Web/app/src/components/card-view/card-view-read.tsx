@@ -4,12 +4,12 @@ import {DeleteOutlined, EditOutlined, SendOutlined} from '@ant-design/icons'
 import {IReadModeProps} from './types'
 
 export const ReadMode = (props: IReadModeProps): JSX.Element => {
-    const {card, onEditClick, onRemove, fetchingCard, states, onChangeState, selectedCardStateId} = props
+    const {card, onEditClick, onRemove, fetchingCard, states, onChangeState, selectedCardState} = props
     
     const menu = (
         <Menu>
             {states.map((s, i) => {
-                return <Menu.Item key={i} disabled={s.id == selectedCardStateId} onClick={() => onChangeState({cardId: card.id, newStateId: s.id})}>{s.name}</Menu.Item>
+                return <Menu.Item key={i} disabled={s.id == selectedCardState.id} onClick={() => onChangeState({cardId: card.id, newStateId: s.id})}>{s.name}</Menu.Item>
             })}
         </Menu>
     )
@@ -17,12 +17,13 @@ export const ReadMode = (props: IReadModeProps): JSX.Element => {
     return <div className="card-view">
         <header>
             <h2>{card.name}</h2>
+            <span>in {selectedCardState.name}</span>
         </header>
         <div className="body-wrapper">
             <div className="description-etc">
                 <Space direction="vertical">
                     <span><h4 className="header">Description</h4></span>
-                    <span>{card.description}</span>
+                    <span className="description-body">{card.description}</span>
                 </Space>
             </div>
             <div className="buttons-panel">

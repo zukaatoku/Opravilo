@@ -34,15 +34,15 @@ export const EditMode = (props: IEditModeProps): JSX.Element => {
     return <div className="card-view">
         <Form form={form} onFinish={onFinish}>
             <header>
-                <Item name="name">
-                    <TextArea  placeholder="Project Title"/>
+                <Item name="name" rules={[{required: true}]}>
+                    <TextArea placeholder="Project Title" />
                 </Item>
             </header>
             <div className="body-wrapper">
                 <div className="description-etc">
                     <Space direction="vertical">
                         <span><h4 className="header">Description</h4></span>
-                        <Item name="description">
+                        <Item name="description" rules={[{required: true}]}>
                             <TextArea />
                         </Item>
                     </Space>
