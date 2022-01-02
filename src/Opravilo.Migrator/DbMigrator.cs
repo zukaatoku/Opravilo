@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using Opravilo.Migrator.Migrations;
@@ -36,7 +37,7 @@ namespace Opravilo.Migrator
                 .AddLogging(lb => lb.AddSerilog())
                 .BuildServiceProvider(false);
         }
-        
+
         private void UpdateDatabase(IServiceProvider serviceProvider)
         {
             // Instantiate the runner
@@ -44,6 +45,11 @@ namespace Opravilo.Migrator
 
             // Execute the migrations
             runner.MigrateUp();
+
+#if DEBUG
+            var sql = File.ReadAllText("Scripts/Seed.sql");
+            runner.Processor.Execute(sql);
+#endif
         }
     }
 }

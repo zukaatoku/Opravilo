@@ -30,9 +30,8 @@ export const selectedCardSelector = createSelector(
 
 export const cardStateSelector = createSelector(
     [(state: AppState) => state.project.currentProject.states, (state: AppState) => state.project.selectedCardId],
-    (states: IFullStateModel[], selectedCardId) : number => {
+    (states: IFullStateModel[], selectedCardId) : IStateModel => {
         if (!selectedCardId) return undefined
-        const state = states.filter(s => s.cards.some(c => c.id == selectedCardId))[0]
-        return state.id
+        return states.filter(s => s.cards.some(c => c.id == selectedCardId))[0]
     }
 )

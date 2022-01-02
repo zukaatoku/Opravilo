@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <CodeAnalysisRuleSet>..\..\tools\stylecop\custom.ruleset</CodeAnalysisRuleSet>
         <UserSecretsId>dc69a28c-162e-43b4-a544-c2d91323bc51</UserSecretsId>
   </PropertyGroup>
@@ -34,6 +34,9 @@
 
     <ItemGroup>
       <None Remove="logs\**" />
+      <None Update="Scripts\Seed.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

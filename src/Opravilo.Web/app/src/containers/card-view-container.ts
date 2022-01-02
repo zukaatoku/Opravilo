@@ -8,7 +8,7 @@ const mapStateToProps = (state: AppState) : Partial<ICardViewProps> => ({
     card: selectedCardSelector(state),
     fetchingCard: state.project.fetchingCard,
     states: state.project.currentProject.states,
-    selectedCardStateId: cardStateSelector(state)
+    selectedCardState: cardStateSelector(state)
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) : Partial<ICardViewProps> => ({

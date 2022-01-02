@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -59,6 +60,9 @@ namespace Opravilo.API.Extensions
             services.AddDbContext<DataContext>(builder =>
             {
                 builder.UseNpgsql(connectionString);
+                
+                // todo: разобраться с датами
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             });
             return services;
         }

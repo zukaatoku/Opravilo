@@ -3,7 +3,7 @@ import {IChangeCardStateArgs, IStateModel} from '../../store/project/types'
 export interface ICardViewProps {
     card: ICardModel
     states: IStateModel[]
-    selectedCardStateId: number
+    selectedCardState: IStateModel
     
     fetchingCard: boolean
     onSaveClick: (changedCard: ICardModel) => Promise<unknown>
@@ -20,7 +20,7 @@ export interface ICardModel {
 
 export interface IReadModeProps {
     card: ICardModel
-    selectedCardStateId: number
+    selectedCardState: IStateModel
     
     fetchingCard: boolean
     onEditClick: () => void

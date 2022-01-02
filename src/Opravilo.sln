@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 ProjectSection(SolutionItems) = preProject
 	..\.gitignore = ..\.gitignore
 	..\tools\client_gen.nswag = ..\tools\client_gen.nswag
+	..\docker\docker-compose.yaml = ..\docker\docker-compose.yaml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{956D2781-4DE3-4752-B197-ECB408D043A5}"
