@@ -9,7 +9,7 @@ using Opravilo.API.Models.Requests;
 using Opravilo.API.Models.Responses.Account;
 using Xunit;
 
-namespace ApiIntegrationTests;
+namespace ApiIntegrationTests.Controllers;
 
 public class AccountControllerTests : IClassFixture<ApiFixture>
 {
@@ -19,7 +19,7 @@ public class AccountControllerTests : IClassFixture<ApiFixture>
     public AccountControllerTests(ApiFixture fixture)
     {
         _fixture = fixture;
-        _client = fixture.Factory.CreateClient();
+        _client = fixture.PublicClient;
     }
     
     [Fact]
