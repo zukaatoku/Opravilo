@@ -53,7 +53,7 @@ namespace Opravilo.API.Controllers
         
         [AllowAnonymous]
         [HttpPost("login")]
-        public AuthenticationResponse Login(
+        public ActionResult<AuthenticationResponse> Login(
             [FromBody] LoginRequest request)
         {
             var hashedPassword = _passwordHasher.HashPassword(request.Password);
@@ -62,9 +62,10 @@ namespace Opravilo.API.Controllers
             if (result.IsSuccess)
             {
                 AppendCookie(result);
+                return Ok(ToResponse(result));
             }
             
-            return ToResponse(result);
+            return Unauthorized(ToResponse(result));
         }
 
         [AllowAnonymous]
