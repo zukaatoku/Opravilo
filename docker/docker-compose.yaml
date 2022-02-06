@@ -1,4 +1,9 @@
 version: "3.9"
+
+networks:
+  db-development: 
+    driver: bridge
+
 services:
   postgres:
     image: postgres:14-alpine
@@ -8,3 +13,5 @@ services:
       POSTGRES_PASSWORD: "2282"
     ports:
       - "127.0.0.1:5432:5432"
+    networks:
+      - db-development

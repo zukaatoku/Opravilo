@@ -10,9 +10,9 @@ import './card-view.scss'
 export const CardView = (props: ICardViewProps): JSX.Element => {
     const {card, fetchingCard, onSaveClick, onRemoveClick, onAddClick, states, onChangeState, selectedCardState} = props
     
-    const initialState = card == undefined
+    const noSelectedCard = card == undefined
     
-    const [editMode, setEditMode] = useState(initialState)
+    const [editMode, setEditMode] = useState(noSelectedCard)
 
     const onRemove = () => {
         Modal.confirm({
@@ -27,7 +27,6 @@ export const CardView = (props: ICardViewProps): JSX.Element => {
     
     // todo: transpileOnly в этом компоненте починило какую-то супер блядскую ошибку с выбиванием вебпак вотча
     // todo: https://www.npmjs.com/package/react-textarea-autosize
-    // todo: добавить приписочку под title типа "in Unknown", "in Planned", etc
     
     return editMode 
         ? <EditMode card={card} onCancelClick={() => setEditMode(false)} fetchingCard={fetchingCard} onSaveClick={onSaveClick} onRemove={onRemove} onAddClick={onAddClick}/> 
