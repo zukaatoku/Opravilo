@@ -12,4 +12,10 @@ public static class HttpClientExtensions
         var json = JsonConvert.SerializeObject(form);
         return await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, "application/json"));
     }
+    
+    public static async Task<HttpResponseMessage> PatchJsonFormAsync(this HttpClient client, string uri, object form)
+    {
+        var json = JsonConvert.SerializeObject(form);
+        return await client.PatchAsync(uri, new StringContent(json, Encoding.UTF8, "application/json"));
+    }
 }

@@ -11,6 +11,10 @@ public class ApiFixture
 {
     public static string DefaultUser = "Admin";
     public static string DefaultPassword = "Admin";
+
+    public static int DefaultProjectId = 1;
+    public static string DefaultProject = "TestProject";
+    public static string DefaultState = "TestState";
     
     public ApiFixture()
     {
