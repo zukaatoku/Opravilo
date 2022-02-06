@@ -40,6 +40,16 @@ public static class TestDbInitializer
                     Name = ApiFixture.DefaultState,
                     ChangedDate = now,
                     CreatedDate = now,
+                    Cards = new List<CardModel>()
+                    {
+                        new CardModel()
+                        {
+                            ChangedDate = now,
+                            CreatedDate = now,
+                            Description = ApiFixture.DefaultCard,
+                            Name = ApiFixture.DefaultCard
+                        }
+                    }
                 }
             }
         };
