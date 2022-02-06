@@ -15,6 +15,7 @@ public class ApiFixture
     public static int DefaultProjectId = 1;
     public static string DefaultProject = "TestProject";
     public static string DefaultState = "TestState";
+    public static int DefaultStateId = 1;
     
     public ApiFixture()
     {
