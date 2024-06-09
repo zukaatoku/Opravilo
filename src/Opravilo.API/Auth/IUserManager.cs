@@ -9,6 +9,6 @@ namespace Opravilo.API.Auth
         bool UserExists(string vkId);
         AuthenticationResult AuthenticateVkontakte(string vkId);
         AuthenticationResult CreateAndAuthenticate(string vkId, string givenName, string surname);
-        AuthenticationResult RefreshToken(string jwtToken, string refreshToken);
+        AuthenticationResult RefreshToken(string refreshToken);
     }
 }

@@ -13,6 +13,8 @@ async function tryRefreshToken(): Promise<boolean> {
     }
 }
 
+let refreshTokenPromise: Promise<boolean>
+
 export function getClient(): Client {
     // todo: check npm packet axios-auth-refresh
     const client = axios.create({withCredentials: true})
@@ -20,17 +22,35 @@ export function getClient(): Client {
     client.interceptors.response.use((success) => {
         return success
     }, async (err) => {
-            const original = err.config
-            if (err.response.status === 401 && !err.config.__isRetryRequest) {
-                const success = await tryRefreshToken()
+        const original = err.config
+        if (err.response.status === 401 && !err.config.__isRetryRequest) {
+            
+            if (!refreshTokenPromise) {
+                console.log('nothing in progress. refreshing...')
+                refreshTokenPromise = tryRefreshToken()
+                const success = await refreshTokenPromise
 
                 if (!success) {
                     window.location.href = '/'
                 }
-                else {
-                    return axios.request(original)
-                }
+                // else {
+                //     console.log('refresh done, go original')
+                //     return axios.request(original)
+                // }
+            } else {
+                console.log('pending refreshing')
+                // return refreshTokenPromise.then(() => {
+                //     console.log('refresh done, go original FROM PROMISE')
+                //     refreshTokenPromise = null
+                //     return axios.request(original)
+                // })
             }
+            return refreshTokenPromise.then(() => {
+                console.log('refresh done, go original FROM PROMISE')
+                refreshTokenPromise = null
+                return axios.request(original)
+            })
+        }
     })
     return new Client(undefined, client)
 }

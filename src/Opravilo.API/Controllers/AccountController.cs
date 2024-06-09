@@ -85,34 +85,23 @@ namespace Opravilo.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("refresh")]
-        public ActionResult<AuthenticationResponse> RefreshToken()
+        public ActionResult<RefreshTokenResponse> RefreshToken()
         {
-            var jwtFromHeader = HttpContext.Request.Headers["Authorization"];
-
-            if (jwtFromHeader.Count > 0)
-            {
-                var jwt = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
-                var refresh = HttpContext.Request.Cookies["X-REFRESH-TOKEN"];
+            var refresh = HttpContext.Request.Cookies["X-REFRESH-TOKEN"];
             
-                var result = _authManager.RefreshToken(jwt, refresh);
+            var result = _authManager.RefreshToken(refresh);
 
-                if (result.IsSuccess)
-                {
-                    AppendCookie(result);
-                }
-                else
-                {
-                    Logout();
-                    return Unauthorized();
-                }
-                
-                return Ok(result);
+            if (result.IsSuccess)
+            {
+                AppendCookie(result);
             }
             else
             {
                 Logout();
-                return Unauthorized();
+                return Unauthorized(new RefreshTokenResponse() { IsSuccess = false });
             }
+                
+            return Ok(new RefreshTokenResponse() { IsSuccess = true });
         }
 
         [HttpPost("logout")]
@@ -139,7 +128,7 @@ namespace Opravilo.API.Controllers
             // todo: decide cookie lifetime - mb options ?
             HttpContext.Response.Cookies.Append("X-AUTH-TOKEN", result.Token, new CookieOptions()
             {
-                MaxAge = TimeSpan.FromMinutes(_authOptions.Lifetime + 1440),
+                MaxAge = TimeSpan.FromSeconds(_authOptions.Lifetime),
                 HttpOnly = true
             });
             HttpContext.Response.Cookies.Append("X-REFRESH-TOKEN", result.RefreshToken, new CookieOptions()

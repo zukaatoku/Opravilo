@@ -8,5 +8,6 @@ namespace Opravilo.DataAccess.Repositories
         void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime);
         void CleanRefreshTokens(long userId);
         RefreshTokenDto FindRefreshToken(long userId);
+        RefreshTokenDto FindRefreshToken(string refreshToken);
     }
 }
