@@ -53,6 +53,30 @@ namespace Opravilo.DataAccess.EntityFramework.Repositories
             };
         }
 
+        public RefreshTokenDto FindRefreshToken(string refreshToken)
+        {
+            var token = _context.RefreshTokens
+                .Include(r => r.User)
+                .FirstOrDefault(t => t.RefreshToken == refreshToken);
+
+            if (token == null)
+            {
+                return null;
+            }
+            
+            return new RefreshTokenDto()
+            {
+                ExpirationDate = token.ExpirationDate,
+                RefreshToken = token.RefreshToken,
+                
+                User = new UserDto()
+                {
+                    Id = token.User.Id,
+                    DisplayName = token.User.DisplayName
+                }
+            };
+        }
+
         public void CleanRefreshTokens(long userId)
         {
             var tokens = _context.RefreshTokens.Where(r => r.UserId == userId).ToList();

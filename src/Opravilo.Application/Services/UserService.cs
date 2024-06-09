@@ -95,6 +95,27 @@ namespace Opravilo.Application.Services
                 ExpirationDate = token.ExpirationDate
             };
         }
+        
+        public RefreshTokenModel FindToken(string refreshToken)
+        {
+            var token = _refreshTokenRepository.FindRefreshToken(refreshToken);
+            if (token == null)
+            {
+                return null;
+            }
+
+            return new RefreshTokenModel()
+            {
+                RefreshToken = token.RefreshToken,
+                ExpirationDate = token.ExpirationDate,
+                
+                User = new UserModel()
+                {
+                    Id = token.User.Id,
+                    DisplayName = token.User.DisplayName
+                }
+            };
+        }
 
         public void CleanRefreshTokens(long userId)
         {

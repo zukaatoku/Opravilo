@@ -6,5 +6,7 @@ namespace Opravilo.DataAccess.Dto
     {
         public DateTime ExpirationDate { get; init; }
         public string RefreshToken { get; init; }
+        
+        public UserDto User { get; set; }
     }
 }

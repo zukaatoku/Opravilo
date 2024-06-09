@@ -68,29 +68,10 @@ namespace Opravilo.API.Auth
             return Authenticate(user.DisplayName, user.Id);
         }
 
-        public AuthenticationResult RefreshToken(string jwtToken, string refreshToken)
+        public AuthenticationResult RefreshToken(string refreshToken)
         {
-            var parameters = _tokenParametersCreator.Create(_authOptions, false);
-
-            var principal =
-                new JwtSecurityTokenHandler().ValidateToken(jwtToken, parameters, out var validatedToken);
-            
-            var expiredClaim = Convert.ToInt32(principal.Claims.First(c => c.Type == "exp").Value);
-
-            var expirationTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            expirationTime = expirationTime.AddSeconds(expiredClaim);
-
+            var savedToken = _userService.FindToken(refreshToken);
             var now = DateTime.UtcNow;
-
-            if (expirationTime.CompareTo(now) > 0)
-            {
-                return Fail("JWT token not expired yet!");
-            }
-            
-            var nicknameClaim = principal.Claims.First(c => c.Type == "nickname").Value;
-            var idClaim = Convert.ToInt32(principal.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            
-            var savedToken = _userService.FindToken(idClaim);
             
             if (savedToken.RefreshToken != refreshToken)
             {
@@ -102,7 +83,7 @@ namespace Opravilo.API.Auth
                 return Fail("Refresh token expired!");
             }
 
-            return Authenticate(nicknameClaim, idClaim);
+            return Authenticate(savedToken.User.DisplayName, savedToken.User.Id);
         }
 
         private AuthenticationResult Authenticate(string displayName, long userId)

@@ -140,7 +140,7 @@ namespace ApiUnitTests.Auth
             _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
-            var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
+            var result = _authManager.RefreshToken(fakeRefresh);
             
             AssertSuccess(result);
         }
@@ -157,7 +157,7 @@ namespace ApiUnitTests.Auth
             _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
-            var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
+            var result = _authManager.RefreshToken(fakeRefresh);
             
             AssertFail(result, "JWT token not expired yet!");
         }
@@ -174,7 +174,7 @@ namespace ApiUnitTests.Auth
             _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
-            var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
+            var result = _authManager.RefreshToken(fakeRefresh);
             
             AssertFail(result, "Refresh token invalid!");
         }
@@ -191,7 +191,7 @@ namespace ApiUnitTests.Auth
             _authManager = new UserManager(userService, _tokenGeneratorMock.Object, _tokenParametersCreatorMock.Object,
                 _authOptions);
 
-            var result = _authManager.RefreshToken(fakeJwt, fakeRefresh);
+            var result = _authManager.RefreshToken(fakeRefresh);
             
             AssertFail(result, "Refresh token expired!");
         }

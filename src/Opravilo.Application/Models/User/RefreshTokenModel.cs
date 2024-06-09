@@ -6,5 +6,7 @@ namespace Opravilo.Application.Models.User
     {
         public string RefreshToken { get; set; }
         public DateTime ExpirationDate { get; set; }
+        
+        public UserModel User { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace Opravilo.Application.Interfaces.Services
         RegistrationResultModel RegisterUser(string login, string displayName, string passwordHash);
         
         RefreshTokenModel FindToken(long userId);
+        RefreshTokenModel FindToken(string refreshToken);
         
         void SaveRefreshToken(long userId, string refreshToken, DateTime expirationTime);
         void CleanRefreshTokens(long userId);
